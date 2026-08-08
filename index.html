@@ -83,7 +83,9 @@
   /* ---- audio badge : fixed corner marker for the (future) testimonial audio layer ---- */
   .audio-badge{ position:absolute; top:10px; right:10px; z-index:5; display:flex; align-items:center; gap:6px; padding:5px 9px 5px 8px; border-radius:999px; background:rgba(22,19,15,0.62); border:1px solid rgba(231,226,215,0.28); }
   .audio-badge .eq{ display:flex; align-items:flex-end; gap:1.5px; height:9px; }
-  .audio-badge .eq span{ width:2px; background:#C4522F; animation:eqbeat 1.15s ease-in-out infinite; }
+  .audio-badge .eq span{ width:2px; background:#C4522F; animation:eqbeat 1.15s ease-in-out infinite; animation-play-state:paused; opacity:0.4; }
+  .audio-badge.has-audio{ cursor:pointer; }
+  .audio-badge.is-playing .eq span{ animation-play-state:running; opacity:1; }
   .audio-badge .eq span:nth-child(1){ animation-delay:0s; }
   .audio-badge .eq span:nth-child(2){ animation-delay:0.18s; }
   .audio-badge .eq span:nth-child(3){ animation-delay:0.36s; }
@@ -168,7 +170,7 @@
     <div style="position:absolute;left:44px;right:44px;bottom:38px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px">
       <div>
         <div style="font-family:'EB Garamond',serif;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:#6B6864">Autores</div>
-        <div style="margin-top:6px;font-family:'EB Garamond',serif;font-weight:600;font-size:14px;line-height:1.6;letter-spacing:0.01em">Paccha Adriana<br>Lazcano Andrés</div>
+        <div style="margin-top:6px;font-family:'EB Garamond',serif;font-weight:600;font-size:14px;line-height:1.6;letter-spacing:0.01em">Adriana Paccha<br>Andrés Lazcano</div>
       </div>
       <div style="border:1px solid #8E2B1C;color:#8E2B1C;padding:7px 10px;transform:rotate(-1.6deg);font-family:'EB Garamond',serif;font-size:7.5px;letter-spacing:0.15em;text-transform:uppercase;line-height:1.7;text-align:right;opacity:0.9">Sitios de memoria<br>Parque por la Paz · MMDH</div>
     </div>
@@ -236,7 +238,7 @@
     </div>
     <div style="position:absolute;top:0;left:0;right:0;height:172px;background:linear-gradient(180deg,rgba(22,19,15,0.4) 0%,rgba(22,19,15,0.05) 55%,rgba(231,226,215,0.94) 98%);pointer-events:none"></div>
     <div class="audio-badge"><span class="eq"><span></span><span></span><span></span><span></span></span><span class="alabel">Audio · cadena nacional 2019</span></div>
-    <audio class="page-audio" data-role="Declaración presidencial · cadena nacional, Sebastián Piñera, 20.10.2019" preload="none" loop hidden></audio>
+    <audio class="page-audio" src="audio/pinera-2019.mp3" data-role="Declaración presidencial · cadena nacional, Sebastián Piñera, 20.10.2019" preload="none" hidden></audio>
     <div style="position:absolute;left:44px;top:178px;font-family:'EB Garamond',serif;font-size:7px;letter-spacing:0.12em;text-transform:uppercase;color:#6B6864">Fig. 01 — Palacio de La Moneda, sede del gobierno de Chile</div>
 
     <svg width="130" height="130" viewBox="0 0 100 100" style="position:absolute;right:6px;top:208px;opacity:0.14;pointer-events:none" aria-hidden="true">
@@ -317,9 +319,9 @@
         <div class="frame"><img src="img/casa-corvi.jpg" alt="Reconstrucción de una Casa CORVI, Villa Grimaldi" style="object-position:65% 40%"><div class="grain"></div><div class="num">01</div><div class="tag">Casa CORVI, interior</div></div>
         <div class="frame wide"><img src="img/museo-edificio.jpg" alt="Museo de la Memoria y los Derechos Humanos, fachada" style="object-position:30% 50%"><div class="grain"></div><div class="num">02</div><div class="tag">MMDH, entrada</div></div>
       </div>
-      <div class="audio-badge"><span class="eq"><span></span><span></span><span></span><span></span></span><span class="alabel">Audio · testimonio en sitio</span></div>
+      <div class="audio-badge"><span class="eq"><span></span><span></span><span></span><span></span></span><span class="alabel">Audio · Pinochet, dictadura</span></div>
     </div>
-    <audio class="page-audio" data-role="Testimonio de sobreviviente / guía de sitio de memoria, Villa Grimaldi" preload="none" loop hidden></audio>
+    <audio class="page-audio" src="audio/pinochet-dictadura.mp3" data-role="Augusto Pinochet, declaración durante la dictadura — «guerra»" preload="none" hidden></audio>
 
     <div style="position:absolute;left:44px;right:44px;top:176px;bottom:150px;display:flex;flex-direction:column;justify-content:flex-start">
     <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:#8E2B1C">I · Sitios de memoria</div>
@@ -363,8 +365,8 @@
         <div class="interlude-cap" style="bottom:12px"><span>Ahora · 2026</span><span>06</span></div>
       </div>
     </div>
-    <div class="audio-badge"><span class="eq"><span></span><span></span><span></span><span></span></span><span class="alabel">Sin voces, solo ambiente</span></div>
-    <audio class="page-audio" data-role="Silencio — únicamente ambiente, La Torre, Villa Grimaldi" preload="none" loop hidden></audio>
+    <div class="audio-badge"><span class="eq"><span></span><span></span><span></span><span></span></span><span class="alabel">Audio · entrevista, Contreras</span></div>
+    <audio class="page-audio" src="audio/contreras-entrevista.mp3" data-role="Manuel Contreras, exjefe de la DINA, entrevista — «guerra»" preload="none" hidden></audio>
     <div style="position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);display:flex;justify-content:center;pointer-events:none">
       <div style="background:#1A1A1A;padding:8px 22px;box-shadow:0 0 24px 14px #1A1A1A">
         <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:20px;letter-spacing:0.09em;text-transform:uppercase;color:#F5F2EA;white-space:nowrap">La Torre</div>
@@ -547,9 +549,9 @@
         <div class="frame"><img src="img/ecuador-soldados.webp" alt="Soldados ecuatorianos frente a la bandera nacional" style="object-position:75% 35%"><div class="grain"></div><div class="num">01</div><div class="tag">FF.AA., despliegue</div></div>
         <div class="frame wide"><img src="img/ecuador-carcel-2024.jpg" alt="Operativo policial y militar en una cárcel de Ecuador, 2024" style="object-position:30% 25%"><div class="grain"></div><div class="num">02</div><div class="tag">Recinto penitenciario</div></div>
       </div>
-      <div class="audio-badge"><span class="eq"><span></span><span></span><span></span><span></span></span><span class="alabel">Audio · Noboa + Las Malvinas</span></div>
+      <div class="audio-badge"><span class="eq"><span></span><span></span><span></span><span></span></span><span class="alabel">Audio · Kast, 2026 (Chile)</span></div>
     </div>
-    <audio class="page-audio" data-role="Declaración presidencial, Daniel Noboa, 14.05.2026 / familiares del caso Las Malvinas" preload="none" loop hidden></audio>
+    <audio class="page-audio" src="audio/kast-2026.mp3" data-role="José Antonio Kast, declaración 2026 — espejo chileno del caso ecuatoriano" preload="none" hidden></audio>
 
     <div style="position:absolute;left:44px;right:44px;top:152px;bottom:126px;display:flex;flex-direction:column;justify-content:center">
     <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:#8E2B1C">V · Espejo regional</div>
@@ -752,7 +754,7 @@
         <div style="color:#C4522F">Villa Grimaldi y el Museo de la Memoria y los Derechos Humanos, Santiago de Chile</div>
         <div style="margin-top:6px">Curso Trabajo de Campo y Actualidad · Magíster en Ciencias Sociales, mención Sociología de la Modernización · Universidad de Chile</div>
         <div style="margin-top:8px;display:flex;justify-content:space-between;gap:16px">
-          <span>Paccha Adriana · Lazcano Andrés</span><span>13</span>
+          <span>Adriana Paccha · Andrés Lazcano</span><span>13</span>
         </div>
         <div style="margin-top:8px;text-transform:none;letter-spacing:0.04em;font-size:6.6px;line-height:1.55;color:#6B6864">Fuentes citadas: Halbwachs (2004) · Zaffaroni (2007) · Wacquant (2010) · Navarrete Yáñez (2019) · Aguilera (2020) · Luna Báez y Simelio (2024) · Prison Insider (2024) · González Guarda et al. (2025) · CIDH (2025) · Corte Constitucional del Ecuador (2026).</div>
       </div>
@@ -863,6 +865,38 @@
 
   pages[0].classList.add('is-current');
   updateUI();
+})();
+</script>
+
+<script>
+(function(){
+  var badges = Array.from(document.querySelectorAll('.audio-badge'));
+  badges.forEach(function(badge){
+    var page = badge.closest('.book-page');
+    var audio = page && page.querySelector('audio.page-audio');
+    if (!audio || !audio.getAttribute('src')) return;
+    badge.classList.add('has-audio');
+    badge.addEventListener('click', function(){
+      var wasPlaying = !audio.paused;
+      document.querySelectorAll('audio.page-audio').forEach(function(a){ if (a !== audio) a.pause(); });
+      document.querySelectorAll('.audio-badge.is-playing').forEach(function(b){ if (b !== badge) b.classList.remove('is-playing'); });
+      if (wasPlaying) { audio.pause(); badge.classList.remove('is-playing'); }
+      else { audio.play(); badge.classList.add('is-playing'); }
+    });
+    audio.addEventListener('ended', function(){ badge.classList.remove('is-playing'); });
+  });
+
+  new MutationObserver(function(mutations){
+    mutations.forEach(function(m){
+      var page = m.target;
+      if (!page.classList.contains('is-current')) {
+        var audio = page.querySelector('audio.page-audio');
+        if (audio && !audio.paused) audio.pause();
+        var badge = page.querySelector('.audio-badge.is-playing');
+        if (badge) badge.classList.remove('is-playing');
+      }
+    });
+  }).observe(document.getElementById('stage'), { attributes:true, attributeFilter:['class'], subtree:true });
 })();
 </script>
 
