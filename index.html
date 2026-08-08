@@ -321,7 +321,7 @@
       <audio class="page-audio" id="aud-pinera" src="audio/pinera-2019.mp3" data-role="Sebastián Piñera, cadena nacional, 20.10.2019" preload="none" hidden></audio>
       <audio class="page-audio" id="aud-kast" src="audio/kast-2026.mp3" data-role="José Antonio Kast, declaración 2026" preload="none" hidden></audio>
 
-      <div style="margin-top:14px;font-size:10.5px;line-height:1.5;font-style:italic;color:#8A8680">Grabaciones de archivo. Pulsa cada círculo para escuchar.</div>
+      <div style="margin-top:14px;font-size:10.5px;line-height:1.5;font-style:italic;color:#8A8680">Grabaciones de archivo. Suenan en orden al llegar a esta página — toca un círculo para repetir una en particular.</div>
 
       <div style="margin:auto 0 22px;border-left:2px solid #C4522F;padding:2px 0 2px 16px;max-width:440px">
         <p style="margin:0;font-family:'EB Garamond',serif;font-style:italic;font-weight:600;font-size:16px;line-height:1.45;letter-spacing:0;color:#F5F2EA;text-wrap:pretty">El contexto institucional cambió por completo. El mecanismo, no: nombrar una amenaza para volver aceptable la expansión del poder punitivo del Estado.</p>
@@ -958,6 +958,11 @@
   // button carrying data-audio (movement I stacks three on one page).
   var triggers = Array.from(document.querySelectorAll('.audio-badge, [data-audio]'));
 
+  // Per page, the ordered list of {trigger, audio} pairs that actually carry
+  // a real src — arriving on a page auto-plays this list in sequence, like a
+  // soundtrack, instead of waiting for a click.
+  var byPage = new Map();
+
   triggers.forEach(function(trigger){
     var id = trigger.getAttribute('data-audio');
     var audio = id
@@ -968,6 +973,7 @@
     trigger.classList.add('has-audio');
     trigger.addEventListener('click', function(){
       var wasPlaying = !audio.paused;
+      seqToken++; // a manual pick cancels whatever auto-sequence is running
       stopAll();
       // play() rejects with AbortError when a fast second click pauses it first
       if (!wasPlaying) audio.play().catch(function(){});
@@ -978,18 +984,50 @@
     audio.addEventListener('play', function(){ trigger.classList.add('is-playing'); });
     audio.addEventListener('pause', function(){ trigger.classList.remove('is-playing'); });
     audio.addEventListener('ended', function(){ trigger.classList.remove('is-playing'); });
+
+    var page = trigger.closest('.book-page');
+    if (page) {
+      if (!byPage.has(page)) byPage.set(page, []);
+      byPage.get(page).push(audio);
+    }
   });
 
   function stopAll(root){
     (root || document).querySelectorAll('audio.page-audio').forEach(function(a){ a.pause(); });
   }
 
+  var seqToken = 0;
+  function playSequence(list, i, token){
+    if (token !== seqToken || i >= list.length) return;
+    var audio = list[i];
+    audio.play().catch(function(){});
+    audio.addEventListener('ended', function once(){
+      audio.removeEventListener('ended', once);
+      playSequence(list, i + 1, token);
+    });
+  }
+
   new MutationObserver(function(mutations){
     mutations.forEach(function(m){
       var page = m.target;
-      if (page.classList && !page.classList.contains('is-current')) stopAll(page);
+      // subtree:true also reports class changes on things like .voice-play
+      // gaining is-playing — ignore anything that isn't a page itself, or
+      // playback state on one button would keep invalidating seqToken.
+      if (!page.classList || !page.classList.contains('book-page')) return;
+      if (page.classList.contains('is-current')) {
+        var list = byPage.get(page);
+        if (list && list.length) { seqToken++; playSequence(list, 0, seqToken); }
+      } else {
+        seqToken++; // leaving the page cancels its pending sequence
+        stopAll(page);
+      }
     });
   }).observe(document.getElementById('stage'), { attributes:true, attributeFilter:['class'], subtree:true });
+
+  // The starting page is set with is-current before this script runs, so it
+  // never fires a mutation — kick its sequence off by hand.
+  var startPage = document.querySelector('.book-page.is-current');
+  if (startPage && byPage.has(startPage)) { seqToken++; playSequence(byPage.get(startPage), 0, seqToken); }
 })();
 </script>
 
