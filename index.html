@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>El nuevo enemigo interno — Propuesta audiovisual</title>
+<title>El nuevo enemigo interno — E-book audiovisual</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
@@ -94,6 +94,21 @@
   @keyframes eqbeat{ 0%,100%{ height:2px; } 50%{ height:9px; } }
   .audio-badge .alabel{ font-family:'EB Garamond',serif; font-size:6.3px; letter-spacing:0.07em; text-transform:uppercase; color:#F5F2EA; white-space:nowrap; }
 
+  /* ---- voice rows : several playable declarations on one page (movement I) ---- */
+  .voice{ display:grid; grid-template-columns:96px 1fr 32px; align-items:center; gap:14px; padding:17px 0; border-bottom:1px solid rgba(231,226,215,0.16); }
+  .voice-when{ font-family:'EB Garamond',serif; font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#C4522F; }
+  .voice-who{ font-family:'EB Garamond',serif; font-weight:600; font-size:15px; line-height:1.2; color:#F5F2EA; }
+  .voice-note{ margin-top:3px; font-size:10.5px; line-height:1.4; font-style:italic; color:#BFB6A3; }
+  .voice-play{
+    appearance:none; width:32px; height:32px; border-radius:50%; padding:0;
+    border:1px solid rgba(231,226,215,0.4); background:rgba(231,226,215,0.06);
+    color:#F5F2EA; cursor:pointer; font-size:9px; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+    transition:background 0.2s, border-color 0.2s;
+  }
+  .voice-play:hover{ background:rgba(196,82,47,0.4); border-color:#C4522F; }
+  .voice-play.is-playing{ background:#C4522F; border-color:#C4522F; }
+
   /* ---- interludes : near-wordless, no section numeral ---- */
   .interlude-cap{ position:absolute; left:44px; right:44px; bottom:34px; display:flex; justify-content:space-between; align-items:baseline; gap:16px; font-family:'EB Garamond',serif; font-size:7.5px; letter-spacing:0.13em; color:rgba(231,226,215,0.75); text-transform:uppercase; }
 
@@ -166,15 +181,19 @@
 <div id="stage">
 
 <!-- ============================================================
-  NOTA DE PRODUCCIÓN — doculibro / propuesta audiovisual.
+  NOTA DE PRODUCCIÓN — e-book audiovisual.
+  Estructura en cuatro movimientos, cada uno con una identidad
+  sensorial propia: I La palabra (voces) · II El encierro (espacio)
+  · III El cuerpo (rostros) · IV La alerta (el muro). No sigue los
+  seis capítulos del ensayo: se inspira en su argumento.
   Todas las fotografías son material de archivo o de prensa (no
   hay registro propio de los autores); se citan sin nombre en los
   carruseles (.frame .tag oculto) y con crédito genérico en los pies
   de página cuando corresponde.
   Las tres escenas "Interludio" son casi mudas a propósito: cortan
   el ritmo argumentativo con una sola imagen y mínimo texto.
-  Cada .audio-badge marca dónde va la capa de audio de declaraciones
-  — los <audio> están mudos (sin src) a la espera de la edición.
+  Los .audio-badge con src son reproducibles al hacer clic; los que
+  no tienen src marcan dónde irá una capa de audio aún por editar.
 ============================================================= -->
 
 <article class="book-page" data-index="0">
@@ -218,36 +237,33 @@
 
     <div style="position:absolute;left:44px;right:44px;top:70px;bottom:34px;display:flex;flex-direction:column">
       <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:#8E2B1C">Índice</div>
-      <h2 style="margin:16px 0 0;font-family:'EB Garamond',serif;font-weight:600;font-size:27px;line-height:1.24;letter-spacing:-0.005em;max-width:380px">Un recorrido en seis movimientos</h2>
+      <h2 style="margin:16px 0 0;font-family:'EB Garamond',serif;font-weight:600;font-size:27px;line-height:1.24;letter-spacing:-0.005em;max-width:380px">Cuatro movimientos</h2>
       <svg width="100%" height="7" viewBox="0 0 400 7" preserveAspectRatio="none" style="display:block;margin:16px 0 0" aria-hidden="true"><path d="M0 3.5 Q38 1.2 79 4 T158 2.3 T237 4.6 T316 1.8 T400 3.6" fill="none" stroke="#4A4A4A" stroke-width="1" opacity="0.35"/></svg>
 
-      <p style="margin:20px 0 0;font-size:13px;line-height:1.7;color:#4A4A4A;max-width:420px">El poder punitivo es la capacidad del Estado de perseguir, sancionar, privar de libertad y ejercer coerción sobre las personas — legítima solo cuando el derecho, el control institucional y las garantías de los DD.HH. la limitan. Este recorrido examina cómo se construyen las amenazas que vuelven aceptable su expansión, y qué papel juega la memoria en advertirlo.</p>
+      <p style="margin:20px 0 0;font-size:13px;line-height:1.7;color:#4A4A4A;max-width:430px">El poder punitivo es la capacidad del Estado de perseguir, sancionar, privar de libertad y ejercer coerción sobre las personas — legítima solo cuando el derecho, el control institucional y las garantías de los DD.HH. la limitan. Este recorrido no sigue los capítulos de un ensayo: sigue una secuencia. Una palabra autoriza, el encierro la materializa, un cuerpo la carga, la memoria la advierte.</p>
 
-      <div style="margin-top:26px;display:flex;flex-direction:column">
-        <div style="display:grid;grid-template-columns:26px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid rgba(26,26,26,0.14)">
+      <div style="margin-top:24px;display:flex;flex-direction:column">
+        <div style="display:grid;grid-template-columns:26px 1fr auto;gap:12px;align-items:baseline;padding:14px 0;border-bottom:1px solid rgba(26,26,26,0.14)">
           <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:14px;color:#8E2B1C">I</div>
-          <div><div style="font-family:'EB Garamond',serif;font-weight:600;font-size:14px">Sitios de memoria</div><div style="margin-top:3px;font-size:11.5px;line-height:1.5;color:#4A4A4A">Villa Grimaldi y el Museo de la Memoria: de dónde viene el «enemigo interno».</div></div>
+          <div><div style="font-family:'EB Garamond',serif;font-weight:600;font-size:15px">La palabra</div><div style="margin-top:3px;font-size:11.5px;line-height:1.5;color:#4A4A4A">«Guerra», dicha tres veces en medio siglo. De la Doctrina de Seguridad Nacional al miedo administrado.</div></div>
+          <div style="font-family:'EB Garamond',serif;font-size:7.5px;letter-spacing:0.14em;text-transform:uppercase;color:#8A8680">Voces</div>
         </div>
-        <div style="display:grid;grid-template-columns:26px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid rgba(26,26,26,0.14)">
+        <div style="display:grid;grid-template-columns:26px 1fr auto;gap:12px;align-items:baseline;padding:14px 0;border-bottom:1px solid rgba(26,26,26,0.14)">
           <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:14px;color:#8E2B1C">II</div>
-          <div><div style="font-family:'EB Garamond',serif;font-weight:600;font-size:14px">El giro discursivo</div><div style="margin-top:3px;font-size:11.5px;line-height:1.5;color:#4A4A4A">De la Doctrina de Seguridad Nacional al miedo administrado.</div></div>
+          <div><div style="font-family:'EB Garamond',serif;font-weight:600;font-size:15px">El encierro</div><div style="margin-top:3px;font-size:11.5px;line-height:1.5;color:#4A4A4A">Un metro cuadrado en Villa Grimaldi y 58.310 personas privadas de libertad hoy: la misma operación, dos escalas.</div></div>
+          <div style="font-family:'EB Garamond',serif;font-size:7.5px;letter-spacing:0.14em;text-transform:uppercase;color:#8A8680">Espacio</div>
         </div>
-        <div style="display:grid;grid-template-columns:26px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid rgba(26,26,26,0.14)">
+        <div style="display:grid;grid-template-columns:26px 1fr auto;gap:12px;align-items:baseline;padding:14px 0;border-bottom:1px solid rgba(26,26,26,0.14)">
           <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:14px;color:#8E2B1C">III</div>
-          <div><div style="font-family:'EB Garamond',serif;font-weight:600;font-size:14px">Las cifras del encierro</div><div style="margin-top:3px;font-size:11.5px;line-height:1.5;color:#4A4A4A">El costo material de esa expansión: +49,6 % de personas privadas de libertad en tres años.</div></div>
+          <div><div style="font-family:'EB Garamond',serif;font-weight:600;font-size:15px">El cuerpo</div><div style="margin-top:3px;font-size:11.5px;line-height:1.5;color:#4A4A4A">Sobre quién recae la sospecha: edad, clase, color y territorio. De la frontera moral a Las Malvinas, Guayaquil.</div></div>
+          <div style="font-family:'EB Garamond',serif;font-size:7.5px;letter-spacing:0.14em;text-transform:uppercase;color:#8A8680">Rostros</div>
         </div>
-        <div style="display:grid;grid-template-columns:26px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid rgba(26,26,26,0.14)">
+        <div style="display:grid;grid-template-columns:26px 1fr auto;gap:12px;align-items:baseline;padding:14px 0;border-bottom:1px solid rgba(26,26,26,0.14)">
           <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:14px;color:#8E2B1C">IV</div>
-          <div><div style="font-family:'EB Garamond',serif;font-weight:600;font-size:14px">El sujeto peligroso</div><div style="margin-top:3px;font-size:11.5px;line-height:1.5;color:#4A4A4A">Quién carga con la sospecha cuando la seguridad traza una frontera moral.</div></div>
+          <div><div style="font-family:'EB Garamond',serif;font-weight:600;font-size:15px">La alerta</div><div style="margin-top:3px;font-size:11.5px;line-height:1.5;color:#4A4A4A">Por qué los sitios de memoria no hablan solo del pasado. 1973—2026 en una línea.</div></div>
+          <div style="font-family:'EB Garamond',serif;font-size:7.5px;letter-spacing:0.14em;text-transform:uppercase;color:#8A8680">El muro</div>
         </div>
-        <div style="display:grid;grid-template-columns:26px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid rgba(26,26,26,0.14)">
-          <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:14px;color:#8E2B1C">V</div>
-          <div><div style="font-family:'EB Garamond',serif;font-weight:600;font-size:14px">Espejo regional</div><div style="margin-top:3px;font-size:11.5px;line-height:1.5;color:#4A4A4A">Ecuador: la misma lógica, otra escala.</div></div>
-        </div>
-        <div style="display:grid;grid-template-columns:26px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid rgba(26,26,26,0.14)">
-          <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:14px;color:#8E2B1C">VI</div>
-          <div><div style="font-family:'EB Garamond',serif;font-weight:600;font-size:14px">Cronología</div><div style="margin-top:3px;font-size:11.5px;line-height:1.5;color:#4A4A4A">1973—2026, Chile y Ecuador en una sola línea de tiempo.</div></div>
-        </div>
+        <div style="margin-top:18px;font-size:10.5px;line-height:1.55;font-style:italic;color:#6B6864;max-width:420px">Entre movimiento y movimiento hay tres interludios sin numerar: una sola imagen, casi sin texto.</div>
       </div>
     </div>
 
@@ -257,152 +273,68 @@
 </article>
 
 <article class="book-page" data-index="2">
-<section class="page" data-screen-label="03 Apertura" style="position:relative;overflow:hidden;background:#F7F4EC;color:#1A1A1A;font-family:'Crimson Text',Georgia,serif">
-    <div style="position:absolute;top:0;left:0;right:0;height:172px;filter:url(#torn2);overflow:hidden">
-      <img src="img/la-moneda.jpg" alt="Palacio de La Moneda, Santiago" style="width:104%;height:104%;margin:-2%;object-fit:cover;object-position:50% 32%;display:block;filter:grayscale(1) contrast(1.1) brightness(0.82)">
-    </div>
-    <div style="position:absolute;top:0;left:0;right:0;height:172px;background:linear-gradient(180deg,rgba(22,19,15,0.4) 0%,rgba(22,19,15,0.05) 55%,rgba(231,226,215,0.94) 98%);pointer-events:none"></div>
-    <div class="audio-badge"><span class="eq"><span></span><span></span><span></span><span></span></span><span class="alabel">Audio · cadena nacional 2019</span></div>
-    <audio class="page-audio" src="audio/pinera-2019.mp3" data-role="Declaración presidencial · cadena nacional, Sebastián Piñera, 20.10.2019" preload="none" hidden></audio>
-    <div style="position:absolute;left:44px;top:178px;font-family:'EB Garamond',serif;font-size:7px;letter-spacing:0.12em;text-transform:uppercase;color:#6B6864">Fig. 01 — Palacio de La Moneda, sede del gobierno de Chile</div>
+<section class="page" data-screen-label="03 I · La palabra" style="position:relative;overflow:hidden;background:#1A1A1A;color:#F7F4EC;font-family:'Crimson Text',Georgia,serif">
+    <img src="img/la-moneda.jpg" alt="" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 34%;display:block;filter:grayscale(1) contrast(1.2) brightness(0.34)">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,26,26,0.42) 0%,rgba(26,26,26,0.9) 42%,#1A1A1A 72%);pointer-events:none"></div>
 
-    <svg width="130" height="130" viewBox="0 0 100 100" style="position:absolute;right:6px;top:208px;opacity:0.14;pointer-events:none" aria-hidden="true">
-      <g stroke="#8E2B1C" stroke-width="0.6">
-        <line x1="50" y1="50" x2="50" y2="2"/>
-        <line x1="50" y1="50" x2="86" y2="14"/>
-        <line x1="50" y1="50" x2="98" y2="50"/>
-        <line x1="50" y1="50" x2="86" y2="86"/>
-        <line x1="50" y1="50" x2="50" y2="98"/>
-        <line x1="50" y1="50" x2="14" y2="86"/>
-        <line x1="50" y1="50" x2="2" y2="50"/>
-        <line x1="50" y1="50" x2="14" y2="14"/>
+    <svg width="100%" height="60" viewBox="0 0 400 60" preserveAspectRatio="none" style="position:absolute;left:0;right:0;bottom:54px;opacity:0.16;pointer-events:none" aria-hidden="true">
+      <g stroke="#C4522F" stroke-width="2" stroke-linecap="round">
+        <line x1="10" y1="30" x2="10" y2="30"/><line x1="26" y1="22" x2="26" y2="38"/><line x1="42" y1="10" x2="42" y2="50"/>
+        <line x1="58" y1="18" x2="58" y2="42"/><line x1="74" y1="27" x2="74" y2="33"/><line x1="90" y1="14" x2="90" y2="46"/>
+        <line x1="106" y1="24" x2="106" y2="36"/><line x1="122" y1="6" x2="122" y2="54"/><line x1="138" y1="20" x2="138" y2="40"/>
+        <line x1="154" y1="28" x2="154" y2="32"/><line x1="170" y1="12" x2="170" y2="48"/><line x1="186" y1="21" x2="186" y2="39"/>
+        <line x1="202" y1="26" x2="202" y2="34"/><line x1="218" y1="8" x2="218" y2="52"/><line x1="234" y1="19" x2="234" y2="41"/>
+        <line x1="250" y1="25" x2="250" y2="35"/><line x1="266" y1="15" x2="266" y2="45"/><line x1="282" y1="23" x2="282" y2="37"/>
+        <line x1="298" y1="29" x2="298" y2="31"/><line x1="314" y1="11" x2="314" y2="49"/><line x1="330" y1="22" x2="330" y2="38"/>
+        <line x1="346" y1="27" x2="346" y2="33"/><line x1="362" y1="17" x2="362" y2="43"/><line x1="378" y1="24" x2="378" y2="36"/>
       </g>
-      <circle cx="50" cy="50" r="3" fill="#8E2B1C"/>
     </svg>
-    <div style="position:absolute;left:44px;right:44px;top:196px;bottom:126px;display:flex;flex-direction:column;justify-content:flex-start">
-    <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:#8E2B1C">Apertura</div>
-    <svg width="100%" height="7" viewBox="0 0 400 7" preserveAspectRatio="none" style="display:block;margin:10px 0 0" aria-hidden="true"><path d="M0 3.5 Q38 1.2 79 4 T158 2.3 T237 4.6 T316 1.8 T400 3.6" fill="none" stroke="#4A4A4A" stroke-width="1" opacity="0.25"/></svg>
 
-    <div style="margin-top:18px;max-width:420px">
-      <p style="margin:0;font-family:'EB Garamond',serif;font-style:italic;font-weight:600;font-size:25px;line-height:1.35;letter-spacing:0;text-wrap:pretty">«Estamos en guerra contra un enemigo poderoso, implacable.»</p>
-      <div style="margin-top:14px;display:flex;gap:12px;align-items:baseline">
-        <div style="width:28px;height:1px;background:#8E2B1C;transform:translateY(-4px)"></div>
-        <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.08em;line-height:1.6;color:#4A4A4A;text-transform:uppercase">Sebastián Piñera · Presidente de Chile, 20.10.2019</div>
+    <div style="position:absolute;left:44px;right:44px;top:56px;bottom:34px;display:flex;flex-direction:column">
+      <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:#C4522F">I · La palabra</div>
+      <h2 style="margin:14px 0 0;font-family:'EB Garamond',serif;font-weight:600;font-size:27px;line-height:1.24;letter-spacing:-0.005em">Una palabra que vuelve</h2>
+      <svg width="100%" height="7" viewBox="0 0 400 7" preserveAspectRatio="none" style="display:block;margin:14px 0 0" aria-hidden="true"><path d="M0 3.5 Q38 1.2 79 4 T158 2.3 T237 4.6 T316 1.8 T400 3.6" fill="none" stroke="#BFB6A3" stroke-width="1" opacity="0.4"/></svg>
+
+      <p style="margin:18px 0 0;font-size:13px;line-height:1.7;color:#BFB6A3;max-width:440px">Medio siglo separa estas tres declaraciones. Las tres nombran el orden interno con el mismo sustantivo, y ese sustantivo no describe: autoriza. Declarar la guerra hacia adentro convierte a una parte de la población en adversario, y al adversario no se le deben las mismas garantías.</p>
+
+      <div style="margin:18px 0 6px;font-family:'EB Garamond',serif;font-style:italic;font-weight:700;font-size:92px;line-height:1;letter-spacing:-0.02em;color:#F5F2EA">«guerra»</div>
+
+      <div style="margin-top:16px">
+        <div class="voice">
+          <div class="voice-when">Dictadura</div>
+          <div><div class="voice-who">Augusto Pinochet</div><div class="voice-note">Jefe de Estado, 1973–1990</div></div>
+          <button class="voice-play" data-audio="aud-pinochet" aria-label="Reproducir declaración de Pinochet">▶</button>
+        </div>
+        <div class="voice">
+          <div class="voice-when">20.10.2019</div>
+          <div><div class="voice-who">Sebastián Piñera</div><div class="voice-note">«Estamos en guerra contra un enemigo poderoso, implacable.»</div></div>
+          <button class="voice-play" data-audio="aud-pinera" aria-label="Reproducir declaración de Piñera">▶</button>
+        </div>
+        <div class="voice" style="border-bottom:none">
+          <div class="voice-when">2026</div>
+          <div><div class="voice-who">José Antonio Kast</div><div class="voice-note">Chile</div></div>
+          <button class="voice-play" data-audio="aud-kast" aria-label="Reproducir declaración de Kast">▶</button>
+        </div>
+      </div>
+
+      <audio class="page-audio" id="aud-pinochet" src="audio/pinochet-dictadura.mp3" data-role="Augusto Pinochet, declaración durante la dictadura" preload="none" hidden></audio>
+      <audio class="page-audio" id="aud-pinera" src="audio/pinera-2019.mp3" data-role="Sebastián Piñera, cadena nacional, 20.10.2019" preload="none" hidden></audio>
+      <audio class="page-audio" id="aud-kast" src="audio/kast-2026.mp3" data-role="José Antonio Kast, declaración 2026" preload="none" hidden></audio>
+
+      <div style="margin-top:14px;font-size:10.5px;line-height:1.5;font-style:italic;color:#8A8680">Grabaciones de archivo. Pulsa cada círculo para escuchar.</div>
+
+      <div style="margin:auto 0 22px;border-left:2px solid #C4522F;padding:2px 0 2px 16px;max-width:440px">
+        <p style="margin:0;font-family:'EB Garamond',serif;font-style:italic;font-weight:600;font-size:16px;line-height:1.45;letter-spacing:0;color:#F5F2EA;text-wrap:pretty">El contexto institucional cambió por completo. El mecanismo, no: nombrar una amenaza para volver aceptable la expansión del poder punitivo del Estado.</p>
       </div>
     </div>
 
-    <p style="margin:14px 0 0;max-width:440px;font-size:13px;line-height:1.6;color:#4A4A4A;text-wrap:pretty">La frase no describe un hecho: lo instituye — reordena de inmediato quién merece protección y quién puede ser tratado como amenaza. Pregunta que recorre esta propuesta: <em>¿de qué manera los discursos del miedo justifican la expansión del poder punitivo del Estado?</em></p>
-
-    <div style="margin-top:14px;border-left:2px solid #8E2B1C;padding:2px 0 2px 16px;max-width:440px">
-      <p style="margin:0;font-family:'EB Garamond',serif;font-style:italic;font-weight:600;font-size:17px;line-height:1.4;letter-spacing:0;color:#8E2B1C;text-wrap:pretty">Aunque el contexto institucional actual es profundamente distinto al de la dictadura, persisten continuidades en los mecanismos discursivos que construyen amenazas para justificar mayor control estatal — en Chile y, con otra intensidad, en Ecuador.</p>
-    </div>
-    </div>
-
-    <div class="strip bottom">
-      <div class="strip-track">
-        <div class="frame wide"><img src="img/chile-carabineros-disparo.jpg" alt="Fuerzas especiales de Carabineros, estallido social, Santiago" style="object-position:30% 45%"><div class="grain"></div><div class="num">05</div><div class="tag">Carabineros, estallido 2019</div></div>
-        <div class="frame"><img src="img/chile-noche-disturbios.jpg" alt="Persona con bicicleta tras una noche de disturbios" style="object-position:50% 55%"><div class="grain"></div><div class="num">06</div><div class="tag">Después, de noche</div></div>
-        <div class="frame"><img src="img/chile-carabineros-disparo.jpg" alt="Fuerzas especiales de Carabineros, estallido social, Santiago" style="object-position:70% 60%"><div class="grain"></div><div class="num">05</div><div class="tag">Estallido, detalle</div></div>
-        <div class="frame wide"><img src="img/chile-noche-disturbios.jpg" alt="Persona con bicicleta tras una noche de disturbios" style="object-position:35% 45%"><div class="grain"></div><div class="num">06</div><div class="tag">Calle, escombros</div></div>
-        <div class="frame wide"><img src="img/chile-carabineros-disparo.jpg" alt="Fuerzas especiales de Carabineros, estallido social, Santiago" style="object-position:30% 45%"><div class="grain"></div><div class="num">05</div><div class="tag">Carabineros, estallido 2019</div></div>
-        <div class="frame"><img src="img/chile-noche-disturbios.jpg" alt="Persona con bicicleta tras una noche de disturbios" style="object-position:50% 55%"><div class="grain"></div><div class="num">06</div><div class="tag">Después, de noche</div></div>
-        <div class="frame"><img src="img/chile-carabineros-disparo.jpg" alt="Fuerzas especiales de Carabineros, estallido social, Santiago" style="object-position:70% 60%"><div class="grain"></div><div class="num">05</div><div class="tag">Estallido, detalle</div></div>
-        <div class="frame wide"><img src="img/chile-noche-disturbios.jpg" alt="Persona con bicicleta tras una noche de disturbios" style="object-position:35% 45%"><div class="grain"></div><div class="num">06</div><div class="tag">Calle, escombros</div></div>
-      </div>
-    </div>
-    <div style="position:absolute;left:44px;right:44px;bottom:122px;display:flex;justify-content:space-between;font-family:'EB Garamond',serif;font-size:8px;letter-spacing:0.16em;color:#6B6864;text-transform:uppercase"><span>El nuevo enemigo interno</span><span>03</span></div>
-    <div style="position:absolute;z-index:3;left:44px;bottom:134px;font-family:'EB Garamond',serif;font-size:6.6px;letter-spacing:0.08em;text-transform:uppercase;font-style:italic;color:#6B6864">Fotografías de prensa: fuente no identificada</div>
-    <div style="position:absolute;inset:0;background:#fff;filter:url(#grainf);opacity:0.22;mix-blend-mode:multiply;pointer-events:none"></div>
+    <div style="position:absolute;left:44px;right:44px;bottom:14px;display:flex;justify-content:space-between;font-family:'EB Garamond',serif;font-size:8px;letter-spacing:0.16em;color:#8A8680;text-transform:uppercase"><span>Tres declaraciones · audio de archivo</span><span>03</span></div>
+    <div style="position:absolute;inset:0;background:#fff;filter:url(#grainf);opacity:0.16;mix-blend-mode:screen;pointer-events:none"></div>
   </section>
 </article>
 
 <article class="book-page" data-index="3">
-<section class="page" data-screen-label="04 Interludio — El muro" style="position:relative;overflow:hidden;background:#1A1A1A;color:#F7F4EC;font-family:'Crimson Text',Georgia,serif">
-    <img src="img/villa-grimaldi.jpg" alt="Retratos de detenidos desaparecidos dispuestos en el pasto, Parque por la Paz Villa Grimaldi" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;display:block;filter:grayscale(1) contrast(1.15) brightness(0.68)">
-    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,19,15,0.1) 0%,rgba(22,19,15,0.02) 38%,rgba(22,19,15,0.88) 100%)"></div>
-    <div class="audio-badge"><span class="eq"><span></span><span></span><span></span><span></span></span><span class="alabel">Ambiente · sitio de memoria</span></div>
-    <audio class="page-audio" data-role="Sonido ambiente, Parque por la Paz Villa Grimaldi — pasos, aire, sin música" preload="none" loop hidden></audio>
-
-    <div style="position:absolute;left:44px;right:44px;bottom:72px">
-      <p style="margin:0;font-family:'EB Garamond',serif;font-style:italic;font-weight:600;font-size:25px;line-height:1.35;letter-spacing:0;color:#F5F2EA;text-wrap:pretty">Cada fotografía<br>devuelve un nombre.</p>
-    </div>
-    <div class="interlude-cap"><span>Villa Grimaldi · retratos dispuestos en el pasto</span><span>04</span></div>
-    <div style="position:absolute;inset:0;background:#fff;filter:url(#grainf);opacity:0.19;mix-blend-mode:screen;pointer-events:none"></div>
-  </section>
-</article>
-
-<article class="book-page" data-index="4">
-<section class="page" data-screen-label="05 Villa Grimaldi y el Museo de la Memoria" style="position:relative;overflow:hidden;background:#F7F4EC;color:#1A1A1A;font-family:'Crimson Text',Georgia,serif;padding:0 44px">
-    <div class="strip top">
-      <div class="strip-track">
-        <div class="frame wide"><img src="img/casa-corvi.jpg" alt="Reconstrucción de una Casa CORVI, Villa Grimaldi" style="object-position:50% 35%"><div class="grain"></div><div class="num">01</div><div class="tag">Casa CORVI, reconstrucción</div></div>
-        <div class="frame"><img src="img/museo-edificio.jpg" alt="Museo de la Memoria y los Derechos Humanos, fachada" style="object-position:50% 55%"><div class="grain"></div><div class="num">02</div><div class="tag">MMDH, fachada</div></div>
-        <div class="frame"><img src="img/casa-corvi.jpg" alt="Reconstrucción de una Casa CORVI, Villa Grimaldi" style="object-position:65% 40%"><div class="grain"></div><div class="num">01</div><div class="tag">Casa CORVI, interior</div></div>
-        <div class="frame wide"><img src="img/museo-edificio.jpg" alt="Museo de la Memoria y los Derechos Humanos, fachada" style="object-position:30% 50%"><div class="grain"></div><div class="num">02</div><div class="tag">MMDH, entrada</div></div>
-        <div class="frame wide"><img src="img/casa-corvi.jpg" alt="Reconstrucción de una Casa CORVI, Villa Grimaldi" style="object-position:50% 35%"><div class="grain"></div><div class="num">01</div><div class="tag">Casa CORVI, reconstrucción</div></div>
-        <div class="frame"><img src="img/museo-edificio.jpg" alt="Museo de la Memoria y los Derechos Humanos, fachada" style="object-position:50% 55%"><div class="grain"></div><div class="num">02</div><div class="tag">MMDH, fachada</div></div>
-        <div class="frame"><img src="img/casa-corvi.jpg" alt="Reconstrucción de una Casa CORVI, Villa Grimaldi" style="object-position:65% 40%"><div class="grain"></div><div class="num">01</div><div class="tag">Casa CORVI, interior</div></div>
-        <div class="frame wide"><img src="img/museo-edificio.jpg" alt="Museo de la Memoria y los Derechos Humanos, fachada" style="object-position:30% 50%"><div class="grain"></div><div class="num">02</div><div class="tag">MMDH, entrada</div></div>
-      </div>
-      <div class="audio-badge"><span class="eq"><span></span><span></span><span></span><span></span></span><span class="alabel">Audio · Pinochet, dictadura</span></div>
-    </div>
-    <audio class="page-audio" src="audio/pinochet-dictadura.mp3" data-role="Augusto Pinochet, declaración durante la dictadura — «guerra»" preload="none" hidden></audio>
-
-    <div style="position:absolute;left:44px;right:44px;top:176px;bottom:150px;display:flex;flex-direction:column;justify-content:flex-start">
-    <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:#8E2B1C">I · Sitios de memoria</div>
-    <h2 style="margin:16px 0 0;font-family:'EB Garamond',serif;font-weight:600;font-size:27px;line-height:1.24;letter-spacing:-0.005em">Villa Grimaldi y el Museo de la Memoria</h2>
-    <svg width="100%" height="7" viewBox="0 0 400 7" preserveAspectRatio="none" style="display:block;margin:16px 0 0" aria-hidden="true"><path d="M0 3.5 Q38 1.2 79 4 T158 2.3 T237 4.6 T316 1.8 T400 3.6" fill="none" stroke="#4A4A4A" stroke-width="1" opacity="0.25"/></svg>
-
-    <p style="margin:22px 0 0;font-size:13px;line-height:1.75;color:#4A4A4A;max-width:460px;text-align:justify;hyphens:auto">La memoria colectiva no es un depósito estático: se reconstruye desde marcos sociales compartidos (Halbwachs, 2004). En Villa Grimaldi, las Casas CORVI —un metro cuadrado para cuatro o cinco personas—, La Torre y las «conejeras» documentan un disciplinamiento que buscaba despojar a los detenidos de su condición de sujetos de derecho (Corp. Parque por la Paz Villa Grimaldi, 2017).</p>
-
-    <div style="margin-top:26px;border-left:2px solid #8E2B1C;padding:4px 0 4px 18px;max-width:420px">
-      <p style="margin:0;font-family:'EB Garamond',serif;font-style:italic;font-weight:600;font-size:17px;line-height:1.5;letter-spacing:0;color:#8E2B1C;text-wrap:pretty">Los espacios vacíos del muro no cierran una historia: mantienen abierta la pregunta por verdad, justicia y reparación.</p>
-    </div>
-    </div>
-
-    <div class="strip bottom">
-      <div class="strip-track">
-        <div class="frame"><img src="img/archivo01.jpg" alt="Museo de la Memoria y los Derechos Humanos, edificio" style="object-position:50% 30%"><div class="grain"></div><div class="num">05</div><div class="tag">MMDH, arquitectura</div></div>
-        <div class="frame wide"><img src="img/muro-retratos.jpg" alt="Muro de retratos, Museo de la Memoria y los Derechos Humanos" style="object-position:50% 38%"><div class="grain"></div><div class="num">06</div><div class="tag">Muro de retratos</div></div>
-        <div class="frame"><img src="img/archivo01.jpg" alt="Museo de la Memoria y los Derechos Humanos, edificio" style="object-position:70% 30%"><div class="grain"></div><div class="num">05</div><div class="tag">MMDH, fachada verde</div></div>
-        <div class="frame"><img src="img/muro-retratos.jpg" alt="Muro de retratos, Museo de la Memoria y los Derechos Humanos" style="object-position:30% 42%"><div class="grain"></div><div class="num">06</div><div class="tag">Retratos, detalle</div></div>
-        <div class="frame"><img src="img/archivo01.jpg" alt="Museo de la Memoria y los Derechos Humanos, edificio" style="object-position:50% 30%"><div class="grain"></div><div class="num">05</div><div class="tag">MMDH, arquitectura</div></div>
-        <div class="frame wide"><img src="img/muro-retratos.jpg" alt="Muro de retratos, Museo de la Memoria y los Derechos Humanos" style="object-position:50% 38%"><div class="grain"></div><div class="num">06</div><div class="tag">Muro de retratos</div></div>
-        <div class="frame"><img src="img/archivo01.jpg" alt="Museo de la Memoria y los Derechos Humanos, edificio" style="object-position:70% 30%"><div class="grain"></div><div class="num">05</div><div class="tag">MMDH, fachada verde</div></div>
-        <div class="frame"><img src="img/muro-retratos.jpg" alt="Muro de retratos, Museo de la Memoria y los Derechos Humanos" style="object-position:30% 42%"><div class="grain"></div><div class="num">06</div><div class="tag">Retratos, detalle</div></div>
-      </div>
-    </div>
-    <div style="position:absolute;left:44px;right:44px;bottom:122px;display:flex;justify-content:space-between;font-family:'EB Garamond',serif;font-size:8px;letter-spacing:0.16em;color:#6B6864;text-transform:uppercase"><span>Fuentes: Halbwachs, 2004 · Corp. Parque por la Paz Villa Grimaldi, 2017</span><span>05</span></div>
-    <div style="position:absolute;inset:0;background:#fff;filter:url(#grainf);opacity:0.22;mix-blend-mode:multiply;pointer-events:none"></div>
-  </section>
-</article>
-
-<article class="book-page" data-index="5">
-<section class="page" data-screen-label="06 Interludio — La Torre" style="position:relative;overflow:hidden;background:#1A1A1A;color:#F7F4EC;font-family:'Crimson Text',Georgia,serif">
-    <div style="position:absolute;inset:0;display:flex;flex-direction:column">
-      <div style="flex:1;position:relative;overflow:hidden;background:#1A1A1A;border-bottom:1px solid rgba(231,226,215,0.18)">
-        <img src="img/torre01.jpg" alt="Fotografía de archivo y plano de La Torre, Villa Grimaldi" style="width:100%;height:100%;object-fit:contain;display:block;filter:grayscale(0.3) contrast(1.05) brightness(0.96) sepia(0.15)">
-        <div style="position:absolute;left:14px;top:10px;font-family:'EB Garamond',serif;font-size:7px;letter-spacing:0.14em;text-transform:uppercase;color:#BFB6A3">Entonces · fotografía y plano de archivo</div>
-      </div>
-      <div style="flex:1;position:relative;overflow:hidden">
-        <img src="img/desde-lo-rojo.jpg" alt="La Torre reconstruida, Parque por la Paz Villa Grimaldi" style="width:100%;height:100%;object-fit:cover;object-position:50% 20%;display:block;filter:grayscale(1) contrast(1.1) brightness(0.78)">
-        <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(15,13,10,0.6) 0%,rgba(15,13,10,0) 45%)"></div>
-        <div class="interlude-cap" style="bottom:12px"><span>Ahora · 2026</span><span>06</span></div>
-      </div>
-    </div>
-    <div class="audio-badge"><span class="eq"><span></span><span></span><span></span><span></span></span><span class="alabel">Audio · entrevista, Contreras</span></div>
-    <audio class="page-audio" src="audio/contreras-entrevista.mp3" data-role="Manuel Contreras, exjefe de la DINA, entrevista — «guerra»" preload="none" hidden></audio>
-    <div style="position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);display:flex;justify-content:center;pointer-events:none">
-      <div style="background:#1A1A1A;padding:8px 22px;box-shadow:0 0 24px 14px #1A1A1A">
-        <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:20px;letter-spacing:0.09em;text-transform:uppercase;color:#F5F2EA;white-space:nowrap">La Torre</div>
-      </div>
-    </div>
-    <div style="position:absolute;inset:0;background:#fff;filter:url(#grainf);opacity:0.18;mix-blend-mode:screen;pointer-events:none"></div>
-  </section>
-</article>
-
-<article class="book-page" data-index="6">
-<section class="page" data-screen-label="07 El giro discursivo" style="position:relative;overflow:hidden;background:#F7F4EC;color:#1A1A1A;font-family:'Crimson Text',Georgia,serif;padding:0 44px">
+<section class="page" data-screen-label="04 I · El giro discursivo" style="position:relative;overflow:hidden;background:#F7F4EC;color:#1A1A1A;font-family:'Crimson Text',Georgia,serif;padding:0 44px">
     <div class="strip top">
       <div class="strip-track">
         <div class="frame"><img src="img/archivo01.jpg" alt="Museo de la Memoria y los Derechos Humanos, edificio" style="object-position:50% 35%"><div class="grain"></div><div class="num">01</div><div class="tag">MMDH, arquitectura</div></div>
@@ -419,7 +351,7 @@
     <audio class="page-audio" data-role="Intervención en el Senado, Rodrigo Galilea, 18.07.2024" preload="none" loop hidden></audio>
 
     <div style="position:absolute;left:44px;right:44px;top:176px;bottom:70px;display:flex;flex-direction:column;justify-content:flex-start">
-    <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:#8E2B1C">II · El giro discursivo</div>
+    <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:#8E2B1C">I · La palabra</div>
     <h2 style="margin:16px 0 0;font-family:'EB Garamond',serif;font-weight:600;font-size:27px;line-height:1.26;letter-spacing:-0.005em">De la Doctrina de Seguridad Nacional al miedo administrado</h2>
     <svg width="100%" height="7" viewBox="0 0 400 7" preserveAspectRatio="none" style="display:block;margin:16px 0 0" aria-hidden="true"><path d="M0 3.5 Q38 1.2 79 4 T158 2.3 T237 4.6 T316 1.8 T400 3.6" fill="none" stroke="#4A4A4A" stroke-width="1" opacity="0.25"/></svg>
 
@@ -437,13 +369,110 @@
       <path d="M82 66 L72 62 M82 66 L80 77" fill="none" stroke="#1A1A1A" stroke-width="0.7"/>
     </svg>
 
-    <div style="position:absolute;left:44px;right:44px;bottom:34px;display:flex;justify-content:space-between;font-family:'EB Garamond',serif;font-size:8px;letter-spacing:0.16em;color:#6B6864;text-transform:uppercase"><span>Fuentes: Zaffaroni, 2007 · Navarrete Yáñez, 2019 · Senado de Chile, 2024</span><span>07</span></div>
+    <div style="position:absolute;left:44px;right:44px;bottom:34px;display:flex;justify-content:space-between;font-family:'EB Garamond',serif;font-size:8px;letter-spacing:0.16em;color:#6B6864;text-transform:uppercase"><span>Fuentes: Zaffaroni, 2007 · Navarrete Yáñez, 2019 · Senado de Chile, 2024</span><span>04</span></div>
     <div style="position:absolute;inset:0;background:#fff;filter:url(#grainf);opacity:0.22;mix-blend-mode:multiply;pointer-events:none"></div>
   </section>
 </article>
 
+<article class="book-page" data-index="4">
+<section class="page" data-screen-label="05 Interludio — El muro" style="position:relative;overflow:hidden;background:#1A1A1A;color:#F7F4EC;font-family:'Crimson Text',Georgia,serif">
+    <img src="img/villa-grimaldi.jpg" alt="Retratos de detenidos desaparecidos dispuestos en el pasto, Parque por la Paz Villa Grimaldi" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;display:block;filter:grayscale(1) contrast(1.15) brightness(0.68)">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,19,15,0.1) 0%,rgba(22,19,15,0.02) 38%,rgba(22,19,15,0.88) 100%)"></div>
+    <div class="audio-badge"><span class="eq"><span></span><span></span><span></span><span></span></span><span class="alabel">Ambiente · sitio de memoria</span></div>
+    <audio class="page-audio" data-role="Sonido ambiente, Parque por la Paz Villa Grimaldi — pasos, aire, sin música" preload="none" loop hidden></audio>
+
+    <div style="position:absolute;left:44px;right:44px;bottom:72px">
+      <p style="margin:0;font-family:'EB Garamond',serif;font-style:italic;font-weight:600;font-size:25px;line-height:1.35;letter-spacing:0;color:#F5F2EA;text-wrap:pretty">Cada fotografía<br>devuelve un nombre.</p>
+    </div>
+    <div class="interlude-cap"><span>Villa Grimaldi · retratos dispuestos en el pasto</span><span>05</span></div>
+    <div style="position:absolute;inset:0;background:#fff;filter:url(#grainf);opacity:0.19;mix-blend-mode:screen;pointer-events:none"></div>
+  </section>
+</article>
+
+<article class="book-page" data-index="5">
+<section class="page" data-screen-label="06 II · Un metro cuadrado" style="position:relative;overflow:hidden;background:#F7F4EC;color:#1A1A1A;font-family:'Crimson Text',Georgia,serif;padding:0 44px">
+    <div class="strip top">
+      <div class="strip-track">
+        <div class="frame wide"><img src="img/casa-corvi.jpg" alt="Reconstrucción de una Casa CORVI, Villa Grimaldi" style="object-position:50% 35%"><div class="grain"></div><div class="num">01</div><div class="tag">Casa CORVI, reconstrucción</div></div>
+        <div class="frame"><img src="img/museo-edificio.jpg" alt="Museo de la Memoria y los Derechos Humanos, fachada" style="object-position:50% 55%"><div class="grain"></div><div class="num">02</div><div class="tag">MMDH, fachada</div></div>
+        <div class="frame"><img src="img/casa-corvi.jpg" alt="Reconstrucción de una Casa CORVI, Villa Grimaldi" style="object-position:65% 40%"><div class="grain"></div><div class="num">01</div><div class="tag">Casa CORVI, interior</div></div>
+        <div class="frame wide"><img src="img/museo-edificio.jpg" alt="Museo de la Memoria y los Derechos Humanos, fachada" style="object-position:30% 50%"><div class="grain"></div><div class="num">02</div><div class="tag">MMDH, entrada</div></div>
+        <div class="frame wide"><img src="img/casa-corvi.jpg" alt="Reconstrucción de una Casa CORVI, Villa Grimaldi" style="object-position:50% 35%"><div class="grain"></div><div class="num">01</div><div class="tag">Casa CORVI, reconstrucción</div></div>
+        <div class="frame"><img src="img/museo-edificio.jpg" alt="Museo de la Memoria y los Derechos Humanos, fachada" style="object-position:50% 55%"><div class="grain"></div><div class="num">02</div><div class="tag">MMDH, fachada</div></div>
+        <div class="frame"><img src="img/casa-corvi.jpg" alt="Reconstrucción de una Casa CORVI, Villa Grimaldi" style="object-position:65% 40%"><div class="grain"></div><div class="num">01</div><div class="tag">Casa CORVI, interior</div></div>
+        <div class="frame wide"><img src="img/museo-edificio.jpg" alt="Museo de la Memoria y los Derechos Humanos, fachada" style="object-position:30% 50%"><div class="grain"></div><div class="num">02</div><div class="tag">MMDH, entrada</div></div>
+      </div>
+      <div class="audio-badge"><span class="eq"><span></span><span></span><span></span><span></span></span><span class="alabel">Ambiente · recorrido en sitio</span></div>
+    </div>
+    <audio class="page-audio" data-role="Sonido ambiente del recorrido por las Casas CORVI, Villa Grimaldi" preload="none" loop hidden></audio>
+
+    <div style="position:absolute;left:44px;right:44px;top:176px;bottom:150px;display:flex;flex-direction:column;justify-content:flex-start">
+    <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:#8E2B1C">II · El encierro</div>
+    <h2 style="margin:16px 0 0;font-family:'EB Garamond',serif;font-weight:600;font-size:27px;line-height:1.24;letter-spacing:-0.005em">Un metro cuadrado</h2>
+    <svg width="100%" height="7" viewBox="0 0 400 7" preserveAspectRatio="none" style="display:block;margin:16px 0 0" aria-hidden="true"><path d="M0 3.5 Q38 1.2 79 4 T158 2.3 T237 4.6 T316 1.8 T400 3.6" fill="none" stroke="#4A4A4A" stroke-width="1" opacity="0.25"/></svg>
+
+    <p style="margin:22px 0 0;font-size:13px;line-height:1.75;color:#4A4A4A;max-width:460px;text-align:justify;hyphens:auto">Declarada la guerra, alguien tiene que ocupar el lugar del enemigo. En Villa Grimaldi ese lugar tuvo medidas exactas: las Casas CORVI —un metro cuadrado para cuatro o cinco personas—, La Torre y las «conejeras», compartimientos sin luz ni ventilación a los que se entraba en cuclillas (Corp. Parque por la Paz Villa Grimaldi, 2017). No buscaban solo neutralizar al opositor: buscaban despojarlo de su condición de sujeto de derecho.</p>
+
+    <div style="margin-top:22px;display:grid;grid-template-columns:auto 1fr;gap:0 16px;align-items:center;max-width:440px">
+      <svg width="72" height="72" viewBox="0 0 72 72" aria-hidden="true">
+        <rect x="1" y="1" width="70" height="70" fill="none" stroke="#8E2B1C" stroke-width="1"/>
+        <circle cx="24" cy="26" r="7" fill="none" stroke="#8E2B1C" stroke-width="0.9"/>
+        <circle cx="46" cy="26" r="7" fill="none" stroke="#8E2B1C" stroke-width="0.9"/>
+        <circle cx="24" cy="47" r="7" fill="none" stroke="#8E2B1C" stroke-width="0.9"/>
+        <circle cx="46" cy="47" r="7" fill="none" stroke="#8E2B1C" stroke-width="0.9"/>
+        <circle cx="35" cy="36" r="7" fill="none" stroke="#8E2B1C" stroke-width="0.9"/>
+      </svg>
+      <div style="font-size:11.5px;line-height:1.55;color:#4A4A4A">Casa CORVI: <strong style="font-weight:600">1 m²</strong> para cuatro o cinco personas. Se turnaban para sentarse.</div>
+    </div>
+
+    <div style="margin-top:22px;border-left:2px solid #8E2B1C;padding:4px 0 4px 18px;max-width:420px">
+      <p style="margin:0;font-family:'EB Garamond',serif;font-style:italic;font-weight:600;font-size:17px;line-height:1.5;letter-spacing:0;color:#8E2B1C;text-wrap:pretty">El encierro no fue una consecuencia del discurso: fue su forma construida.</p>
+    </div>
+    </div>
+
+    <div class="strip bottom">
+      <div class="strip-track">
+        <div class="frame"><img src="img/archivo01.jpg" alt="Museo de la Memoria y los Derechos Humanos, edificio" style="object-position:50% 30%"><div class="grain"></div><div class="num">05</div><div class="tag">MMDH, arquitectura</div></div>
+        <div class="frame wide"><img src="img/muro-retratos.jpg" alt="Muro de retratos, Museo de la Memoria y los Derechos Humanos" style="object-position:50% 38%"><div class="grain"></div><div class="num">06</div><div class="tag">Muro de retratos</div></div>
+        <div class="frame"><img src="img/archivo01.jpg" alt="Museo de la Memoria y los Derechos Humanos, edificio" style="object-position:70% 30%"><div class="grain"></div><div class="num">05</div><div class="tag">MMDH, fachada verde</div></div>
+        <div class="frame"><img src="img/muro-retratos.jpg" alt="Muro de retratos, Museo de la Memoria y los Derechos Humanos" style="object-position:30% 42%"><div class="grain"></div><div class="num">06</div><div class="tag">Retratos, detalle</div></div>
+        <div class="frame"><img src="img/archivo01.jpg" alt="Museo de la Memoria y los Derechos Humanos, edificio" style="object-position:50% 30%"><div class="grain"></div><div class="num">05</div><div class="tag">MMDH, arquitectura</div></div>
+        <div class="frame wide"><img src="img/muro-retratos.jpg" alt="Muro de retratos, Museo de la Memoria y los Derechos Humanos" style="object-position:50% 38%"><div class="grain"></div><div class="num">06</div><div class="tag">Muro de retratos</div></div>
+        <div class="frame"><img src="img/archivo01.jpg" alt="Museo de la Memoria y los Derechos Humanos, edificio" style="object-position:70% 30%"><div class="grain"></div><div class="num">05</div><div class="tag">MMDH, fachada verde</div></div>
+        <div class="frame"><img src="img/muro-retratos.jpg" alt="Muro de retratos, Museo de la Memoria y los Derechos Humanos" style="object-position:30% 42%"><div class="grain"></div><div class="num">06</div><div class="tag">Retratos, detalle</div></div>
+      </div>
+    </div>
+    <div style="position:absolute;left:44px;right:44px;bottom:122px;display:flex;justify-content:space-between;font-family:'EB Garamond',serif;font-size:8px;letter-spacing:0.16em;color:#6B6864;text-transform:uppercase"><span>Fuentes: Halbwachs, 2004 · Corp. Parque por la Paz Villa Grimaldi, 2017</span><span>06</span></div>
+    <div style="position:absolute;inset:0;background:#fff;filter:url(#grainf);opacity:0.22;mix-blend-mode:multiply;pointer-events:none"></div>
+  </section>
+</article>
+
+<article class="book-page" data-index="6">
+<section class="page" data-screen-label="07 Interludio — La Torre" style="position:relative;overflow:hidden;background:#1A1A1A;color:#F7F4EC;font-family:'Crimson Text',Georgia,serif">
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column">
+      <div style="flex:1;position:relative;overflow:hidden;background:#1A1A1A;border-bottom:1px solid rgba(231,226,215,0.18)">
+        <img src="img/torre01.jpg" alt="Fotografía de archivo y plano de La Torre, Villa Grimaldi" style="width:100%;height:100%;object-fit:contain;display:block;filter:grayscale(0.3) contrast(1.05) brightness(0.96) sepia(0.15)">
+        <div style="position:absolute;left:14px;top:10px;font-family:'EB Garamond',serif;font-size:7px;letter-spacing:0.14em;text-transform:uppercase;color:#BFB6A3">Entonces · fotografía y plano de archivo</div>
+      </div>
+      <div style="flex:1;position:relative;overflow:hidden">
+        <img src="img/desde-lo-rojo.jpg" alt="La Torre reconstruida, Parque por la Paz Villa Grimaldi" style="width:100%;height:100%;object-fit:cover;object-position:50% 20%;display:block;filter:grayscale(1) contrast(1.1) brightness(0.78)">
+        <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(15,13,10,0.6) 0%,rgba(15,13,10,0) 45%)"></div>
+        <div class="interlude-cap" style="bottom:12px"><span>Ahora · 2026</span><span>07</span></div>
+      </div>
+    </div>
+    <div class="audio-badge"><span class="eq"><span></span><span></span><span></span><span></span></span><span class="alabel">Audio · entrevista, Contreras</span></div>
+    <audio class="page-audio" src="audio/contreras-entrevista.mp3" data-role="Manuel Contreras, exjefe de la DINA, entrevista — «guerra»" preload="none" hidden></audio>
+    <div style="position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);display:flex;justify-content:center;pointer-events:none">
+      <div style="background:#1A1A1A;padding:8px 22px;box-shadow:0 0 24px 14px #1A1A1A">
+        <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:20px;letter-spacing:0.09em;text-transform:uppercase;color:#F5F2EA;white-space:nowrap">La Torre</div>
+      </div>
+    </div>
+    <div style="position:absolute;inset:0;background:#fff;filter:url(#grainf);opacity:0.18;mix-blend-mode:screen;pointer-events:none"></div>
+  </section>
+</article>
+
 <article class="book-page" data-index="7">
-<section class="page" data-screen-label="08 Las cifras del encierro" style="position:relative;overflow:hidden;background:#F7F4EC;color:#1A1A1A;font-family:'Crimson Text',Georgia,serif;padding:0 44px">
+<section class="page" data-screen-label="08 II · Las cifras del encierro" style="position:relative;overflow:hidden;background:#F7F4EC;color:#1A1A1A;font-family:'Crimson Text',Georgia,serif;padding:0 44px">
     <div class="strip top" style="height:130px">
       <div class="strip-track">
         <div class="frame" style="height:130px"><img src="img/chile-carcel-interior.jpg" alt="Interior de un recinto penitenciario" style="object-position:50% 60%"></div>
@@ -455,11 +484,11 @@
       </div>
     </div>
     <div style="position:absolute;left:44px;right:44px;top:130px;bottom:98px;display:flex;flex-direction:column;justify-content:center">
-    <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:#8E2B1C">III · Las cifras del encierro</div>
+    <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:#8E2B1C">II · El encierro</div>
     <h2 style="margin:14px 0 0;font-family:'EB Garamond',serif;font-weight:600;font-size:27px;line-height:1.15;letter-spacing:-0.005em">Cuarenta y nueve coma seis</h2>
     <svg width="100%" height="7" viewBox="0 0 400 7" preserveAspectRatio="none" style="display:block;margin:12px 0 0" aria-hidden="true"><path d="M0 3.5 Q38 1.2 79 4 T158 2.3 T237 4.6 T316 1.8 T400 3.6" fill="none" stroke="#4A4A4A" stroke-width="1" opacity="0.25"/></svg>
 
-    <p style="margin:14px 0 0;font-size:13px;line-height:1.7;color:#4A4A4A;max-width:420px">Población penitenciaria en Chile, 2021–2024: el encierro dejó de ser el último recurso.</p>
+    <p style="margin:14px 0 0;font-size:13px;line-height:1.7;color:#4A4A4A;max-width:440px">Medio siglo después, en democracia y sin cuarteles clandestinos, el encierro volvió a crecer. No es la misma violencia — pero es la misma respuesta: contener antes que atender. Población penitenciaria en Chile, 2021–2024.</p>
 
     <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:end;position:relative">
       <svg width="100%" height="120" viewBox="0 0 300 120" preserveAspectRatio="none" style="position:absolute;left:0;right:0;bottom:26px;opacity:0.35;pointer-events:none" aria-hidden="true">
@@ -504,7 +533,7 @@
 </article>
 
 <article class="book-page" data-index="8">
-<section class="page" data-screen-label="09 El sujeto peligroso" style="position:relative;overflow:hidden;background:#F7F4EC;color:#1A1A1A;font-family:'Crimson Text',Georgia,serif;padding:0 44px">
+<section class="page" data-screen-label="09 III · El sujeto peligroso" style="position:relative;overflow:hidden;background:#F7F4EC;color:#1A1A1A;font-family:'Crimson Text',Georgia,serif;padding:0 44px">
     <div class="strip top">
       <div class="strip-track">
         <div class="frame"><img src="img/casa-corvi.jpg" alt="Reconstrucción de una Casa CORVI, Villa Grimaldi" style="object-position:20% 40%"><div class="grain"></div><div class="num">01</div><div class="tag">Casa CORVI, exterior</div></div>
@@ -531,7 +560,7 @@
       <line x1="0" y1="50" x2="12" y2="50" stroke="#8E2B1C" stroke-width="0.6"/>
       <line x1="88" y1="50" x2="100" y2="50" stroke="#8E2B1C" stroke-width="0.6"/>
     </svg>
-    <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:#8E2B1C">IV · El sujeto peligroso</div>
+    <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:#8E2B1C">III · El cuerpo</div>
     <h2 style="margin:16px 0 0;font-family:'EB Garamond',serif;font-weight:600;font-size:27px;line-height:1.24;letter-spacing:-0.005em;max-width:340px">Una frontera moral que nadie firmó</h2>
     <svg width="100%" height="7" viewBox="0 0 400 7" preserveAspectRatio="none" style="display:block;margin:16px 0 0" aria-hidden="true"><path d="M0 3.5 Q38 1.2 79 4 T158 2.3 T237 4.6 T316 1.8 T400 3.6" fill="none" stroke="#4A4A4A" stroke-width="1" opacity="0.25"/></svg>
 
@@ -562,7 +591,7 @@
 </article>
 
 <article class="book-page" data-index="9">
-<section class="page" data-screen-label="10 Espejo regional Ecuador" style="position:relative;overflow:hidden;background:#EFEAE0;color:#1A1A1A;font-family:'Crimson Text',Georgia,serif;padding:0 44px">
+<section class="page" data-screen-label="10 III · Las Malvinas, Guayaquil" style="position:relative;overflow:hidden;background:#EFEAE0;color:#1A1A1A;font-family:'Crimson Text',Georgia,serif;padding:0 44px">
     <div class="strip top">
       <div class="strip-track">
         <div class="frame wide"><img src="img/ecuador-soldados.webp" alt="Soldados ecuatorianos frente a la bandera nacional" style="object-position:50% 30%"><div class="grain"></div><div class="num">01</div><div class="tag">Fuerzas Armadas, Ecuador</div></div>
@@ -574,13 +603,13 @@
         <div class="frame"><img src="img/ecuador-soldados.webp" alt="Soldados ecuatorianos frente a la bandera nacional" style="object-position:75% 35%"><div class="grain"></div><div class="num">01</div><div class="tag">FF.AA., despliegue</div></div>
         <div class="frame wide"><img src="img/ecuador-carcel-2024.jpg" alt="Operativo policial y militar en una cárcel de Ecuador, 2024" style="object-position:30% 25%"><div class="grain"></div><div class="num">02</div><div class="tag">Recinto penitenciario</div></div>
       </div>
-      <div class="audio-badge"><span class="eq"><span></span><span></span><span></span><span></span></span><span class="alabel">Audio · Kast, 2026 (Chile)</span></div>
+      <div class="audio-badge"><span class="eq"><span></span><span></span><span></span><span></span></span><span class="alabel">Audio · familiares, Las Malvinas</span></div>
     </div>
-    <audio class="page-audio" src="audio/kast-2026.mp3" data-role="José Antonio Kast, declaración 2026 — espejo chileno del caso ecuatoriano" preload="none" hidden></audio>
+    <audio class="page-audio" data-role="Voces de familiares del caso Las Malvinas, Guayaquil" preload="none" loop hidden></audio>
 
     <div style="position:absolute;left:44px;right:44px;top:152px;bottom:126px;display:flex;flex-direction:column;justify-content:center">
-    <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:#8E2B1C">V · Espejo regional</div>
-    <h2 style="margin:14px 0 0;font-family:'EB Garamond',serif;font-weight:600;font-size:27px;line-height:1.24;letter-spacing:-0.005em">Ecuador: cuando la urgencia se vuelve doctrina</h2>
+    <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:#8E2B1C">III · El cuerpo</div>
+    <h2 style="margin:14px 0 0;font-family:'EB Garamond',serif;font-weight:600;font-size:27px;line-height:1.24;letter-spacing:-0.005em">Cuatro niños en Las Malvinas</h2>
     <svg width="100%" height="7" viewBox="0 0 400 7" preserveAspectRatio="none" style="display:block;margin:12px 0 0" aria-hidden="true"><path d="M0 3.5 Q38 1.2 79 4 T158 2.3 T237 4.6 T316 1.8 T400 3.6" fill="none" stroke="#4A4A4A" stroke-width="1" opacity="0.25"/></svg>
 
     <div style="margin-top:14px;display:grid;grid-template-columns:1fr 118px;gap:0 16px;align-items:start">
@@ -588,11 +617,11 @@
         <p style="margin:0;font-family:'EB Garamond',serif;font-style:italic;font-weight:600;font-size:25px;line-height:1.35;letter-spacing:0">“We are at war.”</p>
         <div style="margin-top:8px;font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.08em;color:#4A4A4A;text-transform:uppercase">Daniel Noboa · Presidente del Ecuador, 14.05.2026</div>
 
-        <p style="margin:14px 0 0;font-size:13px;line-height:1.7;color:#4A4A4A;text-align:justify;hyphens:auto">Enero 2024: el Decreto N.º 111 reconoció un <em>conflicto armado interno</em> y amplió a las Fuerzas Armadas frente a organizaciones calificadas como terroristas, difuminando la frontera entre defensa nacional y seguridad interna.</p>
+        <p style="margin:14px 0 0;font-size:13px;line-height:1.7;color:#4A4A4A;text-align:justify;hyphens:auto">La misma palabra, otra escala. Enero 2024: el Decreto N.º 111 reconoció un <em>conflicto armado interno</em> y desplegó a las Fuerzas Armadas contra organizaciones calificadas como terroristas. Cuando una lógica militar —identificar y neutralizar— se traslada al control cotidiano de un barrio, la frontera entre ciudadano y enemigo deja de ser evidente.</p>
 
         <div style="margin-top:12px;display:grid;grid-template-columns:auto 1fr;gap:0 14px;font-size:12.5px;line-height:1.6;color:#4A4A4A">
           <div style="width:2px;background:#8E2B1C"></div>
-          <p style="margin:0;text-align:justify;hyphens:auto">Diciembre 2024, Guayaquil: cuatro niños afrodescendientes fueron interceptados por una patrulla militar; sus cuerpos aparecieron en Taura. En 2026 la Corte Constitucional determinó que la privación de libertad fue ilegal, arbitraria e ilegítima; la CIDH advirtió sobre perfilamiento racial.</p>
+          <p style="margin:0;text-align:justify;hyphens:auto">Diciembre 2024, Guayaquil: tres adolescentes y un niño afrodescendientes de un barrio popular fueron interceptados por una patrulla militar. Sus cuerpos aparecieron en Taura. En 2026 la Corte Constitucional determinó que la privación de libertad fue ilegal, arbitraria e ilegítima; la CIDH advirtió sobre perfilamiento racial. Edad, color, territorio: los tres criterios de la página anterior, en un solo caso.</p>
         </div>
       </div>
       <div>
@@ -640,7 +669,7 @@
 </article>
 
 <article class="book-page" data-index="11">
-<section class="page" data-screen-label="12 Cronología" style="position:relative;overflow:hidden;background:#F7F4EC;color:#1A1A1A;font-family:'Crimson Text',Georgia,serif;padding:0 44px">
+<section class="page" data-screen-label="12 IV · La alerta" style="position:relative;overflow:hidden;background:#F7F4EC;color:#1A1A1A;font-family:'Crimson Text',Georgia,serif;padding:0 44px">
     <div class="strip top" style="height:60px">
       <div class="strip-track">
         <div class="frame" style="height:60px"><img src="img/casa-corvi.jpg" alt="Villa Grimaldi" style="object-position:40% 45%"><div class="grain"></div><div class="tag">1973 — DINA</div></div>
@@ -654,94 +683,74 @@
       </div>
     </div>
 
-    <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:#8E2B1C;margin-top:78px">VI · Cronología</div>
-    <h2 style="margin:12px 0 0;font-family:'EB Garamond',serif;font-weight:600;font-size:30px;line-height:1.1;letter-spacing:0.005em">1973 — 2026</h2>
-    <svg width="100%" height="7" viewBox="0 0 400 7" preserveAspectRatio="none" style="display:block;margin:12px 0 12px" aria-hidden="true"><path d="M0 3.5 Q38 1.2 79 4 T158 2.3 T237 4.6 T316 1.8 T400 3.6" fill="none" stroke="#4A4A4A" stroke-width="1" opacity="0.25"/></svg>
+    <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:#8E2B1C;margin-top:76px">IV · La alerta</div>
+    <h2 style="margin:14px 0 0;font-family:'EB Garamond',serif;font-weight:600;font-size:27px;line-height:1.24;letter-spacing:-0.005em;max-width:400px">La distancia solo se ve después</h2>
+    <svg width="100%" height="7" viewBox="0 0 400 7" preserveAspectRatio="none" style="display:block;margin:14px 0 0" aria-hidden="true"><path d="M0 3.5 Q38 1.2 79 4 T158 2.3 T237 4.6 T316 1.8 T400 3.6" fill="none" stroke="#4A4A4A" stroke-width="1" opacity="0.25"/></svg>
 
-    <div style="column-count:2;column-gap:24px">
-              <div style="break-inside:avoid;display:grid;grid-template-columns:8px 48px 1fr;gap:9px;padding:9px 0;border-bottom:1px solid rgba(22,19,15,0.13)">
-          <div style="width:7px;height:7px;border-radius:50%;background:#8E2B1C;margin-top:6px"></div>
-          <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:9.5px;letter-spacing:0.06em;color:#8E2B1C;padding-top:1px">1973</div>
-          <div style="font-size:11.5px;font-weight:600;line-height:1.4;color:#1A1A1A">Golpe de Estado. La Doctrina de Seguridad Nacional instala el «enemigo interno».</div>
+    <p style="margin:18px 0 0;font-size:13px;line-height:1.7;color:#4A4A4A;max-width:450px">La diferencia entre el uso legítimo y el uso arbitrario de la fuerza estatal rara vez es evidente mientras ocurre. Suele reconocerse después, cuando ya se toleró la erosión. Por eso estos sitios no hablan solo del pasado: son el único lugar donde esa distancia quedó registrada.</p>
+
+    <div style="margin-top:20px;position:relative;padding-left:22px">
+      <div style="position:absolute;left:0;top:10px;bottom:10px;width:1px;background:rgba(142,43,28,0.28)"></div>
+        <div style="position:relative;display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:baseline;padding:9px 0">
+          <div style="position:absolute;left:-22px;top:14px;width:7px;height:7px;border-radius:50%;background:#8E2B1C;opacity:1;transform:translateX(-50%)"></div>
+          <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:10px;letter-spacing:0.06em;color:#8E2B1C">1973</div>
+          <div style="font-size:11.5px;font-weight:600;line-height:1.5;color:#1A1A1A">Golpe de Estado.</div>
         </div>
-        <div style="break-inside:avoid;display:grid;grid-template-columns:8px 48px 1fr;gap:9px;padding:7px 0;border-bottom:1px solid rgba(22,19,15,0.13)">
-          <div style="width:5px;height:5px;border-radius:50%;background:#8E2B1C;margin-top:7px;opacity:0.65"></div>
-          <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.06em;color:#8E2B1C;padding-top:2px">1974</div>
-          <div style="font-size:10px;line-height:1.4;color:#4A4A4A">Villa Grimaldi opera como cuartel de la DINA.</div>
+        <div style="position:relative;display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:baseline;padding:9px 0">
+          <div style="position:absolute;left:-22px;top:14px;width:5px;height:5px;border-radius:50%;background:#8E2B1C;opacity:0.55;transform:translateX(-50%)"></div>
+          <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:10px;letter-spacing:0.06em;color:#8E2B1C">1974</div>
+          <div style="font-size:11.5px;font-weight:400;line-height:1.5;color:#4A4A4A">Villa Grimaldi opera como cuartel de la DINA.</div>
         </div>
-        <div style="break-inside:avoid;display:grid;grid-template-columns:8px 48px 1fr;gap:9px;padding:7px 0;border-bottom:1px solid rgba(22,19,15,0.13)">
-          <div style="width:5px;height:5px;border-radius:50%;background:#8E2B1C;margin-top:7px;opacity:0.65"></div>
-          <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.06em;color:#8E2B1C;padding-top:2px">1990</div>
-          <div style="font-size:10px;line-height:1.4;color:#4A4A4A">Retorno a la democracia.</div>
+        <div style="position:relative;display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:baseline;padding:9px 0">
+          <div style="position:absolute;left:-22px;top:14px;width:7px;height:7px;border-radius:50%;background:#8E2B1C;opacity:1;transform:translateX(-50%)"></div>
+          <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:10px;letter-spacing:0.06em;color:#8E2B1C">1990</div>
+          <div style="font-size:11.5px;font-weight:600;line-height:1.5;color:#1A1A1A">Retorno a la democracia.</div>
         </div>
-        <div style="break-inside:avoid;display:grid;grid-template-columns:8px 48px 1fr;gap:9px;padding:7px 0;border-bottom:1px solid rgba(22,19,15,0.13)">
-          <div style="width:5px;height:5px;border-radius:50%;background:#8E2B1C;margin-top:7px;opacity:0.65"></div>
-          <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.06em;color:#8E2B1C;padding-top:2px">1991</div>
-          <div style="font-size:10px;line-height:1.4;color:#4A4A4A">Informe Rettig: comisión que documenta las violaciones a los DD.HH. de la dictadura. Se abre el debate entre reconciliación y justicia.</div>
+        <div style="position:relative;display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:baseline;padding:9px 0">
+          <div style="position:absolute;left:-22px;top:14px;width:5px;height:5px;border-radius:50%;background:#8E2B1C;opacity:0.55;transform:translateX(-50%)"></div>
+          <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:10px;letter-spacing:0.06em;color:#8E2B1C">1991</div>
+          <div style="font-size:11.5px;font-weight:400;line-height:1.5;color:#4A4A4A">Informe Rettig: se reconoce a las víctimas, pero no se determinan responsabilidades.</div>
         </div>
-        <div style="break-inside:avoid;display:grid;grid-template-columns:8px 48px 1fr;gap:9px;padding:7px 0;border-bottom:1px solid rgba(22,19,15,0.13)">
-          <div style="width:5px;height:5px;border-radius:50%;background:#8E2B1C;margin-top:7px;opacity:0.65"></div>
-          <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.06em;color:#8E2B1C;padding-top:2px">2010</div>
-          <div style="font-size:10px;line-height:1.4;color:#4A4A4A">Se inaugura el Museo de la Memoria y los Derechos Humanos.</div>
+        <div style="position:relative;display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:baseline;padding:9px 0">
+          <div style="position:absolute;left:-22px;top:14px;width:5px;height:5px;border-radius:50%;background:#8E2B1C;opacity:0.55;transform:translateX(-50%)"></div>
+          <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:10px;letter-spacing:0.06em;color:#8E2B1C">2010</div>
+          <div style="font-size:11.5px;font-weight:400;line-height:1.5;color:#4A4A4A">Se inaugura el Museo de la Memoria y los Derechos Humanos.</div>
         </div>
-        <div style="break-inside:avoid;display:grid;grid-template-columns:8px 48px 1fr;gap:9px;padding:9px 0;border-bottom:1px solid rgba(22,19,15,0.13)">
-          <div style="width:7px;height:7px;border-radius:50%;background:#8E2B1C;margin-top:6px"></div>
-          <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:9.5px;letter-spacing:0.06em;color:#8E2B1C;padding-top:1px">18.10.2019</div>
-          <div style="font-size:11.5px;font-weight:600;line-height:1.4;color:#1A1A1A">Estallido social. «Estamos en guerra contra un enemigo poderoso».</div>
+        <div style="position:relative;display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:baseline;padding:9px 0">
+          <div style="position:absolute;left:-22px;top:14px;width:5px;height:5px;border-radius:50%;background:#8E2B1C;opacity:0.55;transform:translateX(-50%)"></div>
+          <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:10px;letter-spacing:0.06em;color:#8E2B1C">2022</div>
+          <div style="font-size:11.5px;font-weight:400;line-height:1.5;color:#4A4A4A">Estado de excepción en la Macrozona Sur, prorrogado de forma sostenida.</div>
         </div>
-        <div style="break-inside:avoid;display:grid;grid-template-columns:8px 48px 1fr;gap:9px;padding:7px 0;border-bottom:1px solid rgba(22,19,15,0.13)">
-          <div style="width:5px;height:5px;border-radius:50%;background:#8E2B1C;margin-top:7px;opacity:0.65"></div>
-          <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.06em;color:#8E2B1C;padding-top:2px">2021</div>
-          <div style="font-size:10px;line-height:1.4;color:#4A4A4A">38.977 personas privadas de libertad en Chile.</div>
+        <div style="position:relative;display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:baseline;padding:9px 0">
+          <div style="position:absolute;left:-22px;top:14px;width:5px;height:5px;border-radius:50%;background:#8E2B1C;opacity:0.55;transform:translateX(-50%)"></div>
+          <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:10px;letter-spacing:0.06em;color:#8E2B1C">2023</div>
+          <div style="font-size:11.5px;font-weight:400;line-height:1.5;color:#4A4A4A">Ley N.º 21.560 (Naín-Retamal): amplía las facultades policiales.</div>
         </div>
-        <div style="break-inside:avoid;display:grid;grid-template-columns:8px 48px 1fr;gap:9px;padding:7px 0;border-bottom:1px solid rgba(22,19,15,0.13)">
-          <div style="width:5px;height:5px;border-radius:50%;background:#8E2B1C;margin-top:7px;opacity:0.65"></div>
-          <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.06em;color:#8E2B1C;padding-top:2px">2022</div>
-          <div style="font-size:10px;line-height:1.4;color:#4A4A4A">Estado de excepción en la Macrozona Sur, prorrogado de forma sostenida.</div>
-        </div>
-        <div style="break-inside:avoid;display:grid;grid-template-columns:8px 48px 1fr;gap:9px;padding:7px 0;border-bottom:1px solid rgba(22,19,15,0.13)">
-          <div style="width:5px;height:5px;border-radius:50%;background:#8E2B1C;margin-top:7px;opacity:0.65"></div>
-          <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.06em;color:#8E2B1C;padding-top:2px">04.2023</div>
-          <div style="font-size:10px;line-height:1.4;color:#4A4A4A">Ley N.º 21.560 (Naín-Retamal): amplía las facultades policiales.</div>
-        </div>
-        <div style="break-inside:avoid;display:grid;grid-template-columns:8px 48px 1fr;gap:9px;padding:9px 0;border-bottom:1px solid rgba(22,19,15,0.13)">
-          <div style="width:7px;height:7px;border-radius:50%;background:#8E2B1C;margin-top:6px"></div>
-          <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:9.5px;letter-spacing:0.06em;color:#8E2B1C;padding-top:1px">01.2024</div>
-          <div style="font-size:11.5px;font-weight:600;line-height:1.4;color:#1A1A1A">Ecuador: Decreto N.º 111 reconoce un conflicto armado interno.</div>
-        </div>
-        <div style="break-inside:avoid;display:grid;grid-template-columns:8px 48px 1fr;gap:9px;padding:7px 0;border-bottom:1px solid rgba(22,19,15,0.13)">
-          <div style="width:5px;height:5px;border-radius:50%;background:#8E2B1C;margin-top:7px;opacity:0.65"></div>
-          <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.06em;color:#8E2B1C;padding-top:2px">07.2024</div>
-          <div style="font-size:10px;line-height:1.4;color:#4A4A4A">Chile: se propone tipificar la «migración ilegal» como delito.</div>
-        </div>
-        <div style="break-inside:avoid;display:grid;grid-template-columns:8px 48px 1fr;gap:9px;padding:7px 0;border-bottom:1px solid rgba(22,19,15,0.13)">
-          <div style="width:5px;height:5px;border-radius:50%;background:#8E2B1C;margin-top:7px;opacity:0.65"></div>
-          <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.06em;color:#8E2B1C;padding-top:2px">12.2024</div>
-          <div style="font-size:10px;line-height:1.4;color:#4A4A4A">Guayaquil: cuatro niños de Las Malvinas, interceptados por una patrulla militar.</div>
-        </div>
-        <div style="break-inside:avoid;display:grid;grid-template-columns:8px 48px 1fr;gap:9px;padding:9px 0;border-bottom:1px solid rgba(22,19,15,0.13)">
-          <div style="width:7px;height:7px;border-radius:50%;background:#8E2B1C;margin-top:6px"></div>
-          <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:9.5px;letter-spacing:0.06em;color:#8E2B1C;padding-top:1px">2024</div>
-          <div style="font-size:11.5px;font-weight:600;line-height:1.4;color:#1A1A1A">58.310 personas privadas de libertad en Chile: +49,6 % en tres años.</div>
-        </div>
-        <div style="break-inside:avoid;display:grid;grid-template-columns:8px 48px 1fr;gap:9px;padding:7px 0;border-bottom:1px solid rgba(22,19,15,0.13)">
-          <div style="width:5px;height:5px;border-radius:50%;background:#8E2B1C;margin-top:7px;opacity:0.65"></div>
-          <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.06em;color:#8E2B1C;padding-top:2px">10.2025</div>
-          <div style="font-size:10px;line-height:1.4;color:#4A4A4A">Diecisiete militares llamados a juicio por desaparición forzada.</div>
-        </div>
-        <div style="break-inside:avoid;display:grid;grid-template-columns:8px 48px 1fr;gap:9px;padding:7px 0;border-bottom:1px solid rgba(22,19,15,0.13)">
-          <div style="width:5px;height:5px;border-radius:50%;background:#8E2B1C;margin-top:7px;opacity:0.65"></div>
-          <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.06em;color:#8E2B1C;padding-top:2px">03.2026</div>
-          <div style="font-size:10px;line-height:1.4;color:#4A4A4A">Corte Constitucional de Ecuador: privación de libertad ilegal, arbitraria e ilegítima.</div>
-        </div>
-        <div style="break-inside:avoid;display:grid;grid-template-columns:8px 48px 1fr;gap:9px;padding:9px 0;border-bottom:1px solid rgba(22,19,15,0.13)">
-          <div style="width:7px;height:7px;border-radius:50%;background:#8E2B1C;margin-top:6px"></div>
-          <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:9.5px;letter-spacing:0.06em;color:#8E2B1C;padding-top:1px">05.2026</div>
-          <div style="font-size:11.5px;font-weight:600;line-height:1.4;color:#1A1A1A">«We are at war»: la excepción vuelve a enunciarse como estado permanente.</div>
+        <div style="position:relative;display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:baseline;padding:9px 0">
+          <div style="position:absolute;left:-22px;top:14px;width:7px;height:7px;border-radius:50%;background:#8E2B1C;opacity:1;transform:translateX(-50%)"></div>
+          <div style="font-family:'EB Garamond',serif;font-weight:700;font-size:10px;letter-spacing:0.06em;color:#8E2B1C">2025</div>
+          <div style="font-size:11.5px;font-weight:600;line-height:1.5;color:#1A1A1A">Diecisiete militares llamados a juicio por desaparición forzada, Ecuador.</div>
         </div>
     </div>
 
-    <div style="position:absolute;left:44px;right:44px;bottom:20px;display:flex;justify-content:space-between;font-family:'EB Garamond',serif;font-size:8px;letter-spacing:0.16em;color:#6B6864;text-transform:uppercase"><span>Chile · Ecuador</span><span>12</span></div>
+    <div style="margin-top:18px;border-left:2px solid #8E2B1C;padding:4px 0 4px 18px;max-width:440px">
+      <p style="margin:0;font-family:'EB Garamond',serif;font-style:italic;font-weight:600;font-size:17px;line-height:1.5;letter-spacing:0;color:#8E2B1C;text-wrap:pretty">Ante cada medida que promete seguridad: qué límites acepta, sobre quién recae y qué garantías compromete.</p>
+    </div>
+
+    <div class="strip bottom" style="height:96px">
+      <div class="strip-track">
+        <div class="frame" style="height:96px"><img src="img/muro-retratos.jpg" alt="Muro de retratos, MMDH" style="object-position:50% 38%"></div>
+        <div class="frame wide" style="height:96px"><img src="img/museo-edificio.jpg" alt="MMDH, fachada" style="object-position:50% 55%"></div>
+        <div class="frame" style="height:96px"><img src="img/villa-grimaldi.jpg" alt="Villa Grimaldi, retratos en el pasto" style="object-position:50% 40%"></div>
+        <div class="frame wide" style="height:96px"><img src="img/casa-corvi.jpg" alt="Casa CORVI, Villa Grimaldi" style="object-position:50% 35%"></div>
+        <div class="frame" style="height:96px"><img src="img/muro-retratos.jpg" alt="Muro de retratos, MMDH" style="object-position:50% 38%"></div>
+        <div class="frame wide" style="height:96px"><img src="img/museo-edificio.jpg" alt="MMDH, fachada" style="object-position:50% 55%"></div>
+        <div class="frame" style="height:96px"><img src="img/villa-grimaldi.jpg" alt="Villa Grimaldi, retratos en el pasto" style="object-position:50% 40%"></div>
+        <div class="frame wide" style="height:96px"><img src="img/casa-corvi.jpg" alt="Casa CORVI, Villa Grimaldi" style="object-position:50% 35%"></div>
+      </div>
+    </div>
+
+    <div style="position:absolute;left:44px;right:44px;bottom:108px;display:flex;justify-content:space-between;gap:16px;font-family:'EB Garamond',serif;font-size:8px;letter-spacing:0.16em;color:#6B6864;text-transform:uppercase"><span>Informe Rettig · BCN · Ley 21.560 · Fiscalía General del Estado</span><span>12</span></div>
     <div style="position:absolute;inset:0;background:#fff;filter:url(#grainf);opacity:0.22;mix-blend-mode:multiply;pointer-events:none"></div>
   </section>
 </article>
@@ -772,6 +781,16 @@
       <div style="font-family:'EB Garamond',serif;font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:#C4522F">Cierre</div>
       <p style="margin:20px 0 0;font-family:'EB Garamond',serif;font-style:italic;font-weight:600;font-size:25px;line-height:1.4;letter-spacing:0;text-wrap:pretty;max-width:440px">La memoria es un ejercicio de justicia hacia el pasado y, sobre todo, una herramienta de alerta para el presente.</p>
       <p style="margin:22px 0 0;font-size:13px;line-height:1.7;color:#BFB6A3;max-width:420px">Los límites del Estado no se defienden solos: su erosión suele comenzar antes de que sea posible nombrarla.</p>
+
+      <div style="margin-top:34px;padding-top:20px;border-top:1px solid rgba(231,226,215,0.16);max-width:440px">
+        <div style="display:flex;flex-wrap:wrap;gap:6px 14px;font-family:'EB Garamond',serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#8A8680">
+          <span>La palabra</span><span style="color:#C4522F">·</span>
+          <span>El encierro</span><span style="color:#C4522F">·</span>
+          <span>El cuerpo</span><span style="color:#C4522F">·</span>
+          <span>La alerta</span>
+        </div>
+        <div style="margin-top:10px;font-size:11.5px;line-height:1.6;font-style:italic;color:#8A8680">Una se dice, el segundo la construye, el tercero la paga, la última la reconoce.</div>
+      </div>
     </div>
 
     <div style="position:absolute;left:44px;right:44px;bottom:26px">
@@ -935,31 +954,40 @@
 
 <script>
 (function(){
-  var badges = Array.from(document.querySelectorAll('.audio-badge'));
-  badges.forEach(function(badge){
-    var page = badge.closest('.book-page');
-    var audio = page && page.querySelector('audio.page-audio');
+  // A trigger is either a corner badge (one audio per page) or a voice row
+  // button carrying data-audio (movement I stacks three on one page).
+  var triggers = Array.from(document.querySelectorAll('.audio-badge, [data-audio]'));
+
+  triggers.forEach(function(trigger){
+    var id = trigger.getAttribute('data-audio');
+    var audio = id
+      ? document.getElementById(id)
+      : (trigger.closest('.book-page') || document).querySelector('audio.page-audio');
     if (!audio || !audio.getAttribute('src')) return;
-    badge.classList.add('has-audio');
-    badge.addEventListener('click', function(){
+
+    trigger.classList.add('has-audio');
+    trigger.addEventListener('click', function(){
       var wasPlaying = !audio.paused;
-      document.querySelectorAll('audio.page-audio').forEach(function(a){ if (a !== audio) a.pause(); });
-      document.querySelectorAll('.audio-badge.is-playing').forEach(function(b){ if (b !== badge) b.classList.remove('is-playing'); });
-      if (wasPlaying) { audio.pause(); badge.classList.remove('is-playing'); }
-      else { audio.play(); badge.classList.add('is-playing'); }
+      stopAll();
+      // play() rejects with AbortError when a fast second click pauses it first
+      if (!wasPlaying) audio.play().catch(function(){});
     });
-    audio.addEventListener('ended', function(){ badge.classList.remove('is-playing'); });
+
+    // The element's own events are the only source of truth for the badge:
+    // a superseded play() promise can still resolve after stopAll() ran.
+    audio.addEventListener('play', function(){ trigger.classList.add('is-playing'); });
+    audio.addEventListener('pause', function(){ trigger.classList.remove('is-playing'); });
+    audio.addEventListener('ended', function(){ trigger.classList.remove('is-playing'); });
   });
+
+  function stopAll(root){
+    (root || document).querySelectorAll('audio.page-audio').forEach(function(a){ a.pause(); });
+  }
 
   new MutationObserver(function(mutations){
     mutations.forEach(function(m){
       var page = m.target;
-      if (!page.classList.contains('is-current')) {
-        var audio = page.querySelector('audio.page-audio');
-        if (audio && !audio.paused) audio.pause();
-        var badge = page.querySelector('.audio-badge.is-playing');
-        if (badge) badge.classList.remove('is-playing');
-      }
+      if (page.classList && !page.classList.contains('is-current')) stopAll(page);
     });
   }).observe(document.getElementById('stage'), { attributes:true, attributeFilter:['class'], subtree:true });
 })();
