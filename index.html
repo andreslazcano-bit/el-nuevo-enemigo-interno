@@ -321,7 +321,7 @@
       <audio class="page-audio" id="aud-pinera" src="audio/pinera-2019.mp3" data-role="Sebastián Piñera, cadena nacional, 20.10.2019" preload="none" hidden></audio>
       <audio class="page-audio" id="aud-kast" src="audio/kast-2026.mp3" data-role="José Antonio Kast, declaración 2026" preload="none" hidden></audio>
 
-      <div style="margin-top:14px;font-size:10.5px;line-height:1.5;font-style:italic;color:#8A8680">Grabaciones de archivo. Suenan en orden al llegar a esta página — toca un círculo para repetir una en particular.</div>
+      <div style="margin-top:14px;font-size:10.5px;line-height:1.5;font-style:italic;color:#8A8680">Grabaciones de archivo, parte del audio de fondo del libro. Toca un círculo para saltar a esa voz.</div>
 
       <div style="margin:auto 0 22px;border-left:2px solid #C4522F;padding:2px 0 2px 16px;max-width:440px">
         <p style="margin:0;font-family:'EB Garamond',serif;font-style:italic;font-weight:600;font-size:16px;line-height:1.45;letter-spacing:0;color:#F5F2EA;text-wrap:pretty">El contexto institucional cambió por completo. El mecanismo, no: nombrar una amenaza para volver aceptable la expansión del poder punitivo del Estado.</p>
@@ -954,14 +954,11 @@
 
 <script>
 (function(){
-  // A trigger is either a corner badge (one audio per page) or a voice row
-  // button carrying data-audio (movement I stacks three on one page).
+  // One continuous soundtrack, independent of which page is on screen — it
+  // starts on the reader's first interaction and keeps playing underneath
+  // page turns instead of restarting or cutting off per page.
   var triggers = Array.from(document.querySelectorAll('.audio-badge, [data-audio]'));
-
-  // Per page, the ordered list of {trigger, audio} pairs that actually carry
-  // a real src — arriving on a page auto-plays this list in sequence, like a
-  // soundtrack, instead of waiting for a click.
-  var byPage = new Map();
+  var playlist = []; // [{audio, triggers:[...]}], in document order
 
   triggers.forEach(function(trigger){
     var id = trigger.getAttribute('data-audio');
@@ -971,63 +968,48 @@
     if (!audio || !audio.getAttribute('src')) return;
 
     trigger.classList.add('has-audio');
+    var entry = playlist.filter(function(e){ return e.audio === audio; })[0];
+    if (!entry) { entry = { audio: audio, triggers: [] }; playlist.push(entry); }
+    entry.triggers.push(trigger);
+
     trigger.addEventListener('click', function(){
       var wasPlaying = !audio.paused;
-      seqToken++; // a manual pick cancels whatever auto-sequence is running
       stopAll();
-      // play() rejects with AbortError when a fast second click pauses it first
-      if (!wasPlaying) audio.play().catch(function(){});
+      if (wasPlaying) return; // toggle off, don't resume the track after it
+      playTrack(playlist.indexOf(entry)); // jump in; the soundtrack picks up from here
     });
 
     // The element's own events are the only source of truth for the badge:
     // a superseded play() promise can still resolve after stopAll() ran.
-    audio.addEventListener('play', function(){ trigger.classList.add('is-playing'); });
-    audio.addEventListener('pause', function(){ trigger.classList.remove('is-playing'); });
-    audio.addEventListener('ended', function(){ trigger.classList.remove('is-playing'); });
-
-    var page = trigger.closest('.book-page');
-    if (page) {
-      if (!byPage.has(page)) byPage.set(page, []);
-      byPage.get(page).push(audio);
-    }
+    audio.addEventListener('play', function(){ entry.triggers.forEach(function(t){ t.classList.add('is-playing'); }); });
+    audio.addEventListener('pause', function(){ entry.triggers.forEach(function(t){ t.classList.remove('is-playing'); }); });
   });
 
-  function stopAll(root){
-    (root || document).querySelectorAll('audio.page-audio').forEach(function(a){ a.pause(); });
-  }
+  function stopAll(){ playlist.forEach(function(e){ e.audio.pause(); }); }
 
-  var seqToken = 0;
-  function playSequence(list, i, token){
-    if (token !== seqToken || i >= list.length) return;
-    var audio = list[i];
+  var current = -1;
+  function playTrack(i){
+    current = i;
+    if (current >= playlist.length) return; // soundtrack finished; no loop
+    var audio = playlist[current].audio;
     audio.play().catch(function(){});
-    audio.addEventListener('ended', function once(){
-      audio.removeEventListener('ended', once);
-      playSequence(list, i + 1, token);
-    });
+    audio.addEventListener('ended', function(){ playTrack(current + 1); }, { once: true });
   }
+  function playNext(){ playTrack(current + 1); }
 
-  new MutationObserver(function(mutations){
-    mutations.forEach(function(m){
-      var page = m.target;
-      // subtree:true also reports class changes on things like .voice-play
-      // gaining is-playing — ignore anything that isn't a page itself, or
-      // playback state on one button would keep invalidating seqToken.
-      if (!page.classList || !page.classList.contains('book-page')) return;
-      if (page.classList.contains('is-current')) {
-        var list = byPage.get(page);
-        if (list && list.length) { seqToken++; playSequence(list, 0, seqToken); }
-      } else {
-        seqToken++; // leaving the page cancels its pending sequence
-        stopAll(page);
-      }
-    });
-  }).observe(document.getElementById('stage'), { attributes:true, attributeFilter:['class'], subtree:true });
-
-  // The starting page is set with is-current before this script runs, so it
-  // never fires a mutation — kick its sequence off by hand.
-  var startPage = document.querySelector('.book-page.is-current');
-  if (startPage && byPage.has(startPage)) { seqToken++; playSequence(byPage.get(startPage), 0, seqToken); }
+  if (playlist.length) {
+    var start = function(){
+      document.removeEventListener('click', start);
+      document.removeEventListener('keydown', start);
+      document.removeEventListener('wheel', start);
+      document.removeEventListener('touchend', start);
+      playNext();
+    };
+    document.addEventListener('click', start);
+    document.addEventListener('keydown', start);
+    document.addEventListener('wheel', start, { passive: true });
+    document.addEventListener('touchend', start);
+  }
 })();
 </script>
 
