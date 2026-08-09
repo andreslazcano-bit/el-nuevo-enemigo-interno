@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>¿El nuevo enemigo interno? — E-book audiovisual</title>
-<meta name="description" content="E-book audiovisual sobre discursos de amenaza, seguridad y límites del Estado en Chile y Ecuador. Adriana Paccha · Andrés Lazcano, Magíster en Ciencias Sociales, Universidad de Chile.">
+<meta name="description" content="E-book audiovisual sobre discursos de amenaza, seguridad y límites del Estado en Chile y Ecuador. Adriana Paccha Pineda · Andrés Lazcano Astorga, Magíster en Ciencias Sociales, Universidad de Chile.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%230C0C0C'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%23C4522F' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%23C4522F'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -375,15 +375,27 @@
     transition:background 0.2s, border-color 0.2s;
   }
   #indexCloseBtn:hover{ background:rgba(142,43,28,0.5); border-color:#8E2B1C; }
+  /* align-content:start is load-bearing — without it the grid container
+     (which has a definite height, being a constrained flex child) stretches
+     its auto rows to fill, squeezing each row far shorter than the card's
+     aspect-ratio height, so every card overflowed its row and overlapped
+     the ones below. min-height:0 lets it actually scroll as a flex child. */
   #indexGrid{
-    display:grid; grid-template-columns:repeat(4, 1fr); gap:16px;
+    display:grid; grid-template-columns:repeat(4, 1fr); grid-auto-rows:min-content; gap:16px;
     overflow-y:auto; padding:4px;
+    align-content:start; min-height:0;
   }
   .index-card{
-    position:relative; aspect-ratio:4/3; overflow:hidden; cursor:pointer;
+    position:relative; aspect-ratio:1.41; overflow:hidden; cursor:pointer;
     background:#161412; border:1px solid rgba(190,183,168,0.16);
     display:flex; align-items:flex-end;
     transition:transform 0.2s ease, border-color 0.2s ease;
+  }
+  /* text-only pages have no thumbnail; give them a faint rule so they read
+     as intentional rather than as a card whose image failed to load */
+  .index-card.no-thumb::before{
+    content:""; position:absolute; left:12px; right:12px; top:34%;
+    border-top:1px solid rgba(190,183,168,0.14);
   }
   .index-card:hover{ transform:translateY(-3px); border-color:#C4522F; }
   .index-card.is-current{ border-color:#C4522F; box-shadow:0 0 0 1px #C4522F; }
@@ -478,7 +490,7 @@
     <div class="eyebrow">Discursos de amenaza, seguridad y límites del Estado en Chile</div>
     <h1 style="margin:20px 0 0;font-family:'EB Garamond',serif;font-weight:700;font-size:52px;line-height:1.14;letter-spacing:-0.005em;color:#F5F2EA;text-wrap:balance">¿El nuevo enemigo interno?</h1>
     <svg width="340" height="8" viewBox="0 0 400 7" preserveAspectRatio="none" style="display:block;margin:26px 0 0" aria-hidden="true"><path d="M0 3.5 Q38 1.2 79 4 T158 2.3 T237 4.6 T316 1.8 T400 3.6" fill="none" stroke="#BFB6A3" stroke-width="1" opacity="0.4"/></svg>
-    <div style="margin-top:28px;font-family:'EB Garamond',serif;font-weight:600;font-size:14px;letter-spacing:0.02em;color:#BFB6A3">Adriana Paccha · Andrés Lazcano</div>
+    <div style="margin-top:28px;font-family:'EB Garamond',serif;font-weight:600;font-size:14px;letter-spacing:0.02em;color:#BFB6A3">Adriana Paccha Pineda · Andrés Lazcano Astorga</div>
   </div>
   <div class="filmstrip bottom" style="height:74px">
     <div class="track">
@@ -834,7 +846,7 @@
       <p class="big-line" style="margin-top:30px;max-width:640px;font-size:30px;color:#C4522F">¿Dónde está el límite?</p>
     </div>
   </div>
-  <div class="credit" style="bottom:22px">Adriana Paccha · Andrés Lazcano — Curso Trabajo de Campo y Actualidad · Magíster en Ciencias Sociales, mención Sociología de la Modernización · Universidad de Chile</div>
+  <div class="credit" style="bottom:22px">Adriana Paccha Pineda · Andrés Lazcano Astorga — Curso Trabajo de Campo y Actualidad · Magíster en Ciencias Sociales, mención Sociología de la Modernización · Universidad de Chile</div>
   <div class="pageno">15</div>
 </section>
 </article>
@@ -846,7 +858,7 @@
     <div class="split-text reveal-group" data-step="600" data-start="150">
       <div class="eyebrow">Formato alternativo</div>
       <p class="big-line" style="margin-top:14px">Este mismo contenido también existe como un video narrado.</p>
-      <p class="sub-line">Recorre los mismos audios, videos y fotografías de este libro, de principio a fin, para quien prefiera verlo de corrido en vez de navegar las láminas.</p>
+      <p class="sub-line">Recorre los mismos audios, videos y fotografías de este libro, de principio a fin.</p>
     </div>
     <div class="split-media">
       <div class="player">
@@ -912,7 +924,7 @@
   <div class="reveal-group" data-step="600" data-start="200" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 150px">
     <div class="eyebrow">Nota de producción</div>
     <p class="big-line" style="margin-top:18px;font-size:22px;max-width:760px;font-weight:500">Esta es una propuesta audiovisual desarrollada para el curso Trabajo de Campo y Actualidad, en el marco del Magíster en Ciencias Sociales, mención Sociología de la Modernización, Universidad de Chile.</p>
-    <p class="sub-line" style="max-width:600px">Adriana Paccha · Andrés Lazcano — 2026</p>
+    <p class="sub-line" style="max-width:600px">Adriana Paccha Pineda · Andrés Lazcano Astorga — 2026</p>
   </div>
   <div class="pageno">17</div>
 </section>
@@ -1118,6 +1130,7 @@
     var card = document.createElement('div');
     card.className = 'index-card';
     var thumb = PAGE_THUMBS[idx];
+    if (!thumb) card.classList.add('no-thumb');
     card.innerHTML = (thumb ? '<img src="' + thumb + '" alt="">' : '') +
       '<div class="ic-label"><div class="ic-num">' + pad(parseInt(num,10)) + '</div><div class="ic-title">' + title + '</div></div>';
     card.addEventListener('click', function(){
