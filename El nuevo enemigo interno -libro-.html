@@ -9,8 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --page-w: 148mm;
-    --page-h: 210mm;
+    --page-w: 256mm;
+    --page-h: 144mm;
     --user-zoom: 1;
   }
   *{box-sizing:border-box}
@@ -57,21 +57,17 @@
   .book-page::after{
     content:"";
     position:absolute; inset:0;
-    background:linear-gradient(90deg, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0) 3.5%, rgba(0,0,0,0) 96.5%, rgba(0,0,0,0.22) 100%);
+    background:linear-gradient(90deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 2.5%, rgba(0,0,0,0) 97.5%, rgba(0,0,0,0.2) 100%);
     pointer-events:none;
   }
 
   .scene{ position:relative; background:#1A1A1A; color:#F5F2EA; font-family:'Crimson Text',Georgia,serif; }
-  .scene.paper{ background:#F7F4EC; color:#1A1A1A; }
-  .scene-inner{ position:absolute; left:44px; right:44px; top:0; bottom:0; display:flex; flex-direction:column; justify-content:center; }
-  .eyebrow{ font-family:'EB Garamond',serif; font-size:8.5px; letter-spacing:0.22em; text-transform:uppercase; color:#C4522F; }
-  .big-line{ font-family:'EB Garamond',serif; font-weight:600; font-size:25px; line-height:1.34; color:#F5F2EA; text-wrap:pretty; }
-  .scene.paper .big-line{ color:#1A1A1A; }
-  .sub-line{ margin-top:16px; font-size:14px; line-height:1.65; color:#BFB6A3; font-style:italic; max-width:440px; }
-  .scene.paper .sub-line{ color:#4A4A4A; }
-  .credit{ position:absolute; left:44px; right:44px; bottom:20px; font-family:'EB Garamond',serif; font-size:7.3px; letter-spacing:0.08em; line-height:1.6; color:#6B6864; text-transform:uppercase; }
+  .eyebrow{ font-family:'EB Garamond',serif; font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:#C4522F; }
+  .big-line{ font-family:'EB Garamond',serif; font-weight:600; font-size:30px; line-height:1.3; color:#F5F2EA; text-wrap:pretty; }
+  .sub-line{ margin-top:18px; font-size:15.5px; line-height:1.65; color:#BFB6A3; font-style:italic; }
+  .credit{ position:absolute; left:56px; right:56px; bottom:22px; font-family:'EB Garamond',serif; font-size:7.6px; letter-spacing:0.08em; line-height:1.6; color:#6B6864; text-transform:uppercase; }
   .credit em{ font-style:italic; text-transform:none; }
-  .pageno{ position:absolute; right:44px; bottom:20px; font-family:'EB Garamond',serif; font-size:8px; letter-spacing:0.16em; color:#6B6864; }
+  .pageno{ position:absolute; right:56px; bottom:22px; font-family:'EB Garamond',serif; font-size:8.5px; letter-spacing:0.16em; color:#6B6864; }
 
   /* generic staggered reveal: children fade/rise in one by one when a page
      becomes current, and reset when it's left so the beat replays fresh */
@@ -83,8 +79,15 @@
   .reveal-solo{ opacity:0; transform:translateY(10px); transition:opacity 0.9s ease, transform 0.9s ease; }
   .reveal-solo.is-in{ opacity:1; transform:none; }
 
+  /* ---- two-column scene: text on one side, media/figures on the other ---- */
+  .split{ position:absolute; inset:0; display:flex; align-items:center; }
+  .split.reverse{ flex-direction:row-reverse; }
+  .split-text{ flex:0 0 40%; padding:0 30px 0 56px; }
+  .split.reverse .split-text{ padding:0 56px 0 30px; }
+  .split-media{ flex:1; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:36px 56px; min-width:0; }
+
   /* ---- media: audio pill + embedded video ---- */
-  .audio-pill{ display:inline-flex; align-items:center; gap:7px; padding:6px 11px 6px 9px; border-radius:999px; background:rgba(196,82,47,0.12); border:1px solid rgba(196,82,47,0.4); }
+  .audio-pill{ display:inline-flex; align-items:center; gap:7px; padding:7px 12px 7px 10px; border-radius:999px; background:rgba(196,82,47,0.12); border:1px solid rgba(196,82,47,0.4); }
   .audio-pill .eq{ display:flex; align-items:flex-end; gap:1.5px; height:9px; }
   .audio-pill .eq span{ width:2px; background:#C4522F; animation:eqbeat 1.15s ease-in-out infinite; animation-play-state:paused; opacity:0.45; }
   .audio-pill.is-playing .eq span{ animation-play-state:running; opacity:1; }
@@ -93,27 +96,35 @@
   .audio-pill .eq span:nth-child(3){ animation-delay:0.36s; }
   .audio-pill .eq span:nth-child(4){ animation-delay:0.09s; }
   @keyframes eqbeat{ 0%,100%{ height:2px; } 50%{ height:9px; } }
-  .audio-pill .lbl{ font-family:'EB Garamond',serif; font-size:7.5px; letter-spacing:0.09em; text-transform:uppercase; color:#C4522F; white-space:nowrap; }
+  .audio-pill .lbl{ font-family:'EB Garamond',serif; font-size:8px; letter-spacing:0.09em; text-transform:uppercase; color:#C4522F; white-space:nowrap; }
 
-  .player{ width:100%; max-width:440px; }
-  .player video{ display:block; width:100%; height:auto; background:#000; box-shadow:0 10px 32px rgba(0,0,0,0.5); }
-  .player .cap{ margin-top:8px; font-family:'EB Garamond',serif; font-size:7.3px; letter-spacing:0.05em; line-height:1.5; color:#8A8680; }
+  .player{ width:100%; }
+  .player video{ display:block; width:100%; height:auto; max-height:calc(144mm - 120px); background:#000; box-shadow:0 14px 40px rgba(0,0,0,0.55); object-fit:contain; }
+  .player .cap{ margin-top:9px; font-family:'EB Garamond',serif; font-size:7.6px; letter-spacing:0.05em; line-height:1.5; color:#8A8680; }
 
-  /* ---- image beats: full-bleed photo with a short line laid over it ---- */
-  .shot{ position:absolute; inset:0; }
-  .shot img{ width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(1) contrast(1.12) brightness(0.62); }
-  .shot::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.12) 30%, rgba(10,10,10,0.18) 70%, rgba(10,10,10,0.82) 100%); }
-  .shot-line{ position:absolute; left:44px; right:44px; top:38%; font-family:'EB Garamond',serif; font-style:italic; font-weight:600; font-size:22px; line-height:1.4; color:#F5F2EA; text-wrap:pretty; z-index:2; }
-  .shot-cap{ position:absolute; z-index:2; left:44px; right:44px; bottom:20px; font-family:'EB Garamond',serif; font-size:7.3px; letter-spacing:0.05em; line-height:1.5; color:rgba(245,242,234,0.8); }
+  /* ---- image beats: full-bleed photo with a short line laid over it ----
+     the source photos here are portrait (9:16); a plain object-fit:cover
+     would crop most of each one away, so the frame is filled with a
+     blurred backdrop of the same image and the real photo sits centered
+     and whole on top of it. */
+  .shot{ position:absolute; inset:0; overflow:hidden; background:#050505; display:flex; align-items:center; justify-content:center; }
+  .shot-bg{ position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(1) contrast(1.05) brightness(0.3) blur(24px); transform:scale(1.15); }
+  .shot-fg{ position:relative; z-index:1; height:100%; width:auto; max-width:100%; object-fit:contain; display:block; filter:grayscale(1) contrast(1.12) brightness(0.8); box-shadow:0 24px 70px rgba(0,0,0,0.65); }
+  .shot::after{ content:""; position:absolute; inset:0; z-index:2; background:linear-gradient(90deg, rgba(10,10,10,0.72) 0%, rgba(10,10,10,0.15) 42%, rgba(10,10,10,0.1) 65%, rgba(10,10,10,0.6) 100%); }
+  .shot-line{ position:absolute; left:56px; width:38%; top:50%; transform:translateY(-50%); font-family:'EB Garamond',serif; font-style:italic; font-weight:600; font-size:25px; line-height:1.42; color:#F5F2EA; text-wrap:pretty; z-index:2; }
+  .shot-cap{ position:absolute; z-index:2; left:56px; right:56px; bottom:22px; font-family:'EB Garamond',serif; font-size:7.6px; letter-spacing:0.05em; line-height:1.5; color:rgba(245,242,234,0.85); }
 
-  /* ---- small figure grid (El encierro / De la amenaza) ---- */
-  .fig-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  /* ---- figure grid: fills the media column with 2-4 photos ---- */
+  .fig-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; width:100%; }
   .fig{ position:relative; }
-  .fig .frame-box{ position:relative; overflow:hidden; background:#0c0c0c; box-shadow:0 6px 18px rgba(0,0,0,0.4); }
+  .fig .frame-box{ position:relative; overflow:hidden; background:#0c0c0c; box-shadow:0 8px 22px rgba(0,0,0,0.4); }
   .fig img{ width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(1) contrast(1.12) brightness(0.85); }
   .fig .grain{ position:absolute; inset:0; background:#fff; filter:url(#grainf); opacity:0.16; mix-blend-mode:screen; }
-  .fig .fig-cap{ margin-top:6px; font-family:'EB Garamond',serif; font-size:6.6px; letter-spacing:0.05em; line-height:1.45; color:#8A8680; }
-  .fig .fig-title{ font-family:'EB Garamond',serif; font-size:8px; letter-spacing:0.1em; text-transform:uppercase; color:#C4522F; margin-bottom:5px; }
+  .fig .fig-cap{ margin-top:7px; font-family:'EB Garamond',serif; font-size:7px; letter-spacing:0.05em; line-height:1.5; color:#8A8680; }
+  .fig .fig-title{ font-family:'EB Garamond',serif; font-size:8.5px; letter-spacing:0.1em; text-transform:uppercase; color:#C4522F; margin-bottom:6px; }
+
+  /* ---- subtle abstract graphics used purely to fill empty space ---- */
+  .deco{ position:absolute; opacity:0.5; pointer-events:none; }
 
   #controls{
     position:fixed; left:0; right:0; bottom:22px;
@@ -174,29 +185,39 @@
 <div id="stage">
 
 <!-- ============================================================
-  NOTA DE PRODUCCIÓN — e-book audiovisual, versión 2.
-  Reestructurado sobre el guion de la compañera (docx "Sugerencia de
-  mejora"): 17 páginas siguiendo sus 11 escenas — "La memoria" y
-  "Ecuador" se reparten en varias páginas para dar a cada foto su
-  propio tiempo, en vez de amontonarlas.
-  Cada audio/video queda anclado a SU página: se reproduce solo al
-  entrar, se pausa y se reinicia a 0 al salir (así el beat se repite
-  entero en la próxima visita). El motor está al final del archivo:
-  .reveal-group/.type-group revelan hijos en cascada; un hijo con
-  data-play="idDelMedia" también dispara ese audio/video al aparecer;
-  [data-reveal-on="id:ended"] revela un texto cuando ESE media termina.
-  Los videos fueron recomprimidos (960x720, CRF 24) — el material
-  original pesaba 389MB entre los tres y excedía el límite de GitHub.
+  NOTA DE PRODUCCIÓN — e-book audiovisual, versión 3 (horizontal).
+  16:9 (256mm x 144mm) en vez de A5 vertical, para que el video y
+  las imágenes tengan más presencia y sobre menos espacio vacío.
+  La mayoría de las escenas usan .split: una columna de texto fija
+  (40%) y una columna de media/figuras que ocupa el resto. Las
+  escenas de "La memoria" siguen siendo foto de página completa,
+  ahora en formato panorámico.
+  Motor de audio/video/reveal igual que la versión anterior — ver
+  el <script> final. Solo cambió el layout, no el contenido ni la
+  lógica de reproducción.
 ============================================================= -->
 
 <article class="book-page" data-index="0">
 <section class="scene" data-screen-label="01 Portada">
-  <div class="scene-inner reveal-group" data-step="500" data-start="200">
-    <div class="eyebrow">Discursos de amenaza, seguridad y límites del Estado en Chile</div>
-    <h1 style="margin:18px 0 0;font-family:'EB Garamond',serif;font-weight:700;font-size:38px;line-height:1.18;letter-spacing:-0.005em;color:#F5F2EA;text-wrap:balance">¿El nuevo<br>enemigo interno?</h1>
-    <svg width="100%" height="7" viewBox="0 0 400 7" preserveAspectRatio="none" style="display:block;margin:22px 0 0;max-width:300px" aria-hidden="true"><path d="M0 3.5 Q38 1.2 79 4 T158 2.3 T237 4.6 T316 1.8 T400 3.6" fill="none" stroke="#BFB6A3" stroke-width="1" opacity="0.4"/></svg>
-    <div style="margin-top:26px;font-family:'EB Garamond',serif;font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:#6B6864;line-height:1.8;max-width:380px">Curso Trabajo de Campo y Actualidad · Magíster en Ciencias Sociales, mención Sociología de la Modernización · Universidad de Chile</div>
-    <div style="margin-top:22px;font-family:'EB Garamond',serif;font-weight:600;font-size:12.5px;letter-spacing:0.02em;color:#BFB6A3">Adriana Paccha · Andrés Lazcano</div>
+  <svg class="deco" width="46%" height="100%" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet" style="right:0;top:0" aria-hidden="true">
+    <g stroke="#8E2B1C" stroke-width="0.5" opacity="0.55">
+      <circle cx="230" cy="150" r="120"/>
+      <circle cx="230" cy="150" r="86"/>
+      <circle cx="230" cy="150" r="52"/>
+      <circle cx="230" cy="150" r="18"/>
+      <line x1="230" y1="0" x2="230" y2="300"/>
+      <line x1="80" y1="150" x2="380" y2="150"/>
+    </g>
+  </svg>
+  <div class="split">
+    <div class="split-text reveal-group" data-step="500" data-start="200" style="flex-basis:62%">
+      <div class="eyebrow">Discursos de amenaza, seguridad y límites del Estado en Chile</div>
+      <h1 style="margin:20px 0 0;font-family:'EB Garamond',serif;font-weight:700;font-size:52px;line-height:1.14;letter-spacing:-0.005em;color:#F5F2EA;text-wrap:balance">¿El nuevo enemigo interno?</h1>
+      <svg width="340" height="8" viewBox="0 0 400 7" preserveAspectRatio="none" style="display:block;margin:26px 0 0" aria-hidden="true"><path d="M0 3.5 Q38 1.2 79 4 T158 2.3 T237 4.6 T316 1.8 T400 3.6" fill="none" stroke="#BFB6A3" stroke-width="1" opacity="0.4"/></svg>
+      <div style="margin-top:30px;font-family:'EB Garamond',serif;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:#6B6864;line-height:1.9;max-width:420px">Curso Trabajo de Campo y Actualidad · Magíster en Ciencias Sociales, mención Sociología de la Modernización · Universidad de Chile</div>
+      <div style="margin-top:24px;font-family:'EB Garamond',serif;font-weight:600;font-size:14px;letter-spacing:0.02em;color:#BFB6A3">Adriana Paccha · Andrés Lazcano</div>
+    </div>
+    <div class="split-media"></div>
   </div>
   <div style="position:absolute;inset:0;background:#fff;filter:url(#grainf);opacity:0.14;mix-blend-mode:screen;pointer-events:none"></div>
 </section>
@@ -205,42 +226,59 @@
 <article class="book-page" data-index="1">
 <section class="scene" data-screen-label="02 La palabra">
   <audio id="aud-bando10" data-autoplay src="audio/bando-n10-1973.mp3" preload="none" hidden></audio>
-  <div style="position:absolute;left:44px;top:22px" class="reveal-solo" data-reveal-on="aud-bando10:play">
+  <svg class="deco" width="100%" height="90" viewBox="0 0 600 90" preserveAspectRatio="none" style="left:0;bottom:64px;opacity:0.18" aria-hidden="true">
+    <g stroke="#C4522F" stroke-width="1.6" stroke-linecap="round">
+      <line x1="8" y1="45" x2="8" y2="45"/><line x1="24" y1="34" x2="24" y2="56"/><line x1="40" y1="14" x2="40" y2="76"/>
+      <line x1="56" y1="28" x2="56" y2="62"/><line x1="72" y1="40" x2="72" y2="50"/><line x1="88" y1="20" x2="88" y2="70"/>
+      <line x1="104" y1="36" x2="104" y2="54"/><line x1="120" y1="8" x2="120" y2="82"/><line x1="136" y1="30" x2="136" y2="60"/>
+      <line x1="152" y1="42" x2="152" y2="48"/><line x1="168" y1="16" x2="168" y2="74"/><line x1="184" y1="32" x2="184" y2="58"/>
+      <line x1="200" y1="38" x2="200" y2="52"/><line x1="216" y1="10" x2="216" y2="80"/><line x1="232" y1="28" x2="232" y2="62"/>
+      <line x1="248" y1="37" x2="248" y2="53"/><line x1="264" y1="22" x2="264" y2="68"/><line x1="280" y1="34" x2="280" y2="56"/>
+      <line x1="296" y1="44" x2="296" y2="46"/><line x1="312" y1="16" x2="312" y2="74"/><line x1="328" y1="30" x2="328" y2="60"/>
+      <line x1="344" y1="40" x2="344" y2="50"/><line x1="360" y1="24" x2="360" y2="66"/><line x1="376" y1="36" x2="376" y2="54"/>
+      <line x1="392" y1="18" x2="392" y2="72"/><line x1="408" y1="32" x2="408" y2="58"/><line x1="424" y1="42" x2="424" y2="48"/>
+      <line x1="440" y1="12" x2="440" y2="78"/><line x1="456" y1="28" x2="456" y2="62"/><line x1="472" y1="38" x2="472" y2="52"/>
+      <line x1="488" y1="20" x2="488" y2="70"/><line x1="504" y1="34" x2="504" y2="56"/><line x1="520" y1="44" x2="520" y2="46"/>
+      <line x1="536" y1="16" x2="536" y2="74"/><line x1="552" y1="30" x2="552" y2="60"/><line x1="568" y1="26" x2="568" y2="64"/><line x1="584" y1="40" x2="584" y2="50"/>
+    </g>
+  </svg>
+  <div style="position:absolute;left:56px;top:26px" class="reveal-solo" data-reveal-on="aud-bando10:play">
     <span class="audio-pill" id="pill-bando10"><span class="eq"><span></span><span></span><span></span><span></span></span><span class="lbl">Bando N.º 10, 1973</span></span>
   </div>
-  <div class="scene-inner">
-    <p style="margin:0;font-family:'EB Garamond',serif;font-weight:600;font-size:27px;line-height:1.5;max-width:460px" data-typewriter data-step="52" data-start="900">Antes de que el enemigo sea encerrado, debe ser nombrado.</p>
+  <div style="position:absolute;left:56px;right:56px;top:0;bottom:0;display:flex;align-items:center;justify-content:center">
+    <p style="margin:0;font-family:'EB Garamond',serif;font-weight:600;font-size:38px;line-height:1.5;max-width:820px;text-align:center" data-typewriter data-step="46" data-start="900">Antes de que el enemigo sea encerrado, debe ser nombrado.</p>
   </div>
-  <div class="credit reveal-solo" data-reveal-on="aud-bando10:play"><em>Audio: Bando N.º 10 de la Junta Militar, 11 de septiembre de 1973. Archivo Radial y Sonoro, Museo de la Memoria y los Derechos Humanos.</em></div>
+  <div class="credit reveal-solo" data-reveal-on="aud-bando10:play" style="text-align:center"><em>Audio: Bando N.º 10 de la Junta Militar, 11 de septiembre de 1973. Archivo Radial y Sonoro, Museo de la Memoria y los Derechos Humanos.</em></div>
   <div class="pageno">02</div>
 </section>
 </article>
 
 <article class="book-page" data-index="2">
 <section class="scene" data-screen-label="03 El encierro">
-  <div class="scene-inner" style="top:36px;bottom:auto;justify-content:flex-start">
-    <div class="reveal-group" data-step="700" data-start="150">
-      <p class="big-line" style="margin:0">La palabra no quedó en el discurso.</p>
-      <p class="sub-line" style="margin-top:12px">Quienes fueron señalados como enemigos pasaron a ser perseguidos, detenidos y encerrados.</p>
+  <div class="split">
+    <div class="split-text reveal-group" data-step="700" data-start="150">
+      <div class="eyebrow">1973</div>
+      <p class="big-line" style="margin-top:14px">La palabra no quedó en el discurso.</p>
+      <p class="sub-line">Quienes fueron señalados como enemigos pasaron a ser perseguidos, detenidos y encerrados.</p>
     </div>
-  </div>
-  <div style="position:absolute;left:44px;right:44px;bottom:56px;top:190px">
-    <div class="fig-grid reveal-group" data-step="450" data-start="1400">
-      <div class="fig">
-        <div class="frame-box" style="height:150px"><img src="img/vg-celda.jpg" alt="Celda de detención, Villa Grimaldi"><div class="grain"></div></div>
-        <div class="fig-cap">Celda de detención de prisioneros. Parque por la Paz Villa Grimaldi.</div>
-      </div>
-      <div class="fig">
-        <div class="frame-box" style="height:150px"><img src="img/vg-torre-interior.jpg" alt="La Torre, Villa Grimaldi" style="object-position:50% 30%"><div class="grain"></div></div>
-        <div class="fig-cap">La Torre, reconstrucción del espacio de aislamiento y tortura del Cuartel Terranova. Parque por la Paz Villa Grimaldi.</div>
-      </div>
-      <div class="fig">
-        <div class="frame-box" style="height:150px"><img src="img/estadio-nacional-1973.png" alt="Prisioneros en el Estadio Nacional, 1973"><div class="grain"></div></div>
-        <div class="fig-cap">Prisioneros políticos en el Estadio Nacional, Santiago, septiembre de 1973. Fotografía: Evandro Teixeira.</div>
-      </div>
-      <div class="fig">
-        <div class="frame-box" style="height:150px"><img src="img/vg-tortura-dibujo.jpg" alt="Sala de torturas, dibujo de Miguel Montecinos" style="object-position:50% 35%"><div class="grain"></div></div>
-        <div class="fig-cap">Sala de torturas del primer piso de La Torre. Dibujo de Miguel Montecinos, sobreviviente de Villa Grimaldi. Fotografía propia.</div>
+    <div class="split-media">
+      <div class="fig-grid reveal-group" data-step="380" data-start="1200" style="grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;height:100%">
+        <div class="fig" style="display:flex;flex-direction:column">
+          <div class="frame-box" style="flex:1"><img src="img/vg-celda.jpg" alt="Celda de detención, Villa Grimaldi"><div class="grain"></div></div>
+          <div class="fig-cap">Celda de detención de prisioneros. Parque por la Paz Villa Grimaldi.</div>
+        </div>
+        <div class="fig" style="display:flex;flex-direction:column">
+          <div class="frame-box" style="flex:1"><img src="img/vg-torre-interior.jpg" alt="La Torre, Villa Grimaldi" style="object-position:50% 30%"><div class="grain"></div></div>
+          <div class="fig-cap">La Torre, reconstrucción del espacio de aislamiento y tortura del Cuartel Terranova.</div>
+        </div>
+        <div class="fig" style="display:flex;flex-direction:column">
+          <div class="frame-box" style="flex:1"><img src="img/estadio-nacional-1973.png" alt="Prisioneros en el Estadio Nacional, 1973"><div class="grain"></div></div>
+          <div class="fig-cap">Prisioneros políticos en el Estadio Nacional, Santiago, 1973. Foto: Evandro Teixeira.</div>
+        </div>
+        <div class="fig" style="display:flex;flex-direction:column">
+          <div class="frame-box" style="flex:1"><img src="img/vg-tortura-dibujo.jpg" alt="Sala de torturas, dibujo de Miguel Montecinos" style="object-position:50% 35%"><div class="grain"></div></div>
+          <div class="fig-cap">Sala de torturas de La Torre. Dibujo de Miguel Montecinos, sobreviviente. Fotografía propia.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -251,11 +289,22 @@
 <article class="book-page" data-index="3">
 <section class="scene" data-screen-label="04 El cuerpo">
   <video id="vid-toque" data-autoplay src="video/toque-de-queda.mp4" preload="none" playsinline muted="false" style="display:none"></video>
-  <div class="scene-inner" style="justify-content:flex-start;top:40px;bottom:24px">
-    <p class="big-line reveal-solo is-in" style="max-width:420px">El enemigo deja de ser una palabra. Ahora tiene un rostro.</p>
-    <div class="player reveal-solo" data-reveal-on="vid-toque:play" style="margin-top:22px;max-width:100%">
-      <video-slot></video-slot>
-      <div class="cap"><em>Fragmento de Chile: Toque de queda (1973). RTVE.</em></div>
+  <div class="split">
+    <div class="split-text">
+      <p class="big-line reveal-solo is-in">El enemigo deja de ser una palabra.</p>
+      <p class="big-line reveal-solo is-in" style="margin-top:10px;color:#C4522F">Ahora tiene un rostro.</p>
+      <svg width="100%" height="60" viewBox="0 0 200 60" style="margin-top:34px;opacity:0.45" aria-hidden="true">
+        <g stroke="#6B6864" stroke-width="0.6" fill="none">
+          <path d="M10 30 Q30 5 50 30 T90 30"/>
+          <path d="M10 42 Q30 22 50 42 T90 42"/>
+        </g>
+      </svg>
+    </div>
+    <div class="split-media">
+      <div class="player reveal-solo" data-reveal-on="vid-toque:play">
+        <video-slot></video-slot>
+        <div class="cap"><em>Fragmento de Chile: Toque de queda (1973). RTVE.</em></div>
+      </div>
     </div>
   </div>
   <div class="pageno">04</div>
@@ -265,16 +314,20 @@
 <article class="book-page" data-index="4">
 <section class="scene" data-screen-label="05 La justificación">
   <video id="vid-contreras" data-autoplay src="video/contreras-entrevista.mp4" preload="none" playsinline style="display:none"></video>
-  <div class="scene-inner" style="justify-content:flex-start;top:40px;bottom:24px">
-    <div class="reveal-group" data-step="650" data-start="100">
-      <p class="big-line" style="margin:0">La fuerza también necesita una explicación.</p>
-      <p class="sub-line" style="margin-top:12px">Cuando alguien es presentado como una amenaza, actuar contra él puede empezar a parecer necesario.</p>
+  <div class="split reverse">
+    <div class="split-text">
+      <div class="reveal-group" data-step="650" data-start="100">
+        <p class="big-line" style="margin:0">La fuerza también necesita una explicación.</p>
+        <p class="sub-line">Cuando alguien es presentado como una amenaza, actuar contra él puede empezar a parecer necesario.</p>
+      </div>
+      <p class="sub-line reveal-solo" data-reveal-on="vid-contreras:ended" style="margin-top:20px;font-style:italic;color:#C4522F;font-family:'EB Garamond',serif;font-weight:600;font-size:16px;line-height:1.55">Nombrar al otro como una amenaza también puede cambiar lo que parece aceptable hacer contra él.</p>
     </div>
-    <div class="player reveal-solo" data-reveal-on="vid-contreras:play" style="margin-top:20px">
-      <video-slot></video-slot>
-      <div class="cap"><em>Manuel Contreras, exdirector de la DINA. Entrevista a Chilevisión, 29 de julio de 2010.</em></div>
+    <div class="split-media">
+      <div class="player reveal-solo" data-reveal-on="vid-contreras:play">
+        <video-slot></video-slot>
+        <div class="cap"><em>Manuel Contreras, exdirector de la DINA. Entrevista a Chilevisión, 29 de julio de 2010.</em></div>
+      </div>
     </div>
-    <p class="sub-line reveal-solo" data-reveal-on="vid-contreras:ended" style="margin-top:18px;font-style:italic;color:#C4522F;font-family:'EB Garamond',serif;font-weight:600;font-size:15px;line-height:1.5">Nombrar al otro como una amenaza también puede cambiar lo que parece aceptable hacer contra él.</p>
   </div>
   <div class="pageno">05</div>
 </section>
@@ -283,12 +336,14 @@
 <article class="book-page" data-index="5">
 <section class="scene" data-screen-label="06 El presente">
   <video id="vid-pinera" src="video/pinera-2019.mp4" preload="none" playsinline style="display:none"></video>
-  <div class="scene-inner" style="justify-content:flex-start;top:36px;bottom:20px">
-    <div class="reveal-group" data-step="900" data-start="150">
+  <div class="split">
+    <div class="split-text reveal-group" data-step="900" data-start="150">
       <p class="big-line" style="margin:0">Décadas después, el contexto es otro.</p>
-      <p class="sub-line" style="margin-top:16px;color:#8A8680;font-style:normal;font-size:12.5px">En octubre de 2019, Chile atravesaba una fuerte crisis social. En medio del estallido social, episodios de violencia y destrucción, y bajo estado de emergencia, el gobierno recurrió a las Fuerzas Armadas para apoyar el control del orden público.</p>
-      <p class="sub-line" style="margin-top:14px">Pero vuelve a aparecer una pregunta conocida: ¿qué puede hacer el Estado frente a quienes presenta como una amenaza?</p>
-      <div class="player" data-play="vid-pinera" style="margin-top:18px">
+      <p class="sub-line" style="color:#8A8680;font-style:normal;font-size:13.5px">En octubre de 2019, Chile atravesaba una fuerte crisis social. En medio del estallido social, episodios de violencia y destrucción, y bajo estado de emergencia, el gobierno recurrió a las Fuerzas Armadas para apoyar el control del orden público.</p>
+      <p class="sub-line">Pero vuelve a aparecer una pregunta conocida: ¿qué puede hacer el Estado frente a quienes presenta como una amenaza?</p>
+    </div>
+    <div class="split-media">
+      <div class="player" data-play="vid-pinera">
         <video-slot></video-slot>
         <div class="cap"><em>Sebastián Piñera, declaración pública, 20 de octubre de 2019, durante el estado de emergencia y el estallido social. Fuente: La Tercera.</em></div>
       </div>
@@ -301,33 +356,37 @@
 <article class="book-page" data-index="6">
 <section class="scene" data-screen-label="07 De la amenaza a la respuesta">
   <audio id="aud-kast" data-autoplay src="audio/kast-2026.mp3" preload="none" hidden></audio>
-  <div style="position:absolute;left:44px;top:22px" class="reveal-solo" data-reveal-on="aud-kast:play">
+  <div style="position:absolute;left:56px;top:26px" class="reveal-solo" data-reveal-on="aud-kast:play">
     <span class="audio-pill"><span class="eq"><span></span><span></span><span></span><span></span></span><span class="lbl">José Antonio Kast, 2026</span></span>
   </div>
-  <div class="scene-inner" style="justify-content:flex-start;top:56px;bottom:20px">
-    <p class="big-line reveal-solo is-in" style="max-width:430px">Cuando una amenaza se presenta como cada vez más grave, también puede ampliarse aquello que parece necesario hacer para enfrentarla.</p>
-    <div class="fig-grid reveal-group" data-step="4000" data-start="1600" style="margin-top:20px">
-      <div class="fig">
-        <div class="fig-title">Despliegue policial</div>
-        <div class="frame-box" style="height:110px"><img src="img/operativos-santiago.jpg" alt="Operativos policiales en Santiago"><div class="grain"></div></div>
-        <div class="fig-cap">Operativos policiales y fiscalizaciones en Santiago. Fuente: Gobierno de Chile.</div>
-      </div>
-      <div class="fig">
-        <div class="fig-title">Copamiento territorial</div>
-        <div class="frame-box" style="height:110px"><img src="img/frontera-peru-chile.webp" alt="Frontera Perú–Chile"><div class="grain"></div></div>
-        <div class="fig-cap">Obras de infraestructura en la frontera con Perú frente a la migración irregular. Fuente: La Razón, 2026.</div>
-      </div>
-      <div class="fig" style="grid-column:1 / -1">
-        <div class="fig-title">Tecnología de vigilancia</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-          <div class="frame-box" style="height:96px"><img src="img/vigilancia-fronteriza-1.jpg" alt="Vigilancia fronteriza, norte de Chile"><div class="grain"></div></div>
-          <div class="frame-box" style="height:96px"><img src="img/vigilancia-fronteriza-2.jpg" alt="Vigilancia fronteriza, norte de Chile"><div class="grain"></div></div>
+  <div class="split">
+    <div class="split-text">
+      <p class="big-line reveal-solo is-in">Cuando una amenaza se presenta como cada vez más grave, también puede ampliarse aquello que parece necesario hacer para enfrentarla.</p>
+      <p class="sub-line reveal-solo" data-reveal-on="aud-kast:ended">La amenaza no queda solo en el discurso: se traduce en formas concretas de intervención estatal.</p>
+      <p class="sub-line reveal-solo" data-reveal-on="aud-kast:ended" style="margin-top:10px;font-weight:600;color:#F5F2EA;font-style:normal">El problema no es que el Estado busque garantizar seguridad. La pregunta es qué límites mantiene cuando lo hace.</p>
+    </div>
+    <div class="split-media">
+      <div class="fig-grid reveal-group" data-step="4000" data-start="1600" style="grid-template-columns:1fr 1fr;height:100%">
+        <div class="fig" style="display:flex;flex-direction:column">
+          <div class="fig-title">Despliegue policial</div>
+          <div class="frame-box" style="flex:1"><img src="img/operativos-santiago.jpg" alt="Operativos policiales en Santiago"><div class="grain"></div></div>
+          <div class="fig-cap">Operativos policiales y fiscalizaciones en Santiago. Fuente: Gobierno de Chile.</div>
         </div>
-        <div class="fig-cap">Vigilancia en la frontera norte de Chile y reforzamiento del control territorial mediante infraestructura y tecnología. Fuente: Ministerio del Interior / registro de prensa.</div>
+        <div class="fig" style="display:flex;flex-direction:column">
+          <div class="fig-title">Copamiento territorial</div>
+          <div class="frame-box" style="flex:1"><img src="img/frontera-peru-chile.webp" alt="Frontera Perú–Chile"><div class="grain"></div></div>
+          <div class="fig-cap">Infraestructura en la frontera con Perú frente a la migración irregular. Fuente: La Razón, 2026.</div>
+        </div>
+        <div class="fig" style="grid-column:1 / -1;display:flex;flex-direction:column">
+          <div class="fig-title">Tecnología de vigilancia</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:1">
+            <div class="frame-box" style="height:100%"><img src="img/vigilancia-fronteriza-1.jpg" alt="Vigilancia fronteriza, norte de Chile"><div class="grain"></div></div>
+            <div class="frame-box" style="height:100%"><img src="img/vigilancia-fronteriza-2.jpg" alt="Vigilancia fronteriza, norte de Chile"><div class="grain"></div></div>
+          </div>
+          <div class="fig-cap">Vigilancia en la frontera norte de Chile y reforzamiento del control territorial. Fuente: Ministerio del Interior / registro de prensa.</div>
+        </div>
       </div>
     </div>
-    <p class="sub-line reveal-solo" data-reveal-on="aud-kast:ended" style="margin-top:16px">La amenaza no queda solo en el discurso: se traduce en formas concretas de intervención estatal.</p>
-    <p class="sub-line reveal-solo" data-reveal-on="aud-kast:ended" style="margin-top:8px;font-weight:600;color:#F5F2EA;font-style:normal">El problema no es que el Estado busque garantizar seguridad. La pregunta es qué límites mantiene cuando lo hace.</p>
   </div>
   <div class="pageno">07</div>
 </section>
@@ -335,23 +394,27 @@
 
 <article class="book-page" data-index="7">
 <section class="scene" data-screen-label="08 El cuerpo, otra vez">
-  <div class="scene-inner" style="justify-content:flex-start;top:46px;bottom:20px">
-    <div class="reveal-group" data-step="700" data-start="100">
-      <p class="big-line" style="margin:0">¿Sobre quién recae el control?</p>
-      <p class="sub-line" style="margin-top:12px">Las políticas de seguridad no actúan sobre una idea abstracta. Actúan sobre personas, barrios y territorios concretos.</p>
-      <p class="sub-line" style="margin-top:10px;font-weight:600;color:#F5F2EA;font-style:normal">El control no recae sobre todos de la misma manera.</p>
-    </div>
-    <div class="fig-grid reveal-group" data-step="900" data-start="2400" style="margin-top:22px">
-      <div class="fig">
-        <div class="frame-box" style="height:150px"><img src="img/control-estacion-central.jpg" alt="Control policial, Estación Central"><div class="grain"></div></div>
-        <div class="fig-cap">Fiscalización policial en Estación Central durante operativo de seguridad en la Región Metropolitana, abril de 2026. Fuente: Delegación Presidencial Regional Metropolitana de Santiago.</div>
+  <div class="split reverse">
+    <div class="split-text">
+      <div class="reveal-group" data-step="700" data-start="100">
+        <p class="big-line" style="margin:0">¿Sobre quién recae el control?</p>
+        <p class="sub-line">Las políticas de seguridad no actúan sobre una idea abstracta. Actúan sobre personas, barrios y territorios concretos.</p>
+        <p class="sub-line" style="font-weight:600;color:#F5F2EA;font-style:normal">El control no recae sobre todos de la misma manera.</p>
       </div>
-      <div class="fig">
-        <div class="frame-box" style="height:150px"><img src="img/expulsion-migratoria-2026.jpg" alt="Expulsión migratoria, Chile 2026"><div class="grain"></div></div>
-        <div class="fig-cap">Operativo de expulsión de ciudadanos extranjeros desde Chile, abril de 2026. Fuente: Subsecretaría del Interior, Gobierno de Chile.<br><span style="opacity:0.75">El vuelo del 16 de abril de 2026 trasladó a personas sujetas a medidas administrativas y judiciales de expulsión.</span></div>
+      <p class="sub-line reveal-solo" data-reveal-in="4200" id="cv2-close" style="margin-top:18px">La seguridad busca proteger. Pero también debemos preguntar quién queda bajo vigilancia para producir esa protección.</p>
+    </div>
+    <div class="split-media">
+      <div class="fig-grid reveal-group" data-step="900" data-start="2200" style="height:100%">
+        <div class="fig" style="display:flex;flex-direction:column">
+          <div class="frame-box" style="flex:1"><img src="img/control-estacion-central.jpg" alt="Control policial, Estación Central"><div class="grain"></div></div>
+          <div class="fig-cap">Fiscalización policial en Estación Central, Región Metropolitana, abril de 2026. Fuente: Delegación Presidencial RM de Santiago.</div>
+        </div>
+        <div class="fig" style="display:flex;flex-direction:column">
+          <div class="frame-box" style="flex:1"><img src="img/expulsion-migratoria-2026.jpg" alt="Expulsión migratoria, Chile 2026"><div class="grain"></div></div>
+          <div class="fig-cap">Expulsión de ciudadanos extranjeros desde Chile, abril de 2026. Fuente: Subsecretaría del Interior.<br><span style="opacity:0.75">El vuelo del 16 de abril trasladó a personas sujetas a medidas administrativas y judiciales de expulsión.</span></div>
+        </div>
       </div>
     </div>
-    <p class="sub-line reveal-solo" data-reveal-in="4400" style="margin-top:18px" id="cv2-close">La seguridad busca proteger. Pero también debemos preguntar quién queda bajo vigilancia para producir esa protección.</p>
   </div>
   <div class="pageno">08</div>
 </section>
@@ -359,12 +422,25 @@
 
 <article class="book-page" data-index="8">
 <section class="scene" data-screen-label="09 Ecuador, el decreto">
-  <div class="scene-inner" style="justify-content:flex-start;top:46px;bottom:20px">
-    <p class="sub-line reveal-solo is-in" style="color:#F5F2EA;font-style:normal;font-size:15px;line-height:1.65;max-width:440px">En enero de 2024, Ecuador declaró la existencia de un conflicto armado interno mediante el Decreto Ejecutivo N.º 111 y dispuso la intervención de las Fuerzas Armadas frente a las organizaciones criminales identificadas como terroristas.</p>
-    <div class="reveal-solo is-in" style="margin-top:20px;width:220px">
-      <div style="position:relative;overflow:hidden;height:280px;width:220px;background:#0c0c0c;box-shadow:0 10px 28px rgba(0,0,0,0.5)"><img src="img/decreto-ecuador.webp" alt="Decreto Ejecutivo N.º 111, Ecuador" style="width:100%;height:100%;object-fit:contain;display:block"></div>
+  <svg class="deco" width="30%" height="70%" viewBox="0 0 200 300" style="left:6%;top:15%;opacity:0.14" aria-hidden="true">
+    <g stroke="#8E2B1C" stroke-width="0.6" fill="none">
+      <rect x="10" y="10" width="180" height="280"/>
+      <line x1="30" y1="50" x2="170" y2="50"/>
+      <line x1="30" y1="80" x2="170" y2="80"/>
+      <line x1="30" y1="110" x2="150" y2="110"/>
+    </g>
+  </svg>
+  <div class="split">
+    <div class="split-text">
+      <div class="eyebrow">Enero 2024</div>
+      <p class="sub-line" style="margin-top:14px;color:#F5F2EA;font-style:normal;font-size:17px;line-height:1.7">Ecuador declaró la existencia de un conflicto armado interno mediante el Decreto Ejecutivo N.º 111 y dispuso la intervención de las Fuerzas Armadas frente a las organizaciones criminales identificadas como terroristas.</p>
+      <p class="sub-line reveal-solo" data-reveal-in="2200" id="ec1-close" style="font-weight:600;color:#C4522F;font-family:'EB Garamond',serif;font-style:italic;font-size:17px">Una amenaza definida de manera amplia puede extender el control más allá de quienes se busca perseguir.</p>
     </div>
-    <p class="sub-line reveal-solo" data-reveal-in="2400" id="ec1-close" style="margin-top:20px;font-weight:600;color:#C4522F;font-family:'EB Garamond',serif;font-style:italic;font-size:16px">Una amenaza definida de manera amplia puede extender el control más allá de quienes se busca perseguir.</p>
+    <div class="split-media">
+      <div class="reveal-solo is-in" style="height:100%;width:100%;display:flex;align-items:center;justify-content:center">
+        <div style="position:relative;overflow:hidden;height:88%;aspect-ratio:768/1024;background:#0c0c0c;box-shadow:0 14px 36px rgba(0,0,0,0.55)"><img src="img/decreto-ecuador.webp" alt="Decreto Ejecutivo N.º 111, Ecuador" style="width:100%;height:100%;object-fit:contain;display:block"></div>
+      </div>
+    </div>
   </div>
   <div class="pageno">09</div>
 </section>
@@ -372,22 +448,26 @@
 
 <article class="book-page" data-index="9">
 <section class="scene" data-screen-label="10 Las Malvinas, Guayaquil">
-  <div class="scene-inner" style="justify-content:flex-start;top:40px;bottom:20px">
-    <div class="reveal-group" data-step="900" data-start="100">
-      <p class="sub-line" style="color:#F5F2EA;font-style:normal;font-size:13.5px;line-height:1.6;max-width:440px;margin:0">En diciembre de 2024, cuatro niños del sector de Las Malvinas, en Guayaquil, fueron detenidos por una patrulla militar.</p>
-      <p class="sub-line" style="margin-top:10px;font-size:12px;max-width:440px">La Corte Constitucional determinó posteriormente que Josué, Ismael, Steven y Nehemías fueron privados de libertad de forma <strong style="font-style:normal">ilegal, arbitraria e ilegítima</strong> por patrullas militares, y declaró, en el ámbito constitucional, que fueron víctimas de desaparición forzada.</p>
-    </div>
-    <div class="fig-grid reveal-group" data-step="1100" data-start="2200" style="margin-top:18px">
-      <div class="fig">
-        <div class="frame-box" style="height:160px"><img src="img/ecuador-malvinas-retratos.jpg" alt="Marcha por los cuatro niños de Las Malvinas"><div class="grain"></div></div>
-        <div class="fig-cap">Marcha por verdad, justicia y reparación por los cuatro niños de Las Malvinas, Guayaquil, enero de 2025. Fuente: CDH Ecuador.</div>
+  <div class="split reverse">
+    <div class="split-text">
+      <div class="reveal-group" data-step="900" data-start="100">
+        <p class="sub-line" style="color:#F5F2EA;font-style:normal;font-size:15px;line-height:1.65;margin:0">En diciembre de 2024, cuatro niños del sector de Las Malvinas, en Guayaquil, fueron detenidos por una patrulla militar.</p>
+        <p class="sub-line" style="font-size:13.5px">La Corte Constitucional determinó posteriormente que Josué, Ismael, Steven y Nehemías fueron privados de libertad de forma <strong style="font-style:normal">ilegal, arbitraria e ilegítima</strong> por patrullas militares, y declaró, en el ámbito constitucional, que fueron víctimas de desaparición forzada.</p>
       </div>
-      <div class="fig">
-        <div class="frame-box" style="height:160px"><img src="img/ecuador-futbolistas.jpg" alt="Somos futbolistas, no delincuentes"><div class="grain"></div></div>
-        <div class="fig-cap">Jornada comunitaria en memoria de los cuatro niños de Las Malvinas, Guayaquil, enero de 2025. Fuente: CDH Ecuador.</div>
+      <p class="sub-line reveal-solo" data-reveal-in="4200" id="ec2-close" style="margin-top:16px;font-weight:600;color:#F5F2EA;font-style:normal">El problema del control no es solamente cuánto se amplía, sino también sobre quién puede terminar recayendo.</p>
+    </div>
+    <div class="split-media">
+      <div class="fig-grid reveal-group" data-step="1100" data-start="2000" style="height:100%">
+        <div class="fig" style="display:flex;flex-direction:column">
+          <div class="frame-box" style="flex:1"><img src="img/ecuador-malvinas-retratos.jpg" alt="Marcha por los cuatro niños de Las Malvinas"><div class="grain"></div></div>
+          <div class="fig-cap">Marcha por verdad, justicia y reparación, Guayaquil, enero de 2025. Fuente: CDH Ecuador.</div>
+        </div>
+        <div class="fig" style="display:flex;flex-direction:column">
+          <div class="frame-box" style="flex:1"><img src="img/ecuador-futbolistas.jpg" alt="Somos futbolistas, no delincuentes"><div class="grain"></div></div>
+          <div class="fig-cap">Jornada comunitaria en su memoria, Guayaquil, enero de 2025. Fuente: CDH Ecuador.</div>
+        </div>
       </div>
     </div>
-    <p class="sub-line reveal-solo" data-reveal-in="4400" id="ec2-close" style="margin-top:16px;font-weight:600;color:#F5F2EA;font-style:normal;font-size:13px">El problema del control no es solamente cuánto se amplía, sino también sobre quién puede terminar recayendo.</p>
   </div>
   <div class="pageno">10</div>
 </section>
@@ -395,60 +475,87 @@
 
 <article class="book-page" data-index="10">
 <section class="scene" data-screen-label="11 La memoria — el testimonio">
-  <div class="shot"><img src="img/lm1-testimonio.jpg" alt="Dibujo de Miguel Montecinos, Villa Grimaldi"></div>
-  <p class="sub-line reveal-solo is-in" style="position:absolute;left:44px;right:44px;top:64px;color:#F5F2EA;font-size:14px;max-width:420px;z-index:2">Recordar no significa decir que el presente sea igual al pasado.</p>
-  <p class="shot-line reveal-solo" data-reveal-in="2000" id="lm1-line">Hay experiencias que sobreviven porque alguien pudo contarlas.</p>
+  <div class="shot">
+    <img class="shot-bg" src="img/lm1-testimonio.jpg" alt="" style="object-position:50% 40%">
+    <img class="shot-fg" src="img/lm1-testimonio.jpg" alt="Dibujo de Miguel Montecinos, Villa Grimaldi">
+  </div>
+  <p class="sub-line reveal-solo is-in" style="position:absolute;left:56px;width:30%;top:20%;color:#F5F2EA;font-size:16px;line-height:1.6;z-index:2;margin:0">Recordar no significa decir que el presente sea igual al pasado.</p>
+  <p class="shot-line reveal-solo" data-reveal-in="2000" id="lm1-line" style="width:30%;top:auto;bottom:22%;transform:none">Hay experiencias que sobreviven porque alguien pudo contarlas.</p>
   <div class="shot-cap">Camión civil sacando cuerpos para hacerlos desaparecer. Dibujo de Miguel Montecinos, sobreviviente de Villa Grimaldi. Fotografía propia, Parque por la Paz Villa Grimaldi, 2026.</div>
 </section>
 </article>
 
 <article class="book-page" data-index="11">
 <section class="scene" data-screen-label="12 La memoria — los rostros">
-  <div class="shot"><img src="img/lm3-rostros.jpg" alt="Muro de retratos, Museo de la Memoria" style="object-position:50% 30%"></div>
-  <p class="shot-line reveal-solo" data-reveal-in="900" id="lm3-line">La memoria también devuelve nombres y rostros.</p>
+  <div class="shot">
+    <img class="shot-bg" src="img/lm3-rostros.jpg" alt="" style="object-position:50% 30%">
+    <img class="shot-fg" src="img/lm3-rostros.jpg" alt="Muro de retratos, Museo de la Memoria">
+  </div>
+  <p class="shot-line reveal-solo" data-reveal-in="900" id="lm3-line" style="width:30%">La memoria también devuelve nombres y rostros.</p>
   <div class="shot-cap">Muro de retratos. Museo de la Memoria y los Derechos Humanos. Fotografía propia, 2026.</div>
 </section>
 </article>
 
 <article class="book-page" data-index="12">
 <section class="scene" data-screen-label="13 La memoria — las ausencias">
-  <div class="shot"><img src="img/lm2-ausencias.jpg" alt="Detalle del muro de retratos"></div>
-  <p class="shot-line reveal-solo" data-reveal-in="900" id="lm2-line">Y hace visibles las ausencias que permanecen.</p>
+  <div class="shot">
+    <img class="shot-bg" src="img/lm2-ausencias.jpg" alt="">
+    <img class="shot-fg" src="img/lm2-ausencias.jpg" alt="Detalle del muro de retratos">
+  </div>
+  <p class="shot-line reveal-solo" data-reveal-in="900" id="lm2-line" style="width:30%">Y hace visibles las ausencias que permanecen.</p>
   <div class="shot-cap">Detalle del muro de retratos. Museo de la Memoria y los Derechos Humanos. Fotografía propia, 2026.</div>
 </section>
 </article>
 
 <article class="book-page" data-index="13">
 <section class="scene" data-screen-label="14 La memoria — los lugares">
-  <div class="shot"><img src="img/lm5-lugares.jpg" alt="Acceso a las conejeras de La Torre"></div>
-  <p class="shot-line reveal-solo" data-reveal-in="900" id="lm5-line">Los lugares también conservan aquello que ocurrió.</p>
+  <div class="shot">
+    <img class="shot-bg" src="img/lm5-lugares.jpg" alt="">
+    <img class="shot-fg" src="img/lm5-lugares.jpg" alt="Acceso a las conejeras de La Torre">
+  </div>
+  <p class="shot-line reveal-solo" data-reveal-in="900" id="lm5-line" style="width:30%">Los lugares también conservan aquello que ocurrió.</p>
   <div class="shot-cap">Acceso a las denominadas «conejeras» de La Torre. Parque por la Paz Villa Grimaldi. Fotografía propia, 2026.</div>
 </section>
 </article>
 
 <article class="book-page" data-index="14">
 <section class="scene" data-screen-label="15 La memoria — el interior">
-  <div class="shot"><img src="img/lm4-interior.jpg" alt="Interior reconstruido, Villa Grimaldi" style="object-position:50% 25%"></div>
-  <p class="shot-line reveal-solo" data-reveal-in="900" id="lm4-line">Cada espacio reconstruido vuelve a hacer las mismas preguntas.</p>
+  <div class="shot">
+    <img class="shot-bg" src="img/lm4-interior.jpg" alt="" style="object-position:50% 25%">
+    <img class="shot-fg" src="img/lm4-interior.jpg" alt="Interior reconstruido, Villa Grimaldi">
+  </div>
+  <p class="shot-line reveal-solo" data-reveal-in="900" id="lm4-line" style="width:30%">Cada espacio reconstruido vuelve a hacer las mismas preguntas.</p>
   <div class="shot-cap">Interior reconstruido. Parque por la Paz Villa Grimaldi. Fotografía propia, 2026.</div>
 </section>
 </article>
 
 <article class="book-page" data-index="15">
 <section class="scene" data-screen-label="16 La memoria — del recuerdo al presente">
-  <div class="shot"><img src="img/carcel-san-miguel.jpg" alt="Acceso a la Cárcel de San Miguel"></div>
-  <p class="shot-line reveal-solo" data-reveal-in="900" id="csm-line">Pero recordar el pasado también obliga a mirar cómo ejercemos el control en el presente.</p>
+  <div class="shot">
+    <img class="shot-bg" src="img/carcel-san-miguel.jpg" alt="">
+    <img class="shot-fg" src="img/carcel-san-miguel.jpg" alt="Acceso a la Cárcel de San Miguel">
+  </div>
+  <p class="shot-line reveal-solo" data-reveal-in="900" id="csm-line" style="width:30%">Pero recordar el pasado también obliga a mirar cómo ejercemos el control en el presente.</p>
   <div class="shot-cap">Acceso a la Cárcel de San Miguel, Santiago. Fotografía propia, 2026.</div>
 </section>
 </article>
 
 <article class="book-page" data-index="16">
 <section class="scene" data-screen-label="17 Cierre">
-  <div class="scene-inner reveal-group" data-step="2600" data-start="300">
-    <p class="big-line" style="max-width:420px;font-size:24px">¿Cuánto control estamos dispuestos a aceptar para sentirnos seguros?</p>
-    <p class="big-line" style="margin-top:26px;max-width:420px;font-size:24px;color:#C4522F">¿Dónde está el límite?</p>
+  <svg class="deco" width="40%" height="100%" viewBox="0 0 300 300" style="right:0;top:0;opacity:0.12" aria-hidden="true">
+    <g stroke="#F5F2EA" stroke-width="0.5" fill="none">
+      <circle cx="150" cy="150" r="130"/>
+      <circle cx="150" cy="150" r="90"/>
+      <circle cx="150" cy="150" r="50"/>
+    </g>
+  </svg>
+  <div style="position:absolute;left:56px;right:56px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center">
+    <div class="reveal-group" data-step="2600" data-start="300">
+      <p class="big-line" style="max-width:640px;font-size:30px">¿Cuánto control estamos dispuestos a aceptar para sentirnos seguros?</p>
+      <p class="big-line" style="margin-top:30px;max-width:640px;font-size:30px;color:#C4522F">¿Dónde está el límite?</p>
+    </div>
   </div>
-  <div class="credit" style="bottom:20px">Adriana Paccha · Andrés Lazcano — Curso Trabajo de Campo y Actualidad · Magíster en Ciencias Sociales, mención Sociología de la Modernización · Universidad de Chile</div>
+  <div class="credit" style="bottom:22px">Adriana Paccha · Andrés Lazcano — Curso Trabajo de Campo y Actualidad · Magíster en Ciencias Sociales, mención Sociología de la Modernización · Universidad de Chile</div>
   <div class="pageno">17</div>
 </section>
 </article>
@@ -477,7 +584,7 @@
     el.classList.add('type-group');
     Array.from(text).forEach(function(ch){
       var span = document.createElement('span');
-      span.textContent = (ch === ' ') ? ' ' : ch;
+      span.textContent = (ch === ' ') ? ' ' : ch;
       el.appendChild(span);
     });
   });
@@ -488,7 +595,6 @@
     if (!slot) return;
     var page = box.closest('.book-page');
     var video = page.querySelector('video[id]:not([data-mounted])');
-    // pick the one video meant for this box: prefer data-play/data-reveal-on match
     var wantId = box.getAttribute('data-play');
     if (!wantId) {
       var solo = box.closest('[data-reveal-on]');
@@ -533,8 +639,6 @@
       var t = setTimeout(function(){ m.play().catch(function(){}); }, 150);
       timers.push(t);
     });
-    // plain timed reveals with no media involved (e.g. a closing line on an
-    // image-only page) — just fade in N ms after the page becomes current
     page.querySelectorAll('.reveal-solo[data-reveal-in]').forEach(function(el){
       var delay = parseInt(el.getAttribute('data-reveal-in'), 10) || 0;
       var t = setTimeout(function(){ el.classList.add('is-in'); }, delay);
@@ -543,7 +647,6 @@
     pendingTimers.set(page, timers);
   }
 
-  // elements revealed by a specific media event, wired once (id:event on the element itself)
   document.querySelectorAll('[data-reveal-on]').forEach(function(el){
     var spec = (el.getAttribute('data-reveal-on') || '').split(':');
     var media = document.getElementById(spec[0]);
@@ -642,10 +745,10 @@
   }, { passive:true });
 
   var MM = 96 / 25.4;
-  var PAGE_W = 148 * MM, PAGE_H = 210 * MM;
+  var PAGE_W = 256 * MM, PAGE_H = 144 * MM;
   function fit(){
-    var availW = window.innerWidth * 0.92;
-    var availH = (window.innerHeight - 110) * 0.92;
+    var availW = window.innerWidth * 0.94;
+    var availH = (window.innerHeight - 110) * 0.94;
     var scale = Math.min(1, availW/PAGE_W, availH/PAGE_H);
     document.documentElement.style.setProperty('--fit-scale', scale);
   }
