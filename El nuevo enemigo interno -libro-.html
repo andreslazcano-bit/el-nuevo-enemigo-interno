@@ -113,7 +113,10 @@
   .split.reverse{ flex-direction:row-reverse; }
   .split-text{ flex:0 0 40%; padding:0 30px 0 56px; display:flex; flex-direction:column; justify-content:center; }
   .split.reverse .split-text{ padding:0 56px 0 30px; }
-  .split-media{ flex:1; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:36px 56px; min-width:0; }
+  /* the media column bleeds flush to the page's outer edge and to the
+     text divider — no gutter, no card floating in padded space — so
+     photo/video reads as part of the page rather than a placeholder */
+  .split-media{ flex:1; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0; min-width:0; overflow:hidden; background:#000; }
 
   /* ---- media: audio pill + embedded video ---- */
   .audio-pill{ display:inline-flex; align-items:center; gap:7px; padding:7px 12px 7px 10px; border-radius:999px; background:rgba(196,82,47,0.12); border:1px solid rgba(196,82,47,0.4); }
@@ -127,9 +130,13 @@
   @keyframes eqbeat{ 0%,100%{ height:2px; } 50%{ height:9px; } }
   .audio-pill .lbl{ font-family:'EB Garamond',serif; font-size:8px; letter-spacing:0.09em; text-transform:uppercase; color:#C4522F; white-space:nowrap; }
 
-  .player{ width:100%; }
-  .player video{ display:block; width:100%; height:auto; max-height:calc(144mm - 120px); background:#000; box-shadow:0 14px 40px rgba(0,0,0,0.55); object-fit:contain; }
-  .player .cap{ margin-top:9px; font-family:'EB Garamond',serif; font-size:7.6px; letter-spacing:0.05em; line-height:1.5; color:#8A8680; }
+  /* the video fills its whole column (bleeding to the page edge and to
+     the text divider); only the caption line gets its own inset so it
+     doesn't sit flush against the page border */
+  .player{ width:100%; height:100%; display:flex; flex-direction:column; }
+  .player .video-wrap{ flex:1; min-height:0; display:flex; align-items:center; justify-content:center; overflow:hidden; background:#000; }
+  .player video{ display:block; width:100%; height:100%; background:#000; object-fit:contain; }
+  .player .cap{ flex:none; padding:9px 24px 12px; background:#1A1A1A; font-family:'EB Garamond',serif; font-size:7.6px; letter-spacing:0.05em; line-height:1.5; color:#8A8680; }
 
   /* ---- image beats: full-bleed photo with a short line laid over it ----
      the source photos here are portrait (9:16); a plain object-fit:cover
@@ -143,23 +150,29 @@
   .shot-line{ position:absolute; left:56px; width:38%; top:50%; transform:translateY(-50%); font-family:'EB Garamond',serif; font-style:italic; font-weight:600; font-size:25px; line-height:1.42; color:#F5F2EA; text-wrap:pretty; z-index:2; }
   .shot-cap{ position:absolute; z-index:2; left:56px; right:56px; bottom:22px; font-family:'EB Garamond',serif; font-size:7.6px; letter-spacing:0.05em; line-height:1.5; color:rgba(245,242,234,0.85); }
 
-  /* ---- figure grid: fills the media column with 2-4 photos ---- */
-  .fig-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; width:100%; }
+  /* ---- figure grid: fills the media column edge-to-edge, photos butted
+     against each other like a contact sheet rather than floating cards ---- */
+  .fig-grid{ display:grid; grid-template-columns:1fr 1fr; gap:3px; width:100%; height:100%; }
   .fig{ position:relative; }
-  .fig .frame-box{ position:relative; overflow:hidden; background:#0c0c0c; box-shadow:0 8px 22px rgba(0,0,0,0.4); }
+  .fig .frame-box{ position:relative; overflow:hidden; background:#000; }
   .fig img{ width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(1) contrast(1.12) brightness(0.85); }
   .fig .grain{ position:absolute; inset:0; background:#fff; filter:url(#grainf); opacity:0.16; mix-blend-mode:screen; }
-  .fig .fig-cap{ margin-top:7px; font-family:'EB Garamond',serif; font-size:7px; letter-spacing:0.05em; line-height:1.5; color:#8A8680; }
-  .fig .fig-title{ font-family:'EB Garamond',serif; font-size:8.5px; letter-spacing:0.1em; text-transform:uppercase; color:#C4522F; margin-bottom:6px; }
+  .fig .fig-cap{ margin:0; padding:6px 10px 8px; background:#1A1A1A; font-family:'EB Garamond',serif; font-size:7px; letter-spacing:0.05em; line-height:1.5; color:#8A8680; }
+  .fig .fig-title{ margin:0; padding:8px 10px 5px; background:#1A1A1A; font-family:'EB Garamond',serif; font-size:8.5px; letter-spacing:0.1em; text-transform:uppercase; color:#C4522F; }
 
-  /* ---- La memoria: varied portrait-photo treatments (row / row-reverse / poster) ---- */
-  .mem-frame{ position:relative; overflow:hidden; background:#0c0c0c; box-shadow:0 22px 60px rgba(0,0,0,0.55); margin:0 auto; }
+  /* ---- La memoria: varied portrait-photo treatments (row / row-reverse / poster) ----
+     the photo fills its whole column edge-to-edge by default (bleed);
+     pass an explicit width/height/aspect-ratio inline where a page wants
+     the smaller, contained "framed object" look instead (e.g. portada). */
+  .mem-frame{ position:relative; overflow:hidden; background:#000; width:100%; height:100%; margin:0 auto; }
   .mem-frame img{ width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(1) contrast(1.1) brightness(0.82); }
   .mem-frame .grain{ position:absolute; inset:0; background:#fff; filter:url(#grainf); opacity:0.14; mix-blend-mode:screen; }
+  .mem-frame.framed{ box-shadow:0 22px 60px rgba(0,0,0,0.55); }
   .mem-row{ position:absolute; inset:0; display:flex; }
   .mem-row.reverse{ flex-direction:row-reverse; }
   .mem-text{ flex:0 0 34%; display:flex; flex-direction:column; justify-content:center; padding:0 50px; }
-  .mem-photo{ flex:1; height:100%; display:flex; align-items:center; justify-content:center; padding:30px 56px; min-width:0; }
+  .mem-text .mem-cap{ margin-top:20px; font-family:'EB Garamond',serif; font-size:7.6px; letter-spacing:0.05em; line-height:1.5; color:#6B6864; }
+  .mem-photo{ flex:1; height:100%; display:flex; align-items:center; justify-content:center; min-width:0; background:#000; }
   .mem-poster{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding-bottom:96px; }
   .mem-poster::before, .mem-poster::after{ content:""; position:absolute; top:14%; bottom:20%; width:1px; background:rgba(191,182,163,0.16); }
   .mem-poster::before{ left:56px; }
@@ -182,6 +195,19 @@
   .filmstrip img{ height:100%; width:auto; display:block; flex:none; filter:grayscale(1) contrast(1.1) brightness(0.66); }
   @keyframes scrollL{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
   @keyframes scrollR{ from{ transform:translateX(-50%); } to{ transform:translateX(0); } }
+
+  /* ---- portada: full-bleed hero photo behind the title, not a boxed
+     panel beside it — the image IS the page, text sits over a scrim ---- */
+  .portada-photo{ position:absolute; inset:0; }
+  .portada-photo img{ width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(1) contrast(1.08) brightness(0.6); }
+  .portada-photo .grain{ position:absolute; inset:0; background:#fff; filter:url(#grainf); opacity:0.15; mix-blend-mode:screen; }
+  .portada-scrim{
+    position:absolute; inset:0;
+    background:
+      linear-gradient(100deg, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.72) 38%, rgba(10,10,10,0.2) 62%, rgba(10,10,10,0.05) 100%),
+      linear-gradient(0deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0) 22%);
+  }
+  .portada-text{ position:absolute; left:56px; right:38%; top:0; bottom:74px; display:flex; flex-direction:column; justify-content:center; }
 
   /* ---- subtle abstract graphics used purely to fill empty space ---- */
   .deco{ position:absolute; opacity:0.5; pointer-events:none; }
@@ -259,19 +285,16 @@
 
 <article class="book-page" data-index="0">
 <section class="scene" data-screen-label="01 Portada">
-  <div class="split" style="bottom:74px">
-    <div class="split-text reveal-group" data-step="500" data-start="200" style="flex-basis:58%">
-      <div class="eyebrow">Discursos de amenaza, seguridad y límites del Estado en Chile</div>
-      <h1 style="margin:20px 0 0;font-family:'EB Garamond',serif;font-weight:700;font-size:52px;line-height:1.14;letter-spacing:-0.005em;color:#F5F2EA;text-wrap:balance">¿El nuevo enemigo interno?</h1>
-      <svg width="340" height="8" viewBox="0 0 400 7" preserveAspectRatio="none" style="display:block;margin:26px 0 0" aria-hidden="true"><path d="M0 3.5 Q38 1.2 79 4 T158 2.3 T237 4.6 T316 1.8 T400 3.6" fill="none" stroke="#BFB6A3" stroke-width="1" opacity="0.4"/></svg>
-      <div style="margin-top:28px;font-family:'EB Garamond',serif;font-weight:600;font-size:14px;letter-spacing:0.02em;color:#BFB6A3">Adriana Paccha · Andrés Lazcano</div>
-    </div>
-    <div class="split-media">
-      <div class="mem-frame reveal-solo" data-reveal-in="500" style="height:78%;aspect-ratio:4/5;max-width:100%">
-        <img src="img/estadio-nacional-1973.png" alt="Prisioneros políticos en el Estadio Nacional, Santiago, 1973" style="object-position:50% 34%">
-        <div class="grain"></div>
-      </div>
-    </div>
+  <div class="portada-photo">
+    <img src="img/estadio-nacional-1973.png" alt="Prisioneros políticos en el Estadio Nacional, Santiago, 1973" style="object-position:70% 32%">
+    <div class="grain"></div>
+  </div>
+  <div class="portada-scrim"></div>
+  <div class="portada-text reveal-group" data-step="500" data-start="200">
+    <div class="eyebrow">Discursos de amenaza, seguridad y límites del Estado en Chile</div>
+    <h1 style="margin:20px 0 0;font-family:'EB Garamond',serif;font-weight:700;font-size:52px;line-height:1.14;letter-spacing:-0.005em;color:#F5F2EA;text-wrap:balance">¿El nuevo enemigo interno?</h1>
+    <svg width="340" height="8" viewBox="0 0 400 7" preserveAspectRatio="none" style="display:block;margin:26px 0 0" aria-hidden="true"><path d="M0 3.5 Q38 1.2 79 4 T158 2.3 T237 4.6 T316 1.8 T400 3.6" fill="none" stroke="#BFB6A3" stroke-width="1" opacity="0.4"/></svg>
+    <div style="margin-top:28px;font-family:'EB Garamond',serif;font-weight:600;font-size:14px;letter-spacing:0.02em;color:#BFB6A3">Adriana Paccha · Andrés Lazcano</div>
   </div>
   <div class="filmstrip bottom" style="height:74px">
     <div class="track">
@@ -293,7 +316,6 @@
       <img src="img/carcel-san-miguel.jpg" alt="">
     </div>
   </div>
-  <div style="position:absolute;inset:0;background:#fff;filter:url(#grainf);opacity:0.14;mix-blend-mode:screen;pointer-events:none"></div>
 </section>
 </article>
 
@@ -376,7 +398,7 @@
     </div>
     <div class="split-media">
       <div class="player reveal-solo" data-reveal-on="vid-toque:play">
-        <video-slot></video-slot>
+        <div class="video-wrap"><video-slot></video-slot></div>
         <div class="cap"><em>Fragmento de Chile: Toque de queda (1973). RTVE.</em></div>
       </div>
     </div>
@@ -398,7 +420,7 @@
     </div>
     <div class="split-media">
       <div class="player reveal-solo" data-reveal-on="vid-contreras:play">
-        <video-slot></video-slot>
+        <div class="video-wrap"><video-slot></video-slot></div>
         <div class="cap"><em>Manuel Contreras, exdirector de la DINA. Entrevista a Chilevisión, 29 de julio de 2010.</em></div>
       </div>
     </div>
@@ -418,7 +440,7 @@
     </div>
     <div class="split-media">
       <div class="player reveal-solo" data-reveal-on="vid-pinera:play" data-play="vid-pinera">
-        <video-slot></video-slot>
+        <div class="video-wrap"><video-slot></video-slot></div>
         <div class="cap"><em>Sebastián Piñera, declaración pública, 20 de octubre de 2019, durante el estado de emergencia y el estallido social. Fuente: La Tercera.</em></div>
       </div>
     </div>
@@ -453,7 +475,7 @@
         </div>
         <div class="fig" style="grid-column:1 / -1;display:flex;flex-direction:column">
           <div class="fig-title">Tecnología de vigilancia</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:1">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;flex:1">
             <div class="frame-box" style="height:100%"><img src="img/vigilancia-fronteriza-1.jpg" alt="Vigilancia fronteriza, norte de Chile"><div class="grain"></div></div>
             <div class="frame-box" style="height:100%"><img src="img/vigilancia-fronteriza-2.jpg" alt="Vigilancia fronteriza, norte de Chile"><div class="grain"></div></div>
           </div>
@@ -511,9 +533,7 @@
       <p class="sub-line reveal-solo" data-reveal-in="2200" id="ec1-close" style="font-weight:600;color:#C4522F;font-family:'EB Garamond',serif;font-style:italic;font-size:17px">Una amenaza definida de manera amplia puede extender el control más allá de quienes se busca perseguir.</p>
     </div>
     <div class="split-media">
-      <div class="reveal-solo" data-reveal-in="150" style="height:100%;width:100%;display:flex;align-items:center;justify-content:center">
-        <div style="position:relative;overflow:hidden;height:88%;aspect-ratio:768/1024;background:#0c0c0c;box-shadow:0 14px 36px rgba(0,0,0,0.55)"><img src="img/decreto-ecuador.webp" alt="Decreto Ejecutivo N.º 111, Ecuador" style="width:100%;height:100%;object-fit:contain;display:block"></div>
-      </div>
+      <img src="img/decreto-ecuador.webp" alt="Decreto Ejecutivo N.º 111, Ecuador" class="reveal-solo" data-reveal-in="150" style="height:92%;width:auto;max-width:100%;object-fit:contain;display:block;filter:contrast(1.05) brightness(0.95)">
     </div>
   </div>
   <div class="pageno">09</div>
@@ -553,15 +573,15 @@
     <div class="mem-text">
       <p class="lead reveal-solo" data-reveal-in="150">Recordar no significa decir que el presente sea igual al pasado.</p>
       <p class="quote reveal-solo" data-reveal-in="1900">Hay experiencias que sobreviven porque alguien pudo contarlas.</p>
+      <p class="mem-cap">Camión civil sacando cuerpos para hacerlos desaparecer. Dibujo de Miguel Montecinos, sobreviviente de Villa Grimaldi. Fotografía propia, Parque por la Paz Villa Grimaldi, 2026.</p>
     </div>
     <div class="mem-photo">
-      <div class="mem-frame reveal-solo" data-reveal-in="500" style="height:92%;aspect-ratio:4/5;max-width:100%">
+      <div class="mem-frame reveal-solo" data-reveal-in="500" style="width:auto;height:100%;aspect-ratio:9/16">
         <img src="img/lm1-testimonio.jpg" alt="Dibujo de Miguel Montecinos, Villa Grimaldi" style="object-position:50% 26%">
         <div class="grain"></div>
       </div>
     </div>
   </div>
-  <div class="shot-cap">Camión civil sacando cuerpos para hacerlos desaparecer. Dibujo de Miguel Montecinos, sobreviviente de Villa Grimaldi. Fotografía propia, Parque por la Paz Villa Grimaldi, 2026.</div>
   <div class="pageno">11</div>
 </section>
 </article>
@@ -590,15 +610,15 @@
     <div class="mem-text">
       <p class="quote reveal-solo" data-reveal-in="300">Los lugares también conservan aquello que ocurrió.</p>
       <p class="quote reveal-solo" data-reveal-in="1800" style="margin-top:16px;color:#C4522F">Cada espacio reconstruido vuelve a hacer las mismas preguntas.</p>
+      <p class="mem-cap">Interior reconstruido. Parque por la Paz Villa Grimaldi. Fotografía propia, 2026.</p>
     </div>
     <div class="mem-photo">
-      <div class="mem-frame reveal-solo" data-reveal-in="500" style="height:96%;aspect-ratio:3/4;max-width:100%">
+      <div class="mem-frame reveal-solo" data-reveal-in="500" style="width:auto;height:100%;aspect-ratio:9/16">
         <img src="img/lm4-interior.jpg" alt="Interior reconstruido, Villa Grimaldi" style="object-position:50% 30%">
         <div class="grain"></div>
       </div>
     </div>
   </div>
-  <div class="shot-cap">Interior reconstruido. Parque por la Paz Villa Grimaldi. Fotografía propia, 2026.</div>
   <div class="pageno">13</div>
 </section>
 </article>
