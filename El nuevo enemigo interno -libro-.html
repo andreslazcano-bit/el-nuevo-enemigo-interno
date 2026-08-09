@@ -79,10 +79,13 @@
   .reveal-solo{ opacity:0; transform:translateY(10px); transition:opacity 0.9s ease, transform 0.9s ease; }
   .reveal-solo.is-in{ opacity:1; transform:none; }
 
-  /* ---- two-column scene: text on one side, media/figures on the other ---- */
-  .split{ position:absolute; inset:0; display:flex; align-items:center; }
+  /* ---- two-column scene: text on one side, media/figures on the other ----
+     .split itself must stretch (not center) its two columns to the full
+     page height — otherwise split-media's height:100% has nothing definite
+     to resolve against, and grids inside it (fig-grid) collapse/overflow. */
+  .split{ position:absolute; inset:0; display:flex; }
   .split.reverse{ flex-direction:row-reverse; }
-  .split-text{ flex:0 0 40%; padding:0 30px 0 56px; }
+  .split-text{ flex:0 0 40%; padding:0 30px 0 56px; display:flex; flex-direction:column; justify-content:center; }
   .split.reverse .split-text{ padding:0 56px 0 30px; }
   .split-media{ flex:1; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:36px 56px; min-width:0; }
 
@@ -122,6 +125,37 @@
   .fig .grain{ position:absolute; inset:0; background:#fff; filter:url(#grainf); opacity:0.16; mix-blend-mode:screen; }
   .fig .fig-cap{ margin-top:7px; font-family:'EB Garamond',serif; font-size:7px; letter-spacing:0.05em; line-height:1.5; color:#8A8680; }
   .fig .fig-title{ font-family:'EB Garamond',serif; font-size:8.5px; letter-spacing:0.1em; text-transform:uppercase; color:#C4522F; margin-bottom:6px; }
+
+  /* ---- La memoria: varied portrait-photo treatments (row / row-reverse / poster) ---- */
+  .mem-frame{ position:relative; overflow:hidden; background:#0c0c0c; box-shadow:0 22px 60px rgba(0,0,0,0.55); margin:0 auto; }
+  .mem-frame img{ width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(1) contrast(1.1) brightness(0.82); }
+  .mem-frame .grain{ position:absolute; inset:0; background:#fff; filter:url(#grainf); opacity:0.14; mix-blend-mode:screen; }
+  .mem-row{ position:absolute; inset:0; display:flex; }
+  .mem-row.reverse{ flex-direction:row-reverse; }
+  .mem-text{ flex:0 0 34%; display:flex; flex-direction:column; justify-content:center; padding:0 50px; }
+  .mem-photo{ flex:1; height:100%; display:flex; align-items:center; justify-content:center; padding:30px 56px; min-width:0; }
+  .mem-poster{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding-bottom:96px; }
+  .mem-poster::before, .mem-poster::after{ content:""; position:absolute; top:14%; bottom:20%; width:1px; background:rgba(191,182,163,0.16); }
+  .mem-poster::before{ left:56px; }
+  .mem-poster::after{ right:56px; }
+  .mem-band{ position:absolute; left:0; right:0; bottom:0; padding:22px 56px 22px; background:linear-gradient(180deg, rgba(10,10,10,0) 0%, rgba(10,10,10,0.82) 60%, rgba(10,10,10,0.9) 100%); }
+  .mem-band .quote{ margin:0; max-width:600px; }
+  .mem-band .cap{ margin-top:9px; font-family:'EB Garamond',serif; font-size:7.6px; letter-spacing:0.05em; line-height:1.5; color:rgba(245,242,234,0.75); }
+  .quote{ font-family:'EB Garamond',serif; font-style:italic; font-weight:600; font-size:22px; line-height:1.42; color:#F5F2EA; text-wrap:pretty; }
+  .lead{ font-family:'Crimson Text',serif; font-size:15px; line-height:1.65; color:#BFB6A3; }
+  .lead + .quote{ margin-top:16px; }
+
+  /* ---- closing filmstrip: two rows of thumbnails drifting in opposite directions ---- */
+  .filmstrip{ position:absolute; left:0; right:0; height:118px; overflow:hidden; }
+  .filmstrip.top{ top:0; }
+  .filmstrip.bottom{ bottom:0; }
+  .filmstrip::after{ content:""; position:absolute; inset:0; background:rgba(10,10,10,0.32); pointer-events:none; }
+  .filmstrip .track{ display:flex; align-items:center; gap:8px; height:100%; width:max-content; will-change:transform; }
+  .filmstrip.top .track{ animation:scrollL 46s linear infinite; }
+  .filmstrip.bottom .track{ animation:scrollR 52s linear infinite; }
+  .filmstrip img{ height:100%; width:auto; display:block; flex:none; filter:grayscale(1) contrast(1.1) brightness(0.66); }
+  @keyframes scrollL{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+  @keyframes scrollR{ from{ transform:translateX(-50%); } to{ transform:translateX(0); } }
 
   /* ---- subtle abstract graphics used purely to fill empty space ---- */
   .deco{ position:absolute; opacity:0.5; pointer-events:none; }
@@ -199,25 +233,20 @@
 
 <article class="book-page" data-index="0">
 <section class="scene" data-screen-label="01 Portada">
-  <svg class="deco" width="46%" height="100%" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet" style="right:0;top:0" aria-hidden="true">
-    <g stroke="#8E2B1C" stroke-width="0.5" opacity="0.55">
-      <circle cx="230" cy="150" r="120"/>
-      <circle cx="230" cy="150" r="86"/>
-      <circle cx="230" cy="150" r="52"/>
-      <circle cx="230" cy="150" r="18"/>
-      <line x1="230" y1="0" x2="230" y2="300"/>
-      <line x1="80" y1="150" x2="380" y2="150"/>
-    </g>
-  </svg>
   <div class="split">
-    <div class="split-text reveal-group" data-step="500" data-start="200" style="flex-basis:62%">
+    <div class="split-text reveal-group" data-step="500" data-start="200" style="flex-basis:58%">
       <div class="eyebrow">Discursos de amenaza, seguridad y límites del Estado en Chile</div>
       <h1 style="margin:20px 0 0;font-family:'EB Garamond',serif;font-weight:700;font-size:52px;line-height:1.14;letter-spacing:-0.005em;color:#F5F2EA;text-wrap:balance">¿El nuevo enemigo interno?</h1>
       <svg width="340" height="8" viewBox="0 0 400 7" preserveAspectRatio="none" style="display:block;margin:26px 0 0" aria-hidden="true"><path d="M0 3.5 Q38 1.2 79 4 T158 2.3 T237 4.6 T316 1.8 T400 3.6" fill="none" stroke="#BFB6A3" stroke-width="1" opacity="0.4"/></svg>
       <div style="margin-top:30px;font-family:'EB Garamond',serif;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:#6B6864;line-height:1.9;max-width:420px">Curso Trabajo de Campo y Actualidad · Magíster en Ciencias Sociales, mención Sociología de la Modernización · Universidad de Chile</div>
       <div style="margin-top:24px;font-family:'EB Garamond',serif;font-weight:600;font-size:14px;letter-spacing:0.02em;color:#BFB6A3">Adriana Paccha · Andrés Lazcano</div>
     </div>
-    <div class="split-media"></div>
+    <div class="split-media">
+      <div class="mem-frame reveal-solo" data-reveal-in="500" style="height:84%;aspect-ratio:4/5;max-width:100%">
+        <img src="img/estadio-nacional-1973.png" alt="Prisioneros políticos en el Estadio Nacional, Santiago, 1973" style="object-position:50% 34%">
+        <div class="grain"></div>
+      </div>
+    </div>
   </div>
   <div style="position:absolute;inset:0;background:#fff;filter:url(#grainf);opacity:0.14;mix-blend-mode:screen;pointer-events:none"></div>
 </section>
@@ -291,8 +320,8 @@
   <video id="vid-toque" data-autoplay src="video/toque-de-queda.mp4" preload="none" playsinline muted="false" style="display:none"></video>
   <div class="split">
     <div class="split-text">
-      <p class="big-line reveal-solo is-in">El enemigo deja de ser una palabra.</p>
-      <p class="big-line reveal-solo is-in" style="margin-top:10px;color:#C4522F">Ahora tiene un rostro.</p>
+      <p class="big-line reveal-solo" data-reveal-in="150">El enemigo deja de ser una palabra.</p>
+      <p class="big-line reveal-solo" data-reveal-in="700" style="margin-top:10px;color:#C4522F">Ahora tiene un rostro.</p>
       <svg width="100%" height="60" viewBox="0 0 200 60" style="margin-top:34px;opacity:0.45" aria-hidden="true">
         <g stroke="#6B6864" stroke-width="0.6" fill="none">
           <path d="M10 30 Q30 5 50 30 T90 30"/>
@@ -361,7 +390,7 @@
   </div>
   <div class="split">
     <div class="split-text">
-      <p class="big-line reveal-solo is-in">Cuando una amenaza se presenta como cada vez más grave, también puede ampliarse aquello que parece necesario hacer para enfrentarla.</p>
+      <p class="big-line reveal-solo" data-reveal-in="150">Cuando una amenaza se presenta como cada vez más grave, también puede ampliarse aquello que parece necesario hacer para enfrentarla.</p>
       <p class="sub-line reveal-solo" data-reveal-on="aud-kast:ended">La amenaza no queda solo en el discurso: se traduce en formas concretas de intervención estatal.</p>
       <p class="sub-line reveal-solo" data-reveal-on="aud-kast:ended" style="margin-top:10px;font-weight:600;color:#F5F2EA;font-style:normal">El problema no es que el Estado busque garantizar seguridad. La pregunta es qué límites mantiene cuando lo hace.</p>
     </div>
@@ -437,7 +466,7 @@
       <p class="sub-line reveal-solo" data-reveal-in="2200" id="ec1-close" style="font-weight:600;color:#C4522F;font-family:'EB Garamond',serif;font-style:italic;font-size:17px">Una amenaza definida de manera amplia puede extender el control más allá de quienes se busca perseguir.</p>
     </div>
     <div class="split-media">
-      <div class="reveal-solo is-in" style="height:100%;width:100%;display:flex;align-items:center;justify-content:center">
+      <div class="reveal-solo" data-reveal-in="150" style="height:100%;width:100%;display:flex;align-items:center;justify-content:center">
         <div style="position:relative;overflow:hidden;height:88%;aspect-ratio:768/1024;background:#0c0c0c;box-shadow:0 14px 36px rgba(0,0,0,0.55)"><img src="img/decreto-ecuador.webp" alt="Decreto Ejecutivo N.º 111, Ecuador" style="width:100%;height:100%;object-fit:contain;display:block"></div>
       </div>
     </div>
@@ -475,57 +504,90 @@
 
 <article class="book-page" data-index="10">
 <section class="scene" data-screen-label="11 La memoria — el testimonio">
-  <div class="shot">
-    <img class="shot-bg" src="img/lm1-testimonio.jpg" alt="" style="object-position:50% 40%">
-    <img class="shot-fg" src="img/lm1-testimonio.jpg" alt="Dibujo de Miguel Montecinos, Villa Grimaldi">
+  <div class="mem-row">
+    <div class="mem-text">
+      <p class="lead reveal-solo" data-reveal-in="150">Recordar no significa decir que el presente sea igual al pasado.</p>
+      <p class="quote reveal-solo" data-reveal-in="1900">Hay experiencias que sobreviven porque alguien pudo contarlas.</p>
+    </div>
+    <div class="mem-photo">
+      <div class="mem-frame reveal-solo" data-reveal-in="500" style="height:92%;aspect-ratio:720/1280;max-width:100%">
+        <img src="img/lm1-testimonio.jpg" alt="Dibujo de Miguel Montecinos, Villa Grimaldi" style="object-position:50% 42%">
+        <div class="grain"></div>
+      </div>
+    </div>
   </div>
-  <p class="sub-line reveal-solo is-in" style="position:absolute;left:56px;width:30%;top:20%;color:#F5F2EA;font-size:16px;line-height:1.6;z-index:2;margin:0">Recordar no significa decir que el presente sea igual al pasado.</p>
-  <p class="shot-line reveal-solo" data-reveal-in="2000" id="lm1-line" style="width:30%;top:auto;bottom:22%;transform:none">Hay experiencias que sobreviven porque alguien pudo contarlas.</p>
   <div class="shot-cap">Camión civil sacando cuerpos para hacerlos desaparecer. Dibujo de Miguel Montecinos, sobreviviente de Villa Grimaldi. Fotografía propia, Parque por la Paz Villa Grimaldi, 2026.</div>
+  <div class="pageno">11</div>
 </section>
 </article>
 
 <article class="book-page" data-index="11">
 <section class="scene" data-screen-label="12 La memoria — los rostros">
-  <div class="shot">
-    <img class="shot-bg" src="img/lm3-rostros.jpg" alt="" style="object-position:50% 30%">
-    <img class="shot-fg" src="img/lm3-rostros.jpg" alt="Muro de retratos, Museo de la Memoria">
+  <div class="mem-row reverse">
+    <div class="mem-text">
+      <p class="quote reveal-solo" data-reveal-in="300">La memoria también devuelve nombres y rostros.</p>
+    </div>
+    <div class="mem-photo">
+      <div class="mem-frame reveal-solo" data-reveal-in="500" style="height:94%;aspect-ratio:720/1280;max-width:100%">
+        <img src="img/lm3-rostros.jpg" alt="Muro de retratos, Museo de la Memoria" style="object-position:50% 30%">
+        <div class="grain"></div>
+      </div>
+    </div>
   </div>
-  <p class="shot-line reveal-solo" data-reveal-in="900" id="lm3-line" style="width:30%">La memoria también devuelve nombres y rostros.</p>
   <div class="shot-cap">Muro de retratos. Museo de la Memoria y los Derechos Humanos. Fotografía propia, 2026.</div>
+  <div class="pageno">12</div>
 </section>
 </article>
 
 <article class="book-page" data-index="12">
 <section class="scene" data-screen-label="13 La memoria — las ausencias">
-  <div class="shot">
-    <img class="shot-bg" src="img/lm2-ausencias.jpg" alt="">
-    <img class="shot-fg" src="img/lm2-ausencias.jpg" alt="Detalle del muro de retratos">
+  <div class="mem-poster">
+    <div class="mem-frame reveal-solo" data-reveal-in="300" style="height:100%;aspect-ratio:720/1280">
+      <img src="img/lm2-ausencias.jpg" alt="Detalle del muro de retratos">
+      <div class="grain"></div>
+    </div>
   </div>
-  <p class="shot-line reveal-solo" data-reveal-in="900" id="lm2-line" style="width:30%">Y hace visibles las ausencias que permanecen.</p>
-  <div class="shot-cap">Detalle del muro de retratos. Museo de la Memoria y los Derechos Humanos. Fotografía propia, 2026.</div>
+  <div class="mem-band">
+    <p class="quote reveal-solo" data-reveal-in="900">Y hace visibles las ausencias que permanecen.</p>
+    <div class="cap">Detalle del muro de retratos. Museo de la Memoria y los Derechos Humanos. Fotografía propia, 2026.</div>
+  </div>
+  <div class="pageno">13</div>
 </section>
 </article>
 
 <article class="book-page" data-index="13">
 <section class="scene" data-screen-label="14 La memoria — los lugares">
-  <div class="shot">
-    <img class="shot-bg" src="img/lm5-lugares.jpg" alt="">
-    <img class="shot-fg" src="img/lm5-lugares.jpg" alt="Acceso a las conejeras de La Torre">
+  <div class="mem-row">
+    <div class="mem-text">
+      <p class="quote reveal-solo" data-reveal-in="300">Los lugares también conservan aquello que ocurrió.</p>
+    </div>
+    <div class="mem-photo">
+      <div class="mem-frame reveal-solo" data-reveal-in="500" style="height:78%;aspect-ratio:4/5;max-width:100%">
+        <img src="img/lm5-lugares.jpg" alt="Acceso a las conejeras de La Torre" style="object-position:50% 38%">
+        <div class="grain"></div>
+      </div>
+    </div>
   </div>
-  <p class="shot-line reveal-solo" data-reveal-in="900" id="lm5-line" style="width:30%">Los lugares también conservan aquello que ocurrió.</p>
   <div class="shot-cap">Acceso a las denominadas «conejeras» de La Torre. Parque por la Paz Villa Grimaldi. Fotografía propia, 2026.</div>
+  <div class="pageno">14</div>
 </section>
 </article>
 
 <article class="book-page" data-index="14">
 <section class="scene" data-screen-label="15 La memoria — el interior">
-  <div class="shot">
-    <img class="shot-bg" src="img/lm4-interior.jpg" alt="" style="object-position:50% 25%">
-    <img class="shot-fg" src="img/lm4-interior.jpg" alt="Interior reconstruido, Villa Grimaldi">
+  <div class="mem-row reverse">
+    <div class="mem-text">
+      <p class="quote reveal-solo" data-reveal-in="300">Cada espacio reconstruido vuelve a hacer las mismas preguntas.</p>
+    </div>
+    <div class="mem-photo">
+      <div class="mem-frame reveal-solo" data-reveal-in="500" style="height:96%;aspect-ratio:720/1280;max-width:100%">
+        <img src="img/lm4-interior.jpg" alt="Interior reconstruido, Villa Grimaldi" style="object-position:50% 22%">
+        <div class="grain"></div>
+      </div>
+    </div>
   </div>
-  <p class="shot-line reveal-solo" data-reveal-in="900" id="lm4-line" style="width:30%">Cada espacio reconstruido vuelve a hacer las mismas preguntas.</p>
   <div class="shot-cap">Interior reconstruido. Parque por la Paz Villa Grimaldi. Fotografía propia, 2026.</div>
+  <div class="pageno">15</div>
 </section>
 </article>
 
@@ -537,6 +599,7 @@
   </div>
   <p class="shot-line reveal-solo" data-reveal-in="900" id="csm-line" style="width:30%">Pero recordar el pasado también obliga a mirar cómo ejercemos el control en el presente.</p>
   <div class="shot-cap">Acceso a la Cárcel de San Miguel, Santiago. Fotografía propia, 2026.</div>
+  <div class="pageno">16</div>
 </section>
 </article>
 
@@ -560,12 +623,71 @@
 </section>
 </article>
 
+<article class="book-page" data-index="17">
+<section class="scene" data-screen-label="18 Nota de producción">
+  <div class="filmstrip top">
+    <div class="track">
+      <img src="img/vg-torre-interior.jpg" alt="">
+      <img src="img/estadio-nacional-1973.png" alt="">
+      <img src="img/vg-celda.jpg" alt="">
+      <img src="img/operativos-santiago.jpg" alt="">
+      <img src="img/control-estacion-central.jpg" alt="">
+      <img src="img/decreto-ecuador.webp" alt="">
+      <img src="img/ecuador-malvinas-retratos.jpg" alt="">
+      <img src="img/ecuador-futbolistas.jpg" alt="">
+      <img src="img/frontera-peru-chile.webp" alt="">
+      <img src="img/expulsion-migratoria-2026.jpg" alt="">
+      <img src="img/vg-torre-interior.jpg" alt="">
+      <img src="img/estadio-nacional-1973.png" alt="">
+      <img src="img/vg-celda.jpg" alt="">
+      <img src="img/operativos-santiago.jpg" alt="">
+      <img src="img/control-estacion-central.jpg" alt="">
+      <img src="img/decreto-ecuador.webp" alt="">
+      <img src="img/ecuador-malvinas-retratos.jpg" alt="">
+      <img src="img/ecuador-futbolistas.jpg" alt="">
+      <img src="img/frontera-peru-chile.webp" alt="">
+      <img src="img/expulsion-migratoria-2026.jpg" alt="">
+    </div>
+  </div>
+  <div class="filmstrip bottom">
+    <div class="track">
+      <img src="img/lm3-rostros.jpg" alt="">
+      <img src="img/lm1-testimonio.jpg" alt="">
+      <img src="img/carcel-san-miguel.jpg" alt="">
+      <img src="img/lm5-lugares.jpg" alt="">
+      <img src="img/vg-tortura-dibujo.jpg" alt="">
+      <img src="img/lm4-interior.jpg" alt="">
+      <img src="img/vigilancia-fronteriza-1.jpg" alt="">
+      <img src="img/lm2-ausencias.jpg" alt="">
+      <img src="img/vigilancia-fronteriza-2.jpg" alt="">
+      <img src="img/ecuador-malvinas-retratos.jpg" alt="">
+      <img src="img/lm3-rostros.jpg" alt="">
+      <img src="img/lm1-testimonio.jpg" alt="">
+      <img src="img/carcel-san-miguel.jpg" alt="">
+      <img src="img/lm5-lugares.jpg" alt="">
+      <img src="img/vg-tortura-dibujo.jpg" alt="">
+      <img src="img/lm4-interior.jpg" alt="">
+      <img src="img/vigilancia-fronteriza-1.jpg" alt="">
+      <img src="img/lm2-ausencias.jpg" alt="">
+      <img src="img/vigilancia-fronteriza-2.jpg" alt="">
+      <img src="img/ecuador-malvinas-retratos.jpg" alt="">
+    </div>
+  </div>
+  <div class="reveal-group" data-step="600" data-start="200" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 150px">
+    <div class="eyebrow">Nota de producción</div>
+    <p class="big-line" style="margin-top:18px;font-size:22px;max-width:760px;font-weight:500">Esta es una propuesta audiovisual desarrollada para el curso Trabajo de Campo y Actualidad, en el marco del Magíster en Ciencias Sociales, mención Sociología de la Modernización, Universidad de Chile.</p>
+    <p class="sub-line" style="max-width:600px">Adriana Paccha · Andrés Lazcano — 2026</p>
+  </div>
+  <div class="pageno">18</div>
+</section>
+</article>
+
 </div>
 
 <div id="controls">
   <button id="homeBtn" aria-label="Ir a la portada" title="Ir a la portada">⌂</button>
   <button id="prevBtn" aria-label="Página anterior">‹</button>
-  <span id="pageCounter">01 / 17</span>
+  <span id="pageCounter">01 / 18</span>
   <button id="nextBtn" aria-label="Página siguiente">›</button>
 </div>
 
