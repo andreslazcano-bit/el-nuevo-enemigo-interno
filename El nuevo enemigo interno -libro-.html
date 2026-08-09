@@ -60,6 +60,32 @@
     background:linear-gradient(90deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 2.5%, rgba(0,0,0,0) 97.5%, rgba(0,0,0,0.2) 100%);
     pointer-events:none;
   }
+  /* sweeping shadow that darkens each page as it bends through the flip,
+     standing in for the light-catch a real sheet of paper would show */
+  .book-page.is-flip::after{
+    background:linear-gradient(90deg, rgba(0,0,0,0.68) 0%, rgba(0,0,0,0) 42%);
+    opacity:0;
+    animation: pageFlipShadow 0.62s ease-in-out;
+  }
+  .book-page.is-flip.z-bottom::after{
+    background:linear-gradient(270deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 42%);
+  }
+  @keyframes pageFlipShadow{
+    0%{ opacity:0; }
+    48%{ opacity:1; }
+    100%{ opacity:0; }
+  }
+
+  /* thin stacked-paper cue at the fore-edges of the stage, so the book
+     reads as having pages behind it rather than a single flipping card */
+  #page-edges{ position:absolute; inset:0; z-index:3; pointer-events:none; }
+  #page-edges::before, #page-edges::after{
+    content:""; position:absolute; top:8px; bottom:8px; width:3px;
+    background:repeating-linear-gradient(180deg, rgba(245,242,234,0.3) 0px, rgba(245,242,234,0.3) 1px, rgba(20,17,13,0.4) 1px, rgba(20,17,13,0.4) 2px);
+    opacity:0.55;
+  }
+  #page-edges::before{ left:0; }
+  #page-edges::after{ right:0; }
 
   .scene{ position:relative; background:#1A1A1A; color:#F5F2EA; font-family:'Crimson Text',Georgia,serif; }
   .eyebrow{ font-family:'EB Garamond',serif; font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:#C4522F; }
@@ -233,7 +259,7 @@
 
 <article class="book-page" data-index="0">
 <section class="scene" data-screen-label="01 Portada">
-  <div class="split">
+  <div class="split" style="bottom:74px">
     <div class="split-text reveal-group" data-step="500" data-start="200" style="flex-basis:58%">
       <div class="eyebrow">Discursos de amenaza, seguridad y límites del Estado en Chile</div>
       <h1 style="margin:20px 0 0;font-family:'EB Garamond',serif;font-weight:700;font-size:52px;line-height:1.14;letter-spacing:-0.005em;color:#F5F2EA;text-wrap:balance">¿El nuevo enemigo interno?</h1>
@@ -241,10 +267,30 @@
       <div style="margin-top:28px;font-family:'EB Garamond',serif;font-weight:600;font-size:14px;letter-spacing:0.02em;color:#BFB6A3">Adriana Paccha · Andrés Lazcano</div>
     </div>
     <div class="split-media">
-      <div class="mem-frame reveal-solo" data-reveal-in="500" style="height:84%;aspect-ratio:4/5;max-width:100%">
+      <div class="mem-frame reveal-solo" data-reveal-in="500" style="height:78%;aspect-ratio:4/5;max-width:100%">
         <img src="img/estadio-nacional-1973.png" alt="Prisioneros políticos en el Estadio Nacional, Santiago, 1973" style="object-position:50% 34%">
         <div class="grain"></div>
       </div>
+    </div>
+  </div>
+  <div class="filmstrip bottom" style="height:74px">
+    <div class="track">
+      <img src="img/vg-torre-interior.jpg" alt="">
+      <img src="img/lm3-rostros.jpg" alt="">
+      <img src="img/operativos-santiago.jpg" alt="">
+      <img src="img/decreto-ecuador.webp" alt="">
+      <img src="img/ecuador-malvinas-retratos.jpg" alt="">
+      <img src="img/lm4-interior.jpg" alt="">
+      <img src="img/control-estacion-central.jpg" alt="">
+      <img src="img/carcel-san-miguel.jpg" alt="">
+      <img src="img/vg-torre-interior.jpg" alt="">
+      <img src="img/lm3-rostros.jpg" alt="">
+      <img src="img/operativos-santiago.jpg" alt="">
+      <img src="img/decreto-ecuador.webp" alt="">
+      <img src="img/ecuador-malvinas-retratos.jpg" alt="">
+      <img src="img/lm4-interior.jpg" alt="">
+      <img src="img/control-estacion-central.jpg" alt="">
+      <img src="img/carcel-san-miguel.jpg" alt="">
     </div>
   </div>
   <div style="position:absolute;inset:0;background:#fff;filter:url(#grainf);opacity:0.14;mix-blend-mode:screen;pointer-events:none"></div>
@@ -647,6 +693,8 @@
   <div class="pageno">16</div>
 </section>
 </article>
+
+<div id="page-edges" aria-hidden="true"></div>
 
 </div>
 
